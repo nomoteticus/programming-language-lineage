@@ -1,0 +1,16 @@
+# Downloaded build inputs (flag-icons, simple-icons)
+source/package/
+source/si/
+*.tgz
+
+# Python and Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Editors and OS
+.claude/
+.vscode/
+.DS_Store
+Thumbs.db
+.claudine/

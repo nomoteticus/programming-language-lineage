@@ -1,0 +1,423 @@
+<title>Programming Language Lineage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a year-scaled influence map (left = older), with a detail strip and a full list of influences below. */
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --fg: #161a21;
+  --muted: #5a6170;
+  --edge: #a3a9b4;
+  --grid: #e2e5ea;
+  --line: #d6dae1;
+  --f-lisp: #2f8a4f;
+  --f-ml: #7448c8;
+  --f-array: #1f62c4;
+  --f-c: #c05a0c;
+  --f-jvm: #c4373f;
+  --f-script: #0b8584;
+  --f-data: #a8327e;
+  --f-other: #6b7280;
+  --f-edu: #8a6a12;
+  --swiss: #d52b1e;
+  --root: #8a5523;
+  --leaf: #2e8b3e;
+  --font-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1217; --surface: #171b22; --fg: #e5e8ed; --muted: #9aa2b0; --edge: #4b5262; --grid: #1d222a; --line: #2a303a;
+    --f-lisp: #5fc483; --f-ml: #a88cf2; --f-array: #6ea4f2; --f-c: #f09a55; --f-jvm: #f07b80; --f-script: #3fc7c4; --f-data: #e27cbf; --f-other: #a0a7b4; --f-edu: #d9b452; --root: #c9935e; --leaf: #5ec46e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1217; --surface: #171b22; --fg: #e5e8ed; --muted: #9aa2b0; --edge: #4b5262; --grid: #1d222a; --line: #2a303a;
+  --f-lisp: #5fc483; --f-ml: #a88cf2; --f-array: #6ea4f2; --f-c: #f09a55; --f-jvm: #f07b80; --f-script: #3fc7c4; --f-data: #e27cbf; --f-other: #a0a7b4; --f-edu: #d9b452; --root: #c9935e; --leaf: #5ec46e;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1640px; margin: 0 auto; padding-inline: 24px; padding-block: 28px 48px; display: grid; gap: 22px; }
+@media (max-width: 600px) { .wrap { padding-inline: 16px; } }
+
+header { display: grid; gap: 6px; max-width: 70ch; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 4.2vw, 46px); line-height: 1.05; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+h1 code { font-family: var(--font-mono); font-weight: 500; font-size: .8em; }
+.lede { margin: 0; color: var(--muted); }
+
+.legend { display: grid; gap: 8px; font-size: 13px; color: var(--muted); }
+.lrow { display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 4px 12px; align-items: center; }
+.lhead { font-family: var(--font-mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.lkeys { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.lkeys.static { gap: 6px 18px; }
+.lkeys.static > span { display: inline-flex; align-items: center; gap: 7px; }
+.lkey { all: unset; box-sizing: border-box; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; padding: 3px 11px 3px 7px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--fg); font: 13px/1.4 var(--font-body); transition: border-color .15s, background .15s; }
+.lkey:hover { border-color: var(--muted); }
+.lkey[aria-pressed="true"] { border-color: var(--fg); background: color-mix(in srgb, var(--fg) 10%, var(--surface)); font-weight: 600; }
+.lkey:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.lhint { margin: 0; font-size: 12px; }
+@media (max-width: 600px) { .lrow { grid-template-columns: minmax(0, 1fr); } }
+.chip { width: 14px; height: 14px; border-radius: 7px; border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 18%, var(--surface)); }
+.key-line { width: 26px; height: 0; border-top: 1.6px solid var(--muted); }
+.key-line.dashed { border-top-style: dashed; }
+.key-dead { width: 22px; height: 12px; border-radius: 6px; border: 1.4px dashed var(--muted); }
+.key-ring { width: 14px; height: 14px; border-radius: 7px; border: 3px double var(--fg); }
+.key-swiss { width: 13px; height: 13px; border-radius: 2px; background: var(--swiss); position: relative; }
+.key-swiss::before, .key-swiss::after { content: ""; position: absolute; background: #fff; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.key-swiss::before { width: 3px; height: 8px; }
+.key-swiss::after { width: 8px; height: 3px; }
+
+figure { margin: 0; display: grid; gap: 10px; }
+.scroller { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; -webkit-overflow-scrolling: touch; }
+#map { display: block; width: 100%; min-width: 1180px; height: auto; }
+figcaption { font-size: 13px; color: var(--muted); }
+
+/* svg */
+.grid line { stroke: var(--grid); stroke-width: 1; }
+.tick { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
+.edge { fill: none; stroke: var(--edge); stroke-width: 1.3; marker-end: url(#ah); transition: opacity .15s, stroke .15s; }
+.edge.dashed { stroke-dasharray: 5 4; }
+.ah { fill: var(--edge); }
+.ah-hi { fill: var(--fg); }
+.elabel { font-family: var(--font-body); font-size: 11px; fill: var(--muted); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; transition: opacity .15s; pointer-events: none; }
+.node { cursor: pointer; transition: opacity .15s; }
+.node rect { fill: color-mix(in srgb, var(--c) 15%, var(--surface)); stroke: var(--c); stroke-width: 1.4; }
+.node text { font-family: var(--font-mono); font-size: 13px; font-weight: 500; fill: var(--fg); }
+.node.yours rect { stroke-width: 3; }
+.node:focus { outline: none; }
+.node:focus-visible rect { stroke: var(--fg); stroke-width: 3; }
+.badge-bg { fill: var(--surface); stroke: var(--line); stroke-width: 1; }
+.bat { fill: none; stroke: var(--fg); stroke-width: 1.1; }
+.bat-tip { fill: var(--fg); }
+.bat-low { fill: #d6402b; }
+.horn { fill: #e3b25a; stroke: #6b4614; stroke-width: .7; stroke-linejoin: round; }
+.bull-head { fill: #6b4614; }
+.emoji { font-size: 11px; font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; }
+.badge { pointer-events: bounding-box; }
+.node.st-dead rect { stroke-dasharray: 3 2.5; fill: var(--surface); }
+.node.st-dead text { fill: var(--muted); }
+svg.badge-mini { width: 17px; height: 17px; flex: none; display: inline-block; vertical-align: -3px; }
+.status-line { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; margin: 0 0 8px; }
+.status-line span { display: inline-flex; align-items: center; gap: 6px; }
+.flag-edge { fill: none; stroke: var(--fg); stroke-opacity: .28; stroke-width: .6; }
+.node use { pointer-events: bounding-box; }
+svg.mini { width: 16px; height: 12px; flex: none; display: inline-block; vertical-align: -1px; }
+.key-pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 7px; border: 1px solid var(--line); border-radius: 10px; font-family: var(--font-mono); font-size: 12px; color: var(--fg); background: var(--surface); }
+.origin { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; color: var(--muted); margin: 0 0 8px; }
+.origin span { display: inline-flex; align-items: center; gap: 6px; }
+
+.fam-lisp { --c: var(--f-lisp); } .fam-ml { --c: var(--f-ml); } .fam-array { --c: var(--f-array); } .fam-c { --c: var(--f-c); }
+.fam-jvm { --c: var(--f-jvm); } .fam-script { --c: var(--f-script); } .fam-data { --c: var(--f-data); } .fam-other { --c: var(--f-other); } .fam-edu { --c: var(--f-edu); }
+
+#map.filter .node:not(.match) { opacity: .4; }
+#map.filter .edge { opacity: .28; }
+#map.filter .edge.half { opacity: .6; }
+#map.filter .edge.match { opacity: 1; stroke: var(--fg); stroke-width: 1.7; marker-end: url(#ah-hi); }
+#map.filter .elabel { opacity: .3; }
+#map.filter .elabel.half, #map.filter .elabel.match { opacity: 1; }
+#map.filter .elabel.match { fill: var(--fg); }
+#map.focus .node { opacity: .18; }
+#map.focus .node.on { opacity: 1; }
+#map.focus .node.sel rect { stroke-width: 3; }
+#map.focus .edge { opacity: .07; }
+#map.focus .edge.on { opacity: 1; stroke: var(--fg); stroke-width: 1.8; marker-end: url(#ah-hi); }
+#map.focus .elabel { opacity: 0; }
+#map.focus .elabel.on { opacity: 1; fill: var(--fg); font-weight: 600; }
+
+/* card panel */
+.card { position: fixed; top: env(safe-area-inset-top, 0px); right: 0; bottom: env(safe-area-inset-bottom, 0px); width: min(440px, 100vw); background: var(--surface); border-left: 1px solid var(--line); box-shadow: -12px 0 32px rgba(0,0,0,.12); overflow-y: auto; z-index: 20; transform: translateX(105%); visibility: hidden; transition: transform .22s ease, visibility 0s linear .22s; }
+.card.open { transform: none; visibility: visible; transition: transform .22s ease, visibility 0s; }
+.card-inner { padding: 18px 22px 32px; display: grid; gap: 14px; }
+.card-close { all: unset; cursor: pointer; justify-self: end; font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; }
+.card-close:hover { color: var(--fg); border-color: var(--muted); }
+.card-close:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+#cardBody { display: grid; gap: 14px; }
+#cardBody p { margin: 0; }
+.chead { display: flex; gap: 14px; align-items: center; }
+.logo { width: 52px; height: 52px; flex: none; color: var(--fg); }
+.logo.none { display: grid; place-items: center; border-radius: 12px; border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 15%, var(--surface)); font-family: var(--font-mono); font-weight: 600; font-size: 18px; }
+.chead h2 { font-family: var(--font-display); font-size: 30px; line-height: 1.05; margin: 0; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.chead .yr { font-family: var(--font-mono); font-size: 14px; color: var(--muted); font-weight: 400; }
+.chead .fam { font-size: 12px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--c); margin-top: 3px; }
+.facts { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 8px 12px; margin: 0; font-size: 14px; }
+.facts dt { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); padding-top: 2px; font-weight: 600; }
+.facts dd { margin: 0; }
+.who { display: grid; gap: 3px; }
+.who .person { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.who span { color: var(--fg); }
+.muted, .who .muted { color: var(--muted); }
+.note { color: var(--muted); font-size: 14px; }
+.note b { color: var(--fg); font-weight: 600; }
+.desc { font-size: 14.5px; line-height: 1.6; }
+.cols2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+.col h3, #cardBody > h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--fg); margin: 0 0 4px; font-weight: 700; }
+.col h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 10px 0 4px; font-weight: 600; }
+.col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; font-size: 13px; }
+.col li { display: grid; gap: 1px; }
+.col li > span { color: var(--muted); font-size: 12.5px; line-height: 1.35; }
+.col .empty { color: var(--muted); font-size: 13px; }
+.lang { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-weight: 600; font-size: 13px; }
+.lang .chip { width: 9px; height: 9px; }
+.lang:hover { text-decoration: underline; }
+.lang:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+#cardBody > h3 { border-top: 1px solid var(--line); padding-top: 12px; }
+.sw { margin: 0; padding-left: 18px; font-size: 14px; display: grid; gap: 3px; }
+@media (max-width: 420px) { .cols2 { grid-template-columns: minmax(0, 1fr); } }
+.lkeys.depth { gap: 8px 18px; }
+.seg { display: inline-flex; align-items: center; gap: 0; }
+.seglab { font-size: 13px; color: var(--muted); margin-right: 8px; }
+.segb { all: unset; box-sizing: border-box; cursor: pointer; padding: 3px 11px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: 13px/1.4 var(--font-body); margin-left: -1px; }
+.segb:first-of-type { border-radius: 999px 0 0 999px; margin-left: 0; }
+.segb:last-of-type { border-radius: 0 999px 999px 0; }
+.segb[aria-pressed="true"] { background: color-mix(in srgb, var(--fg) 12%, var(--surface)); border-color: var(--fg); font-weight: 600; position: relative; }
+.segb:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; position: relative; }
+.sw li b { font-weight: 600; }
+.sw li span { color: var(--muted); }
+.col li .deg { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.ah-root { fill: var(--root); }
+.ah-leaf { fill: var(--leaf); }
+#map.focus .edge.on.root { stroke: var(--root); marker-end: url(#ah-root); }
+#map.focus .edge.on.leaf { stroke: var(--leaf); marker-end: url(#ah-leaf); }
+#map.focus .elabel.on.root { fill: var(--root); }
+#map.focus .elabel.on.leaf { fill: var(--leaf); }
+.key-line.root { border-top: 2.4px solid var(--root); }
+.key-line.leaf { border-top: 2.4px solid var(--leaf); }
+.col h3.roots { color: var(--root); }
+.col h3.leaves { color: var(--leaf); }
+#map.focus .edge.on.deep { opacity: .55; stroke-width: 1.4; }
+#map.focus .elabel.on.deep { opacity: .8; font-weight: 500; }
+.reset { all: unset; cursor: pointer; font-size: 13px; padding: 3px 12px; border-radius: 999px; border: 1px solid var(--fg); color: var(--fg); }
+.reset:disabled { opacity: .35; cursor: default; border-color: var(--line); }
+.reset:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.hintrow { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+/* list */
+.all h2 { font-family: var(--font-display); font-size: 22px; margin: 6px 0 12px; }
+.all .cols { columns: 300px; column-gap: 32px; }
+.all section { break-inside: avoid; margin: 0 0 14px; }
+.all h3 { font-family: var(--font-mono); font-size: 14px; margin: 0 0 3px; display: flex; gap: 8px; align-items: center; }
+.all h3 .yr { color: var(--muted); font-weight: 400; font-size: 12px; }
+.all h3 .chip { width: 10px; height: 10px; }
+.all ul { list-style: none; margin: 0; padding: 0; font-size: 14px; }
+.all li { padding-left: 18px; }
+.all li b { font-weight: 500; }
+.all li span { color: var(--muted); }
+.all button { all: unset; cursor: pointer; border-bottom: 1px dotted var(--muted); }
+.all button:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+footer { font-size: 13px; color: var(--muted); max-width: 80ch; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">From <code>(lambda ...)</code> to <code>val</code> · 1957 to 2023</p>
+    <h1>Programming Language Lineage</h1>
+    <p class="lede">Each language sits at the year it appeared. Arrows point from a language to the ones it influenced, and say what was passed on. Flags show where each was built and, on the left, where its designers were born when that differs. The corner badges give its health today and my 20-year outlook assuming AI keeps writing more of the world's code. Hover a language to isolate its family, or click it to open its card.</p>
+  </header>
+
+  <div class="legend" role="group" aria-label="Legend and filters">
+    %%LEGEND%%
+    <div class="lrow"><span class="lhead">Hover and click</span><div class="lkeys depth">
+      <span class="seg" role="group" aria-label="Ancestors to show"><span class="seglab">Ancestors</span><button type="button" class="segb" data-dir="up" data-depth="1" aria-pressed="true">Direct</button><button type="button" class="segb" data-dir="up" data-depth="2" aria-pressed="false">2nd degree</button><button type="button" class="segb" data-dir="up" data-depth="99" aria-pressed="false">All</button></span>
+      <span class="seg" role="group" aria-label="Successors to show"><span class="seglab">Successors</span><button type="button" class="segb" data-dir="down" data-depth="1" aria-pressed="true">Direct</button><button type="button" class="segb" data-dir="down" data-depth="2" aria-pressed="false">2nd degree</button><button type="button" class="segb" data-dir="down" data-depth="99" aria-pressed="false">All</button></span>
+    </div></div>
+    <div class="lrow"><span class="lhead">Key</span><div class="lkeys static">
+      <span><span class="key-line"></span>direct influence</span>
+      <span><span class="key-line dashed"></span>loose or cosmetic</span>
+      <span><span class="key-line root"></span>roots: what shaped the selected language</span>
+      <span><span class="key-line leaf"></span>leaves: what it went on to shape</span>
+      <span><span class="key-dead"></span>dashed outline: dead language</span>
+      <span><span class="key-pill"><svg class="mini" viewBox="0 0 16 12" aria-hidden="true"><use href="#flag-dk"/></svg>C++<svg class="mini" viewBox="0 0 16 12" aria-hidden="true"><use href="#flag-us"/></svg></span>left flag: designer's birthplace (if different) · right flag: where it was built · hover a flag for the inventors</span>
+    </div></div>
+    <div class="hintrow"><button type="button" class="reset" id="reset" disabled>Reset selection</button><p class="lhint" id="lhint"></p></div>
+  </div>
+
+  <figure>
+    <div class="scroller">
+      %%SVG%%
+    </div>
+    <figcaption>Influence is simplified: most languages have many parents, and only major ones are drawn. Years are first public release, except Rust (1.0). Health and outlook are my judgement as of October 2026, not measurements. Flags are simplified too: committee languages (ALGOL, Haskell) get a globe, and only the lead designers' birthplaces are shown.</figcaption>
+  </figure>
+
+
+  <div class="all">
+    <h2>Every language and what shaped it</h2>
+    <div class="cols" id="all"></div>
+  </div>
+
+  <footer>Sources: the languages' own design documents and FAQs (Go, Rust, Swift, Kotlin, Scala, Python), plus standard histories of Lisp, ML, APL, S and Simula. Dashed lines mark resemblance more than documented design intent. Flags by flag-icons (MIT licence). Logos from Simple Icons; marks belong to their owners.</footer>
+</div>
+
+<aside class="card" id="card" aria-hidden="true" aria-labelledby="cardTitle">
+  <div class="card-inner">
+    <button type="button" class="card-close" id="cardClose">Close</button>
+    <div id="cardBody"></div>
+  </div>
+</aside>
+
+<script>
+const DATA = %%DATA%%;
+const svg = document.getElementById('map');
+const card = document.getElementById('card');
+const cardBody = document.getElementById('cardBody');
+const lhint = document.getElementById('lhint');
+const resetBtn = document.getElementById('reset');
+let pinned = null;
+
+const flag = c => `<svg class="mini" viewBox="0 0 16 12" aria-hidden="true"><use href="#flag-${c}"/></svg>`;
+const badge = k => `<svg class="badge-mini" viewBox="0 0 16 16" aria-hidden="true"><use href="#${k}"/></svg>`;
+const STL = { dead: 'Dead', dying: 'Dying', alive: 'Alive', thriving: 'Thriving' };
+const OLL = { bull: 'Bullish to 2046', bear: 'Bearish to 2046', steady: 'Steady to 2046' };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- filters: OR within a row, AND across rows ---------- */
+const active = new Map();   // group -> Set(keys)
+const groupOf = k => k === 'yours' ? 'yours' : k.split('-')[0];
+function applyFilter() {
+  svg.querySelectorAll('.match, .half').forEach(el => el.classList.remove('match', 'half'));
+  document.querySelectorAll('.lkey').forEach(b => b.setAttribute('aria-pressed', String(!!active.get(groupOf(b.dataset.key))?.has(b.dataset.key))));
+  const on = [...active.values()].some(s => s.size);
+  resetBtn.disabled = !on;
+  if (!on) { svg.classList.remove('filter'); lhint.textContent = 'Click categories to pick out languages. Choices in one row add up; choices in different rows narrow down.'; return; }
+  const hit = new Set();
+  svg.querySelectorAll('.node').forEach(n => {
+    const ok = [...active.values()].every(set => !set.size || [...set].some(k => n.classList.contains(k)));
+    if (ok) { n.classList.add('match'); hit.add(n.dataset.id); }
+  });
+  svg.querySelectorAll('.edge, .elabel').forEach(el => {
+    const a = hit.has(el.dataset.f), b = hit.has(el.dataset.t);
+    if (a && b) el.classList.add('match'); else if (a || b) el.classList.add('half');
+  });
+  if (!svg.classList.contains('focus')) svg.classList.add('filter');
+  const names = [...active.values()].filter(s => s.size).map(set => [...set].map(k => document.querySelector(`.lkey[data-key="${k}"]`).textContent.trim()).join(' or '));
+  lhint.textContent = `${hit.size} language${hit.size === 1 ? '' : 's'}: ${names.join(' and ')}.`;
+}
+document.querySelectorAll('.lkey').forEach(b => b.addEventListener('click', () => {
+  const k = b.dataset.key, g = groupOf(k);
+  if (!active.has(g)) active.set(g, new Set());
+  const set = active.get(g);
+  set.has(k) ? set.delete(k) : set.add(k);
+  applyFilter();
+}));
+resetBtn.addEventListener('click', () => { active.clear(); applyFilter(); });
+
+/* ---------- hover / pin highlight ---------- */
+const depth = { up: 1, down: 1 };
+const inE = {}, outE = {};
+DATA.edges.forEach((e, i) => { (inE[e.t] ||= []).push(i); (outE[e.f] ||= []).push(i); });
+function reach(id, dir, max) {
+  // breadth-first walk; returns node -> {lvl, via} and edge index -> lvl
+  const nodes = new Map([[id, { lvl: 0, via: null }]]), edges = new Map();
+  let frontier = [id];
+  for (let lvl = 1; lvl <= max && frontier.length; lvl++) {
+    const next = [];
+    frontier.forEach(cur => ((dir === 'up' ? inE : outE)[cur] || []).forEach(i => {
+      const e = DATA.edges[i], other = dir === 'up' ? e.f : e.t;
+      if (!edges.has(i)) edges.set(i, lvl);
+      if (!nodes.has(other)) { nodes.set(other, { lvl, via: cur }); next.push(other); }
+    }));
+    frontier = next;
+  }
+  return { nodes, edges };
+}
+function highlight(id) {
+  svg.querySelectorAll('.on, .sel, .deep, .root, .leaf').forEach(el => el.classList.remove('on', 'sel', 'deep', 'root', 'leaf'));
+  if (!id) { svg.classList.remove('focus'); if ([...active.values()].some(s => s.size)) svg.classList.add('filter'); return; }
+  svg.classList.remove('filter');
+  svg.classList.add('focus');
+  const up = reach(id, 'up', depth.up), down = reach(id, 'down', depth.down);
+  const lvlOf = new Map([...up.edges, ...down.edges]);
+  svg.querySelectorAll('.edge, .elabel').forEach(el => {
+    const i = +el.dataset.e, l = lvlOf.get(i);
+    if (l) { el.classList.add('on', up.edges.has(i) ? 'root' : 'leaf'); if (l > 1) el.classList.add('deep'); }
+  });
+  svg.querySelectorAll('.node').forEach(n => {
+    if (up.nodes.has(n.dataset.id) || down.nodes.has(n.dataset.id)) n.classList.add('on');
+    if (n.dataset.id === id) n.classList.add('sel');
+  });
+}
+document.querySelectorAll('.segb').forEach(b => b.addEventListener('click', () => {
+  depth[b.dataset.dir] = +b.dataset.depth;
+  document.querySelectorAll(`.segb[data-dir="${b.dataset.dir}"]`).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  if (pinned) { highlight(pinned); renderCard(pinned); }
+}));
+
+/* ---------- card ---------- */
+const parents = {}, children = {};
+DATA.edges.forEach(e => { (parents[e.t] ||= []).push(e); (children[e.f] ||= []).push(e); });
+const ord = n => n === 2 ? '2nd' : n === 3 ? '3rd' : n + 'th';
+const langBtn = id => `<button type="button" class="lang" data-id="${id}"><span class="chip fam-${DATA.nodes[id].fam}"></span>${esc(DATA.nodes[id].label)}</button>`;
+function influenceCol(title, id, dir) {
+  const map = dir === 'up' ? parents : children, key = dir === 'up' ? 'f' : 't';
+  const dir1 = (map[id] || []).slice().sort((a, b) => DATA.nodes[a[key]].year - DATA.nodes[b[key]].year);
+  const r = reach(id, dir, Math.max(2, depth[dir]));
+  const ind = [...r.nodes.entries()].filter(([n, v]) => v.lvl >= 2).sort((a, b) => a[1].lvl - b[1].lvl || DATA.nodes[a[0]].year - DATA.nodes[b[0]].year);
+  return `<div class="col"><h3 class="${dir === 'up' ? 'roots' : 'leaves'}">${title}</h3>
+    <h4>Direct</h4>${dir1.length ? `<ul>${dir1.map(e => `<li>${langBtn(e[key])}<span>${esc(e.lab)}${e.d ? ' (loose)' : ''}</span></li>`).join('')}</ul>` : '<p class="empty">None drawn</p>'}
+    <h4>Indirect</h4>${ind.length ? `<ul>${ind.map(([far, v]) => `<li>${langBtn(far)}<span>via ${esc(DATA.nodes[v.via].label)} <span class="deg">· ${ord(v.lvl)} degree</span></span></li>`).join('')}</ul>` : '<p class="empty">None drawn</p>'}
+  </div>`;
+}
+function renderCard(id) {
+  const n = DATA.nodes[id];
+  const logo = n.logo ? `<svg class="logo" viewBox="0 0 24 24" role="img" aria-label="${esc(n.label)} logo"><path d="${n.logo.d}" fill="${n.logo.hex || 'currentColor'}"/></svg>` : `<div class="logo none fam-${n.fam}" aria-hidden="true">${esc(n.label.slice(0, 2))}</div>`;
+  const inv = n.inv.length >= 3
+    ? `<p class="who"><b>Collective</b><span>${n.inv.map(([a, c]) => esc(a) + (c ? ` ${flag(c)}` : '')).join(', ')}</span></p>`
+    : `<p class="who">${n.inv.map(([a, c]) => `<span class="person"><b>${esc(a)}</b>${c ? ` ${flag(c)} <span class="muted">born in ${esc(DATA.countries[c])}</span>` : ''}</span>`).join('')}</p>`;
+  cardBody.innerHTML = `
+    <div class="chead fam-${n.fam}">
+      ${logo}
+      <div><h2 id="cardTitle">${esc(n.label)} <span class="yr">${n.year}</span></h2><div class="fam">${esc(DATA.fams[n.fam])}</div></div>
+    </div>
+    <p class="status-line"><span>${badge('st-' + n.st)} ${STL[n.st]}</span>${n.ol ? `<span>${badge('ol-' + n.ol)} ${OLL[n.ol]}</span>` : ''}</p>
+    <dl class="facts">
+      <dt>Invented by</dt><dd>${inv}</dd>
+      <dt>Where</dt><dd>${flag(n.dev)} ${esc(DATA.countries[n.dev])}<br><span class="muted">${esc(n.org)}</span></dd>
+    </dl>
+    <p class="desc">${esc(n.desc)}</p>
+    <p class="note"><b>Outlook:</b> ${esc(n.note)}</p>
+    <div class="cols2">${influenceCol('Influenced by', id, 'up')}${influenceCol('Influenced', id, 'down')}</div>
+    ${n.sw.length ? `<h3>Famous software written in ${esc(n.label)}</h3><ul class="sw">${n.sw.map(([a, d]) => `<li><b>${esc(a)}</b>${d ? ` <span>${esc(d)}</span>` : ''}</li>`).join('')}</ul>` : ''}`;
+}
+function openCard(id) {
+  pinned = id; highlight(id); renderCard(id);
+  card.classList.add('open'); card.setAttribute('aria-hidden', 'false'); card.inert = false;
+  card.scrollTop = 0;
+}
+function closeCard() {
+  pinned = null; highlight(null);
+  card.classList.remove('open'); card.setAttribute('aria-hidden', 'true'); card.inert = true;
+}
+card.inert = true;
+document.getElementById('cardClose').addEventListener('click', closeCard);
+card.addEventListener('click', ev => { const b = ev.target.closest('button.lang'); if (b) openCard(b.dataset.id); });
+
+svg.querySelectorAll('.node').forEach(n => {
+  const id = n.dataset.id;
+  n.addEventListener('mouseenter', () => { if (!pinned) highlight(id); });
+  n.addEventListener('mouseleave', () => { if (!pinned) highlight(null); else highlight(pinned); });
+  n.addEventListener('click', ev => { ev.stopPropagation(); pinned === id ? closeCard() : openCard(id); });
+  n.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); pinned === id ? closeCard() : openCard(id); } });
+});
+svg.addEventListener('click', () => { if (pinned) closeCard(); });
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape') { if (pinned) closeCard(); else if ([...active.values()].some(s => s.size)) { active.clear(); applyFilter(); } } });
+applyFilter();
+
+/* ---------- full list ---------- */
+const all = document.getElementById('all');
+Object.keys(DATA.nodes)
+  .sort((a, b) => DATA.nodes[a].year - DATA.nodes[b].year)
+  .forEach(id => {
+    const ins = parents[id] || [];
+    const n = DATA.nodes[id];
+    const sec = document.createElement('section');
+    sec.innerHTML = `<h3><span class="chip fam-${n.fam}"></span><button type="button" data-id="${id}">${esc(n.label)}</button> ${n.left.map(flag).join('')}${flag(n.dev)} ${badge('st-' + n.st)}${n.ol ? badge('ol-' + n.ol) : ''} <span class="yr">${n.year}</span></h3>
+      <ul>${ins.length ? ins.map(e => `<li>from <b>${esc(DATA.nodes[e.f].label)}</b>: <span>${esc(e.lab)}${e.d ? ' (loose)' : ''}</span></li>`).join('') : '<li><span>No parents drawn on this map.</span></li>'}</ul>`;
+    all.appendChild(sec);
+  });
+all.addEventListener('click', ev => { const b = ev.target.closest('button[data-id]'); if (b) openCard(b.dataset.id); });
+</script>
