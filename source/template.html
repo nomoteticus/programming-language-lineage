@@ -44,7 +44,10 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-body); f
 .wrap { max-width: 1640px; margin: 0 auto; padding-inline: 24px; padding-block: 28px 48px; display: grid; gap: 22px; }
 @media (max-width: 600px) { .wrap { padding-inline: 16px; } }
 
-header { display: grid; gap: 6px; }
+header { display: grid; gap: 6px; position: relative; }
+.eyebrow { padding-right: 56px; }
+.ver { position: absolute; top: 0; right: 0; font-family: var(--font-mono); font-size: 11px; color: var(--muted); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; }
+.ver:hover, .ver:focus-visible { color: var(--fg); border-color: var(--fg); }
 .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
 h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 4.2vw, 46px); line-height: 1.05; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
 h1 code { font-family: var(--font-mono); font-weight: 500; font-size: .8em; }
@@ -231,12 +234,13 @@ svg.mini { width: 16px; height: 12px; flex: none; display: inline-block; vertica
 .all li span { color: var(--muted); }
 .all button { all: unset; cursor: pointer; border-bottom: 1px dotted var(--muted); }
 .all button:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
-footer { font-size: 13px; color: var(--muted); max-width: 80ch; }
+footer { font-size: 13px; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 
 <div class="wrap">
   <header>
+    <a class="ver" href="https://github.com/nomoteticus/programming-language-lineage#what-changed-in-version-3" title="What changed in version 3" target="_blank" rel="noopener">v3.0</a>
     <p class="eyebrow">From FORTRAN to Zig · 90 languages · 1957 to 2016</p>
     <h1>Programming Language Lineage</h1>
     <p class="lede">Each language sits at the year it appeared. Arrows point from a language to the ones it influenced, and say what was passed on. Flags show where each was built and, on the left, where its designers were born when that differs. The corner badges give its health today and a 20-year outlook, assuming AI keeps writing more of the world's code; both are AI judgments, with the reason on each card. Hover a language to isolate its family, or click it to open its card; Ctrl-click (⌘-click on a Mac) adds more languages to the selection, and <b>Hide panel</b> folds the card away so you can see the whole map.</p>
