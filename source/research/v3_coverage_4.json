@@ -1,0 +1,1159 @@
+[
+ {
+  "sid": "S046",
+  "url": "https://blogs.mathworks.com/cleve/2015/06/15/algol-60-pl0-and-matlab/",
+  "url_used": "https://blogs.mathworks.com/cleve/2015/06/15/algol-60-pl0-and-matlab/",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "matlab"
+  ],
+  "named": [
+   {
+    "frm": "fortran",
+    "to": "matlab",
+    "in_v2": true,
+    "quote": "I wanted my students to have access to LINPACK and EISPACK without writing Fortran programs.",
+    "quote_verbatim_confidence": "high",
+    "relation": "non_design",
+    "source_names_it": "yes",
+    "kind": "library",
+    "what": "a front end to the Fortran libraries LINPACK and EISPACK",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, change strength to weak",
+    "reason": "The quote documents a library route (MATLAB gave access to Fortran packages), not a borrowed design. Under the rule any non-design kind is weak. The post does not say MATLAB was written in Fortran, so 'library' fits better than 'implementation'."
+   },
+   {
+    "frm": "pascal",
+    "to": "matlab",
+    "in_v2": true,
+    "quote": "Wirth gives a formal definition of a miniature programming language that he calls PL/0. [...] Almost as a hobby, I used Wirth's chapter to develop a simple Matrix Laboratory. Consequently, the syntax of the original MATLAB is that of PL/0.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "no",
+    "kind": "syntax",
+    "what": "syntax of Wirth's PL/0 (off-map), which we map to Pascal",
+    "proposed_strength": "strong",
+    "proposed_verdict": "partly",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "The source names PL/0, never Pascal, as MATLAB's model; it calls PL/0 a language influenced by ALGOL 60 and mentions PASCAL separately as 'another descendant of ALGOL'. Mapping PL/0 to Pascal is our inference, so the verdict should be 'partly', not 'supported'. A human should decide whether the parent is Pascal or ALGOL 60."
+   },
+   {
+    "frm": "algol",
+    "to": "matlab",
+    "in_v2": false,
+    "quote": "The 1960 programming language ALGOL 60 influenced the design of many subsequent languages, including C and a miniature language called PL/0. I based the design of the first MATLAB on PL/0.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "ALGOL 60 design, through the off-map PL/0",
+    "proposed_strength": "weak",
+    "proposed_verdict": "partly",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "This is the lineage the post itself states (ALGOL 60 -> PL/0 -> MATLAB), and the post's title pairs ALGOL 60 with MATLAB. Indirect (through PL/0), so weak and partly. Borderline: a human should choose between this tie and pascal -> matlab, or keep both."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "fortran",
+    "to": "matlab",
+    "found_verbatim": true,
+    "comment": ""
+   },
+   {
+    "frm": "pascal",
+    "to": "matlab",
+    "found_verbatim": true,
+    "comment": "Verbatim. A second sentence in the opening paragraph states it too: 'I based the design of the first MATLAB on PL/0.'"
+   }
+  ],
+  "notes": "Off-map: PL/0 (the direct model), ALGOL W, ALGOL 58. The post says EISPACK was translated from Algol procedures, and that C was influenced by ALGOL 60 (not a MATLAB matter). PL/1 is mentioned only as a language used in a 1967 textbook (passing)."
+ },
+ {
+  "sid": "S047",
+  "url": "https://learn.microsoft.com/en-us/analysis-services/multidimensional-models/mdx/mdx-query-the-basic-query",
+  "url_used": "https://learn.microsoft.com/en-us/analysis-services/multidimensional-models/mdx/mdx-query-the-basic-query",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "mdx"
+  ],
+  "named": [
+   {
+    "frm": "sql",
+    "to": "mdx",
+    "in_v2": true,
+    "quote": "The syntax format for the MDX SELECT statement is similar to that of SQL syntax. However, there are several fundamental differences:",
+    "quote_verbatim_confidence": "high",
+    "relation": "resemblance",
+    "source_names_it": "no",
+    "kind": "syntax",
+    "what": "SELECT ... FROM ... WHERE statement form",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "drop",
+    "reason": "The page only says the syntax is 'similar to' SQL and then lists differences; it never says MDX borrowed or was modeled on SQL. Under the rule this is resemblance, not a tie. The tie is probably real, but it needs a source that states the borrowing (for example the OLE DB for OLAP specification or a designer's account); keep only if such a source is found."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "sql",
+    "to": "mdx",
+    "found_verbatim": true,
+    "comment": ""
+   }
+  ],
+  "notes": "No other language is named on the page. The v2 note already admitted this is 'a deliberate syntactic resemblance rather than an explicit statement of design intent'."
+ },
+ {
+  "sid": "S048",
+  "url": "https://www.cs.kent.ac.uk/people/staff/dat/tfp12/tfp12.pdf",
+  "url_used": "https://www.cs.kent.ac.uk/people/staff/dat/tfp12/tfp12.pdf",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "miranda"
+  ],
+  "named": [
+   {
+    "frm": "iswim",
+    "to": "miranda",
+    "in_v2": true,
+    "quote": "It retains SASL's policies of no explicit λ's and, optional, use of an offside rule to allow nested program structure by indentation (both ideas derived from Landin's ISWIM).",
+    "quote_verbatim_confidence": "medium",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "no explicit lambdas; offside rule (layout by indentation); where-clauses",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "This single sentence from the Miranda section states the derivation directly, where the v2 quote stitched three fragments about PAL and SASL. Wording read from a text extraction of the PDF that dropped ligatures and the lambda sign; 'offside' and 'λ' were restored by me, hence medium confidence."
+   },
+   {
+    "frm": "ml",
+    "to": "miranda",
+    "in_v2": false,
+    "quote": "Developed in 1983-86, Miranda is essentially SASL plus algebraic types and the polymorphic type discipline of Milner (1978). [...] The use of * ** *** ... as type variables followed the original ML (Gordon et al. 1979) — standard ML had not yet appeared when I was designing Miranda.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "type",
+    "what": "Milner's polymorphic type discipline; the * ** *** type-variable notation",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Turner says Miranda's type-variable notation 'followed the original ML' and that Miranda added Milner's polymorphic type discipline (the ML type system) to SASL. Not among this source's v2 ties. The second sentence names ML only for notation; the type discipline is credited to 'Milner (1978)', so a human may prefer weak."
+   },
+   {
+    "frm": "lisp",
+    "to": "miranda",
+    "in_v2": false,
+    "quote": "In preparation I started learning LISP 1.5 and was struck by its lack of relationship to the λ-calculus, unfriendly syntax and the complications of the eval/quote machinery. I decided to teach the course using SASL, as it was now called, instead.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "rejected",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "LISP 1.5 as what SASL (Miranda's parent) reacted against",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "LISP appears as the language Turner turned away from when creating SASL. The only borrowing stated is for SASL ('Following LISP, lists were implemented as linked lists'), not for Miranda."
+   },
+   {
+    "frm": "basic",
+    "to": "miranda",
+    "in_v2": false,
+    "quote": "Very simple, KRC had only top level equations (no where) with pattern matching and guards; and a built in line editor — a functional alternative to BASIC.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "KRC positioned as an alternative to BASIC",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Comparison only, and about KRC rather than Miranda."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "iswim",
+    "to": "miranda",
+    "found_verbatim": true,
+    "comment": "All three fragments are in the paper: 'ISWIM inspired PAL (Evans 1968) at MIT'; 'I introduced a simple DL based on the applicative subset of PAL'; 'Developed in 1983-86, Miranda is essentially SASL plus algebraic types and the polymorphic type discipline of Milner (1978).' The v2 quote joins fragments from three sections and omits words at the fragment edges."
+   }
+  ],
+  "notes": "Read through a text extraction of the PDF (ligatures such as 'ff' and 'fi' and Greek letters are lost in it). Off-map languages named as Miranda's direct line: SASL (the main parent), KRC (guards, testbed for list comprehensions), PAL. List comprehensions 'were inspired by Darlington's \"set expressions\"' in NPL (off-map); multi-equation definitions came from Darlington's NPL. SASL's first implementation was in LISP, the second in BCPL (about SASL, not Miranda). Haskell is described as 'Similar in many ways to Miranda' (Haskell is not a target here)."
+ },
+ {
+  "sid": "S049",
+  "url": "https://smlfamily.github.io/history/SML-history.pdf",
+  "url_used": "https://smlfamily.github.io/history/SML-history.pdf",
+  "reachable": true,
+  "read_extent": "partial",
+  "targets": [
+   "ml"
+  ],
+  "named": [
+   {
+    "frm": "lisp",
+    "to": "ml",
+    "in_v2": true,
+    "quote": "We start with a brief look at some programming languages that influenced the design of LCF/ML. Lisp was the language used in the Stanford LCF project [Milner 1972] [...] and it was familiar to all the ML design participants as the then de facto standard language for symbolic computing.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "the earlier LCF metalanguage; lists as a primitive type, an escape mechanism; also ML's first implementation host",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "The paper lists Lisp first among the 'programming languages that influenced the design of LCF/ML', so the tie can be recorded as a (weak) design influence rather than implementation only; a human should confirm the recode from implementation to design. Strength stays weak: ISWIM is named as the basic framework and Lisp's typing and binding are described as drawbacks."
+   },
+   {
+    "frm": "iswim",
+    "to": "ml",
+    "in_v2": true,
+    "quote": "The basic framework of the language design was inspired by Peter Landin's ISWIM language from the mid 1960s [1966b], which was, in turn, a sugared syntax for Church's lambda calculus.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "basic framework: call-by-value applicative core, let/where, higher-order functions, impure features",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Stated outright, and repeated: 'ML followed ISWIM in using strict evaluation and allowing impure features' and 'He chose Landin's ISWIM language [1966b] as the basic framework for the metalanguage'."
+   },
+   {
+    "frm": "clu",
+    "to": "ml",
+    "in_v2": false,
+    "quote": "As noted by Gordon et al. [1978b], the abstype construct is similar to the notion of clusters in the CLU language [Liskov et al. 1981].",
+    "quote_verbatim_confidence": "medium",
+    "relation": "resemblance",
+    "source_names_it": "no",
+    "kind": "type",
+    "what": "abstract types (abstype) compared with CLU clusters",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "'Similar to' only; no borrowing stated. CLU is cited again, with Alphard, as background for the later module design."
+   },
+   {
+    "frm": "pascal",
+    "to": "ml",
+    "in_v2": false,
+    "quote": "Cardelli's preferred working language at the time was Pascal, so both the compiler and the runtime system were written in Pascal, using Pascal's unsafe union type to do coercions for low-level programming (e.g., for the garbage collector).",
+    "quote_verbatim_confidence": "medium",
+    "relation": "non_design",
+    "source_names_it": "yes",
+    "kind": "implementation",
+    "what": "Cardelli's 1981 ML compiler (a later dialect) was written in Pascal",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "A real implementation route, but for one later compiler (Cardelli ML, 1981), not the original 1973 LCF/ML. The paper adds that Cardelli deliberately looked for a 'purer and more abstract notion' of records than Pascal's. Borderline; a human may decide to add it as a weak non-design tie."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "lisp",
+    "to": "ml",
+    "found_verbatim": true,
+    "comment": "Both fragments found. Full second sentence: 'The design of ML for Edinburgh LCF was informed by Milner's experience at Stanford; in fact, LCF/ML was implemented by translation into Stanford Lisp code.' Quotation marks around 'meta-language' could not be confirmed (the text extraction drops them)."
+   },
+   {
+    "frm": "iswim",
+    "to": "ml",
+    "found_verbatim": true,
+    "comment": ""
+   }
+  ],
+  "notes": "Read through a text extraction of the PDF: sections 1-2 and 4.2 read in full, the rest searched by language name. Off-map languages named as influences on ML: POP-2 ('The design of ML was also influenced by POP-2's record structures and by its sections'), GEDANKEN, and Milner's own summary quoted from Edinburgh LCF: ML 'is derived in different aspects from ISWIM, POP2 and GEDANKEN'. HOPE (off-map) is the source of Standard ML's datatypes and pattern matching and of the module proposal; Clear inspired the modules. PAL, CPL and Algol 60 appear as background only. Prolog and Algol 68 are mentioned in passing."
+ },
+ {
+  "sid": "S050",
+  "url": "https://softwarepreservation.computerhistory.org/modula3/doc/SRC-RR-52.pdf",
+  "url_used": "https://softwarepreservation.computerhistory.org/modula3/doc/SRC-RR-52.pdf",
+  "reachable": true,
+  "read_extent": "partial",
+  "targets": [
+   "modula3"
+  ],
+  "named": [
+   {
+    "frm": "modula2",
+    "to": "modula3",
+    "in_v2": true,
+    "quote": "Modula-3 descends from Mesa[6], Modula-2[10], Cedar[3], and Modula-2+[8, 7]. [...] Modula-3 retains one of Modula-2's most successful features, the provision for explicit interfaces between modules.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "descent; explicit interfaces between modules",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "The 'retains' sentence says what was taken from Modula-2 (interfaces); the v2 quote's second sentence lists what Modula-3 adds, which is not from Modula-2. The Acknowledgments add: 'Our starting point was Modula-2+' and Wirth 'also designed Modula-2, the starting point of our starting point.' The v2 label 'safety, objects' describes additions, not borrowings; 'interfaces/modules' would match the source."
+   },
+   {
+    "frm": "oberon",
+    "to": "modula3",
+    "in_v2": false,
+    "quote": "It also resembles its cousins Object Pascal[5], Oberon[9], and Euclid[4].",
+    "quote_verbatim_confidence": "medium",
+    "relation": "resemblance",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "family resemblance ('cousins')",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "The report says 'resembles', and separates these cousins from the languages Modula-3 'descends from'. The Acknowledgments say Wirth 'made valuable suggestions and inspired us with the courage to throw things out', which is about the person, not Oberon."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "modula2",
+    "to": "modula3",
+    "found_verbatim": true,
+    "comment": "Both sentences are in the Preface. The v2 quote drops the bracketed reference numbers; the '...' skips two sentences. Checked against the scan's OCR text, which has errors (for example 'Ccdar')."
+   }
+  ],
+  "notes": "The PDF is a scan; read through its OCR text layer (Preface and Acknowledgments read, the rest searched by language name). Bracket characters in my quotes are normalized from OCR ('(10]' read as '[10]'), hence medium confidence. Off-map ancestors named: Modula-2+ (the direct starting point), Mesa, Cedar; cousins Object Pascal and Euclid. The body notes one departure: 'Modula-3 uses structural equivalence, instead of the name equivalence of Modula-2.' C++ appears only in a chapter epigraph."
+ },
+ {
+  "sid": "S051",
+  "url": "https://kronos.ru/node/39",
+  "url_used": "https://kronos.ru/node/39",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "oberon"
+  ],
+  "named": [
+   {
+    "frm": "modula2",
+    "to": "oberon",
+    "in_v2": true,
+    "quote": "The language Oberon has evolved from Modula-2 and incorporates the experiences of many years of programming in Modula.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "the whole language, minus several features, plus type extension",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "The Summary sentence states the derivation without the typos of the abstract sentence used in v2. Either quote supports the tie."
+   },
+   {
+    "frm": "pascal",
+    "to": "oberon",
+    "in_v2": false,
+    "quote": "In relying on evolution rather then revolution we remain in the tradition of a long development that led from Algol to Pascal, then Modula-2, and eventially to Oberon.",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "ancestor in the Algol-Pascal-Modula-2 line",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Lineage through Modula-2, already carried by pascal -> modula2 -> oberon. Pascal features are mentioned mostly as things Oberon removed (subranges, the for statement)."
+   },
+   {
+    "frm": "algol",
+    "to": "oberon",
+    "in_v2": false,
+    "quote": "In this respect, we return to (and extend) the flexibility of Algol 60.",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "type",
+    "what": "relaxed assignment between numeric types (type inclusion)",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Algol 60 is cited as the tradition (and for one rule Oberon 'returns to'), otherwise as a tradition Oberon breaks with (array lower bounds, the for statement). Borderline single-feature case; a human may decide."
+   },
+   {
+    "frm": "simula",
+    "to": "oberon",
+    "in_v2": false,
+    "quote": "The concept is very similar to the class notion of Simula 67 [3], Smalltalk [4], and others.",
+    "quote_verbatim_confidence": "high",
+    "relation": "resemblance",
+    "source_names_it": "no",
+    "kind": "type",
+    "what": "type extension compared with classes",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "'Very similar to' only, and the next sentences stress the differences."
+   },
+   {
+    "frm": "smalltalk",
+    "to": "oberon",
+    "in_v2": false,
+    "quote": "Most came from the use or study of existing languages, such as Module-2, Ada, Smalltalk, C++ and Cedar, which often though us how not to do it.",
+    "quote_verbatim_confidence": "high",
+    "relation": "rejected",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "ideas from studying existing languages, often as negative examples",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Wirth says ideas came from studying these languages but that they often taught 'how not to do it'; Smalltalk's class rules are also criticized in the text. Borderline (the sentence does credit them as sources of ideas); flagged for a human."
+   },
+   {
+    "frm": "ada",
+    "to": "oberon",
+    "in_v2": false,
+    "quote": "Most came from the use or study of existing languages, such as Module-2, Ada, Smalltalk, C++ and Cedar, which often though us how not to do it.",
+    "quote_verbatim_confidence": "high",
+    "relation": "rejected",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "ideas from studying existing languages, often as negative examples",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Same acknowledgment sentence; no specific Ada feature is named."
+   },
+   {
+    "frm": "cpp",
+    "to": "oberon",
+    "in_v2": false,
+    "quote": "Most came from the use or study of existing languages, such as Module-2, Ada, Smalltalk, C++ and Cedar, which often though us how not to do it.",
+    "quote_verbatim_confidence": "high",
+    "relation": "rejected",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "ideas from studying existing languages, often as negative examples",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Same acknowledgment sentence; no specific C++ feature is named."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "modula2",
+    "to": "oberon",
+    "found_verbatim": true,
+    "comment": "Verbatim, including the transcription's typos ('effort increase', 'simultaniously'). Also in the text: 'Oberon evolved from Modula by a very few addition and several substractions.'"
+   }
+  ],
+  "notes": "The page is a 1988 BIX transcription with many typos, not the Software: Practice and Experience text; quotes keep the typos. Off-map: Cedar (in the acknowledgment list)."
+ },
+ {
+  "sid": "S052",
+  "url": "https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html",
+  "url_used": "https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "objc"
+  ],
+  "named": [
+   {
+    "frm": "c",
+    "to": "objc",
+    "in_v2": true,
+    "quote": "It's a superset of the C programming language and provides object-oriented capabilities and a dynamic runtime. Objective-C inherits the syntax, primitive types, and flow control statements of C and adds syntax for defining classes and methods.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "the whole of C: syntax, primitive types, flow control",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Stated directly ('superset', 'inherits'). The v2 quote stops before 'and adds syntax for defining classes and methods'."
+   },
+   {
+    "frm": "cpp",
+    "to": "objc",
+    "in_v2": false,
+    "quote": "Blocks are a language feature introduced to C, Objective-C and C++ to represent a unit of work; they encapsulate a block of code along with captured state, which makes them similar to closures in other programming languages.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "blocks, added to all three languages",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "C++ is named only as another language that received blocks."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "c",
+    "to": "objc",
+    "found_verbatim": true,
+    "comment": "Verbatim (the page uses a typographic apostrophe in 'It’s')."
+   }
+  ],
+  "notes": "This is the introduction page only. Smalltalk is not mentioned on it. Java, C#, Ruby and Python appear only as languages a reader may know."
+ },
+ {
+  "sid": "S053",
+  "url": "https://hopl4.sigplan.org/details/hopl-4-papers/18/The-Origins-of-Objective-C-at-PPI-Stepstone-and-its-Evolution-at-NeXT",
+  "url_used": "https://hopl4.sigplan.org/details/hopl-4-papers/18/The-Origins-of-Objective-C-at-PPI-Stepstone-and-its-Evolution-at-NeXT",
+  "reachable": true,
+  "read_extent": "abstract only",
+  "targets": [
+   "objc"
+  ],
+  "named": [
+   {
+    "frm": "smalltalk",
+    "to": "objc",
+    "in_v2": true,
+    "quote": "Brad Cox, a member of this group, began to investigate Smalltalk and object-oriented programming for this purpose, but needed a language compatible with the Unix and C environments used by ITT. Cox quickly wrote up the Object-Oriented Pre-Compiler (OOPC) that would translate a Smalltalk-like syntax into C.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "Smalltalk-style object-oriented programming and syntax, grafted onto C",
+    "proposed_strength": "strong",
+    "proposed_verdict": "partly",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "Adding the preceding sentence shows Cox started from Smalltalk, which the v2 fragment ('Smalltalk-like syntax') alone does not. The abstract still does not say 'messaging' or 'based on Smalltalk' in so many words, so the verdict is 'partly' on the abstract alone; the full paper (DOI 10.1145/3386332) was not read and should hold a direct statement."
+   },
+   {
+    "frm": "c",
+    "to": "objc",
+    "in_v2": false,
+    "quote": "Brad Cox, a member of this group, began to investigate Smalltalk and object-oriented programming for this purpose, but needed a language compatible with the Unix and C environments used by ITT. Cox quickly wrote up the Object-Oriented Pre-Compiler (OOPC) that would translate a Smalltalk-like syntax into C.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "C as the base language and compilation target",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Not a v2 tie of this source, but c -> objc is already a v2 tie cited to S052 (Apple). This abstract corroborates it; no new tie is needed."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "smalltalk",
+    "to": "objc",
+    "found_verbatim": true,
+    "comment": ""
+   }
+  ],
+  "notes": "Only the abstract on the conference page was read; the paper itself sits behind the ACM DOI. No other on-map language appears in the part of the abstract examined (the sentences about Smalltalk and C); the rest of the abstract covers PPI/Stepstone, NeXT, GCC and Apple."
+ },
+ {
+  "sid": "S054",
+  "url": "https://ocaml.org/about",
+  "url_used": "https://ocaml.org/about",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "ocaml"
+  ],
+  "named": [
+   {
+    "frm": "ml",
+    "to": "ocaml",
+    "in_v2": true,
+    "quote": "OCaml was written in 1996 by Xavier Leroy, Jérôme Vouillon, Damien Doligez, and Didier Rémy at INRIA in France. It was inspired by a long line of research into ML, starting in the 1960s, and continues to have deep links to the academic community.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "the ML language itself (through Caml); module system from Standard ML",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Stated directly. The same page adds a second ML-family borrowing: 'A module system inspired by Standard ML also provided powerful facilities for abstraction and made larger-scale programs easier to construct.' Standard ML maps to the same node (ml), so no separate tie."
+   },
+   {
+    "frm": "cpp",
+    "to": "ocaml",
+    "in_v2": false,
+    "quote": "This improved the executable efficiency significantly by adding a fast native code compiler that made Caml's performance competitive with mainstream languages such as C++.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "performance comparison",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Comparison only."
+   },
+   {
+    "frm": "java",
+    "to": "ocaml",
+    "in_v2": false,
+    "quote": "This object system was notable for supporting many common object-oriented idioms in a statically type-safe way, whereas the same idioms required runtime checks in languages such as C++ or Java.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "comparison of object systems",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Comparison only."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "ml",
+    "to": "ocaml",
+    "found_verbatim": true,
+    "comment": "Both fragments found. The first is cut mid-sentence (it continues ', starting in the 1960s, and continues to have deep links to the academic community.')."
+   }
+  ],
+  "notes": "The URL now shows the 'Why OCaml?' page, which holds the history paragraphs. The feature list compares OCaml with JavaScript, Common Lisp, C#, Java, C++, Scheme, Scala, F#, Haskell, Rust and Standard ML ('as seen in', 'also available in'): all comparisons, none an influence claim. The page dates LCF/ML to 1972. Off-map steps in the line: Caml (1987), Caml Light (1990), Caml Special Light (1995)."
+ },
+ {
+  "sid": "S055",
+  "url": "https://informatika-21.ru/wirth/Pascal50E.pdf",
+  "url_used": "https://cacm.acm.org/research/50-years-of-pascal/",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "pascal",
+   "modula2"
+  ],
+  "named": [
+   {
+    "frm": "algol",
+    "to": "pascal",
+    "in_v2": true,
+    "quote": "Like its precursor Algol 60, Pascal featured a precise definition and a few lucid, basic elements.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "precursor: precise definition, formal syntax, statements, recursive procedures (through ALGOL W)",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Wirth calls Algol 60 Pascal's precursor and describes Pascal by its additions to and deletions from Algol ('Just as important as addition of features were deletions (with respect to Algol).'). In the CACM text the word is 'lucid'; the v2 quote has 'perspicuous' (see the quote check)."
+   },
+   {
+    "frm": "algol68",
+    "to": "pascal",
+    "in_v2": false,
+    "quote": "One of them aimed at a second, after Algol 60, milestone, a language with radically new, untested concepts and pervasive flexibility. It later became known as Algol 68. The other faction remained more modest and focused on realistic improvements of known concepts.",
+    "quote_verbatim_confidence": "high",
+    "relation": "rejected",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "the committee direction Wirth opposed",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Algol 68 is the path Wirth's faction did not take; his own proposal became Algol W and then Pascal."
+   },
+   {
+    "frm": "fortran",
+    "to": "pascal",
+    "in_v2": false,
+    "quote": "Pascal was easy to teach, and it covered a wide spectrum of applications, which was a significant advantage over Algol, Fortran, and Cobol.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "comparison; also a failed attempt to bootstrap the compiler through Fortran",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Comparison only. Fortran also appears as the language the first compiler bootstrap failed in."
+   },
+   {
+    "frm": "cobol",
+    "to": "pascal",
+    "in_v2": false,
+    "quote": "Pascal was easy to teach, and it covered a wide spectrum of applications, which was a significant advantage over Algol, Fortran, and Cobol.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "comparison",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Comparison only. Wirth does not credit Cobol for Pascal's records here."
+   },
+   {
+    "frm": "pascal",
+    "to": "modula2",
+    "in_v2": true,
+    "quote": "Modules with type consistency checking across boundaries were indeed the primary extension of Pascal's first successor Modula-2 (for modular language, 1979). It evolved from Pascal, but also from Mesa, a language developed at Xerox PARC for system programming, which itself originated from Pascal.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "the base language, extended with modules",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "Adding the next sentence ('It evolved from Pascal') states the derivation outright. The v2 label 'modules' names what Modula-2 added to Pascal, not what it took from it."
+   },
+   {
+    "frm": "fortran",
+    "to": "modula2",
+    "in_v2": false,
+    "quote": "Already Fortran had offered this facility, but now a linker would have to verify the consistency of data types also across module boundaries.",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "separately developed, linked program units",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Fortran is cited as prior art for separate modules, not as a source."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "algol",
+    "to": "pascal",
+    "found_verbatim": null,
+    "comment": "Could not read the cited PDF's text (its fonts do not extract). In the published CACM version the sentence is 'Like its precursor Algol 60, Pascal featured a precise definition and a few lucid, basic elements.' The v2 quote reads 'a few, perspicuous basic elements', so the cited PDF is probably a different draft; the wording should be rechecked by opening the PDF, or the citation moved to the CACM text."
+   },
+   {
+    "frm": "pascal",
+    "to": "modula2",
+    "found_verbatim": true,
+    "comment": "Found in the CACM version, where a footnote number follows 'Modula-2'. Not checked in the cited PDF."
+   }
+  ],
+  "notes": "The cited PDF could not be turned into text, so the published CACM article (same title, author and year as the citation) was read instead. Off-map: ALGOL W (Pascal's direct predecessor: 'But in my opinion Algol W was not perfectly satisfactory'), Mesa (second parent of Modula-2), Cedar, Scallop. Pascal 'was strongly influenced by the new discipline of structured programming' (Dijkstra), not by a language. Outside this source's targets, Wirth also writes that Oberon followed Modula-2 and that 'many of those languages, like Java (Sun Microsystems) and C# (Microsoft) have been strongly influenced by Oberon or Pascal.'"
+ },
+ {
+  "sid": "S056",
+  "url": "https://arxiv.org/pdf/1510.03726",
+  "url_used": "https://arxiv.org/html/1510.03726v2",
+  "reachable": true,
+  "read_extent": "partial",
+  "targets": [
+   "pascal"
+  ],
+  "named": [
+   {
+    "frm": "cobol",
+    "to": "pascal",
+    "in_v2": true,
+    "quote": "Records are not a new idea—the concept was introduced in “business oriented languages”, FLOWMATIC first, then COBOL (see, e.g., [21]), where the field of a record may be a record itself (nested records), thus permitting static hierarchical structures (i.e., trees).",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "type",
+    "what": "record types (as prior art for Hoare's record proposal)",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "drop",
+    "reason": "The sentence cites COBOL (after FLOWMATIC) as prior art for records in a passage about Hoare's 1965 proposal; it does not say Hoare, ALGOL W or Pascal took records from COBOL. Pascal enters only two steps later ('implemented in Algol W [...] an important precursor of Pascal'). Under the rule this is precedent, not a tie. Borderline, for a human: Hoare's own 'Record handling' paper may state the debt and would be the right source."
+   },
+   {
+    "frm": "lisp",
+    "to": "pascal",
+    "in_v2": false,
+    "quote": "Also dynamically allocated structures were already available in “list processing languages”, of which LISP is the main representative.",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "type",
+    "what": "dynamically allocated structures (as prior art for Hoare's records)",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Prior art for Hoare's proposal, same passage; nothing about Pascal. (A footnote mark after 'structures' is omitted from the quote.)"
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "cobol",
+    "to": "pascal",
+    "found_verbatim": true,
+    "comment": "Verbatim as a fragment; the source uses typographic quotation marks and the sentence continues after 'COBOL'."
+   }
+  ],
+  "notes": "Read the HTML version (v2 of the same arXiv paper); only the paragraphs naming Pascal, COBOL or FLOWMATIC were read in full, the rest was searched. The only statement about Pascal's origin: Hoare's proposal 'finally will be implemented in Algol W [36], which will have a significant impact on subsequent languages, being an important precursor of Pascal.' Off-map: FLOWMATIC, ALGOL W. Simula (Dahl and Nygaard) is named in the same passage as a parallel answer to the 'weakness of Algol', not in connection with Pascal."
+ },
+ {
+  "sid": "S057",
+  "url": "https://www.retro11.de/ouxr/211bsd/usr/src/new/PORT/perl.1.0.0/perl.man.1",
+  "url_used": "https://www.retro11.de/ouxr/211bsd/usr/src/new/PORT/perl.1.0.0/perl.man.1",
+  "reachable": true,
+  "read_extent": "partial",
+  "targets": [
+   "perl"
+  ],
+  "named": [
+   {
+    "frm": "sh",
+    "to": "perl",
+    "in_v2": true,
+    "quote": "It combines (in the author's opinion, anyway) some of the best features of C, sed, awk, and sh, so people familiar with those languages should have little difficulty with it.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "shell features: quoting rules, backtick command substitution, command execution",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Named as one of four sources. Supporting detail on the same page: string literals 'work much like shell quotes' and backticks work 'just like in any of the standard shells'."
+   },
+   {
+    "frm": "awk",
+    "to": "perl",
+    "in_v2": true,
+    "quote": "It combines (in the author's opinion, anyway) some of the best features of C, sed, awk, and sh, so people familiar with those languages should have little difficulty with it.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "text scanning and report features; line-range operator 'after the fashion of sed or awk'",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "The v2 quote (the opening sentence about scanning text files) does not name awk at all; this sentence does. The page also notes differences from awk (commands run once, not per line; == is numeric only)."
+   },
+   {
+    "frm": "c",
+    "to": "perl",
+    "in_v2": true,
+    "quote": "It combines (in the author's opinion, anyway) some of the best features of C, sed, awk, and sh, so people familiar with those languages should have little difficulty with it. [...] Expression syntax corresponds quite closely to C expression syntax.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "expression syntax, semicolons, operators",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "The v2 sentence alone ('corresponds quite closely') reads as resemblance; paired with the 'combines ... features of C' sentence the borrowing is explicit."
+   },
+   {
+    "frm": "pascal",
+    "to": "perl",
+    "in_v2": false,
+    "quote": "(Language historians will also note some vestiges of csh, Pascal, and even BASIC-PLUS.)",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "unspecified 'vestiges'",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Wall himself says Perl carries vestiges of Pascal, without naming a feature. Elsewhere the page contrasts Perl with Pascal ('like C, but unlike Pascal'). A minor, surface influence at most; a human should decide whether 'vestiges' clears the bar."
+   },
+   {
+    "frm": "basic",
+    "to": "perl",
+    "in_v2": false,
+    "quote": "(Language historians will also note some vestiges of csh, Pascal, and even BASIC-PLUS.)",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "unspecified 'vestiges' of BASIC-PLUS",
+    "proposed_strength": "weak",
+    "proposed_verdict": "partly",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Same sentence. BASIC-PLUS is DEC's dialect, not Dartmouth BASIC (the on-map node), so the mapping is indirect: 'partly'. Flagged for a human; rejecting it on the dialect ground is equally defensible."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "sh",
+    "to": "perl",
+    "found_verbatim": true,
+    "comment": "Verbatim once the troff font codes are removed."
+   },
+   {
+    "frm": "awk",
+    "to": "perl",
+    "found_verbatim": true,
+    "comment": "Verbatim ('Perl is a interpreted language...'), but the sentence does not mention awk."
+   },
+   {
+    "frm": "c",
+    "to": "perl",
+    "found_verbatim": true,
+    "comment": ""
+   }
+  ],
+  "notes": "The file is troff source and is part 1 of the man page (about 1,000 lines); later parts were not read. Off-map sources named: sed (one of the four), csh ('vestiges'; also '$#days', as in csh). 'There are also translators to turn your sed and awk scripts into perl scripts.'"
+ },
+ {
+  "sid": "S058",
+  "url": "https://www.php.net/manual/en/history.php.php",
+  "url_used": "https://www.php.net/manual/en/history.php.php",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "php"
+  ],
+  "named": [
+   {
+    "frm": "c",
+    "to": "php",
+    "in_v2": true,
+    "quote": "The language was deliberately designed to resemble C in structure, making it an easy adoption for developers familiar with C, Perl, and similar languages.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "C-like structure; PHP itself was first a set of CGI programs written in C",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "'Deliberately designed to resemble' is a statement of design intent, not mere resemblance. The page supports 'structure' only; the 'function names' half of the v2 label rests on the Lerdorf mailing-list message cited in the v2 note, not on this page. Also on the page: the first PHP 'was a simple set of Common Gateway Interface (CGI) binaries written in the C programming language.'"
+   },
+   {
+    "frm": "perl",
+    "to": "php",
+    "in_v2": true,
+    "quote": "It had Perl-like variables, automatic interpretation of form variables, and HTML embedded syntax. The syntax itself was similar to that of Perl, albeit much more limited, simple, and somewhat inconsistent.",
+    "quote_verbatim_confidence": "high",
+    "relation": "resemblance",
+    "source_names_it": "no",
+    "kind": "syntax",
+    "what": "$-style variables, syntax of the 1995 Forms Interpreter",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "drop",
+    "reason": "The page says 'Perl-like' and 'similar to that of Perl'; it never says the syntax was taken from Perl. By the strict rule this is resemblance. The influence is very likely real, so the better outcome is to keep the tie with a source that states it (for example Lerdorf's own accounts); with this page alone it would be at most weak and 'partly'. Flagged for a human."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "c",
+    "to": "php",
+    "found_verbatim": true,
+    "comment": ""
+   },
+   {
+    "frm": "perl",
+    "to": "php",
+    "found_verbatim": true,
+    "comment": "Verbatim. It describes FI (September 1995), one month before the rewrite that 'was deliberately designed to resemble C'."
+   }
+  ],
+  "notes": "No other language is named in connection with PHP's design. PHP 3.0 'included object-oriented programming support' with no source language named; Java and C++ are not mentioned."
+ },
+ {
+  "sid": "S059",
+  "url": "https://wiki.php.net/rfc/nullable_return_types",
+  "url_used": "https://wiki.php.net/rfc/nullable_return_types",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "php"
+  ],
+  "named": [
+   {
+    "frm": "hack",
+    "to": "php",
+    "in_v2": true,
+    "quote": "I propose to use HHVM compatible syntax to declare nullable return types - ?<type>",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "no",
+    "kind": "type",
+    "what": "the ?T syntax for nullable types",
+    "proposed_strength": "weak",
+    "proposed_verdict": "partly",
+    "since": "PHP 7.1",
+    "since_year": 2016,
+    "proposal": "keep",
+    "reason": "The RFC adopts the syntax HHVM already used, which is a borrowing, but it names HHVM (the runtime), not Hack, and frames it as compatibility: so 'partly', not 'supported'. Problem with the source: this RFC's status is 'Draft' and its vote shows 0 votes; it is not the RFC that shipped. PHP 7.1's nullable types came from a different RFC (this page itself refers to the '\"Declaring Nullable Types\" RFC'). The citation's 'implemented in PHP 7.1' is wrong for this page; the accepted RFC should be read and cited instead."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "hack",
+    "to": "php",
+    "found_verbatim": true,
+    "comment": ""
+   }
+  ],
+  "notes": "Header of the page: 'Version: 0.9', 'Date: 2016-04-06', 'Author: Dmitry Stogov', 'Status: Draft'; 'This RFC targets PHP version 7.1.' Both polls show a final result of 0 to 0. A reference titled 'Nullable Types in HHVM' is listed. No other language is named."
+ },
+ {
+  "sid": "S060",
+  "url": "https://cacmb4.acm.org/blogs/blog-cacm/274388-lessons-from-pl-i-a-most-ambitious-programming-language/fulltext",
+  "url_used": "https://cacm.acm.org/blogcacm/lessons-from-pl-i-a-most-ambitious-programming-language/",
+  "reachable": true,
+  "read_extent": "partial",
+  "targets": [
+   "pli"
+  ],
+  "named": [
+   {
+    "frm": "fortran",
+    "to": "pli",
+    "in_v2": true,
+    "quote": "PL/I was designed by IBM with the goal of bringing together the power of 3 different programming languages: FORTRAN (1954), ALGOL (1958), and COBOL (1959).",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "scientific computing features ('FORTRAN—The scientific programming language.')",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Named as one of three languages whose power PL/I was designed to bring together. The post gives no feature-level detail; it is a secondary source."
+   },
+   {
+    "frm": "cobol",
+    "to": "pli",
+    "in_v2": true,
+    "quote": "PL/I was designed by IBM with the goal of bringing together the power of 3 different programming languages: FORTRAN (1954), ALGOL (1958), and COBOL (1959).",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "business data processing features ('COBOL—The business programming language.')",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Same sentence. No feature-level detail in the post."
+   },
+   {
+    "frm": "algol",
+    "to": "pli",
+    "in_v2": false,
+    "quote": "PL/I was designed by IBM with the goal of bringing together the power of 3 different programming languages: FORTRAN (1954), ALGOL (1958), and COBOL (1959).",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "research-language ideas ('ALGOL—Primarily a research language, but with innovative paradigms and features.')",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "The same sentence that supports the two v2 ties names ALGOL as the third parent, on equal footing. Not among this source's v2 ties; if algol -> pli is already recorded from another source, this only corroborates it. The post dates it 'ALGOL (1958)' but discusses ALGOL 58, 60 and 68 together; the on-map node is ALGOL 60."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "fortran",
+    "to": "pli",
+    "found_verbatim": true,
+    "comment": "Verbatim in the blog text. The page also carries an edited version of the same sentence: 'IBM designed PL/I with the goal of bringing together the power of three programming languages: FORTRAN (1954), ALGOL (1958), and COBOL (1959).'"
+   },
+   {
+    "frm": "cobol",
+    "to": "pli",
+    "found_verbatim": true,
+    "comment": "Same sentence as fortran -> pli."
+   }
+  ],
+  "notes": "The cited cacmb4.acm.org URL returns HTTP 403 (bot check); the same post was read at its current cacm.acm.org address. Only the paragraphs naming a language were extracted, which covers nearly all of the post. The two 'halves' in the v2 labels understate the source, which names three parents. Off-map or unrelated mentions: COMTRAN and FLOW-MATIC (as COBOL's predecessors), Simula and C (later landscape), Multics (written in PL/I)."
+ }
+]

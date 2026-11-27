@@ -69,6 +69,13 @@ NEW = {
 }
 D.update(NEW)
 
+# ---- version 3: the two new languages ----
+D.update({
+"turbopascal": "Anders Hejlsberg wrote the compiler in Denmark, and Borland released it as Turbo Pascal in 1983 for CP/M and MS-DOS. It put a very fast compiler and an editor into one small program at a price far below other compilers, and a generation of PC programmers and students learned to program on it. It closely followed standard Pascal and then extended it: units for separate compilation in version 4 (1987) and objects in version 5.5 (1989), inspired by Apple's Object Pascal and by C++. Version 7 (1992) was the last; Borland replaced it with Delphi in 1995. Free Pascal still compiles Turbo Pascal code in a compatibility mode.",
+"quickbasic": "Microsoft released QuickBASIC in 1985 as a compiler for its BASIC, and from version 2 it came with its own editor. It turned the line-numbered BASIC of early PCs into a structured language with subprograms and block statements. Version 4.5 (1988) was the last. QBasic, an interpreter-only subset, shipped with MS-DOS 5 in 1991 and introduced many people to programming through sample games such as Gorillas and Nibbles. In 1991 Microsoft joined the QuickBASIC language to Alan Cooper's visual form designer to make Visual Basic. QB64 and FreeBASIC are independent, compatible successors.",
+})
+
+
 # ---- later edits: card text follows the corrected link rows ----
 rep("lua", "the table. ", "the table. Its authors name Modula, CLU, C++, SNOBOL and Awk, and C as the sources of Lua 1.0; Scheme came later, with closures in Lua 3.1 (1998) and full lexical scoping in Lua 5.0 (2003). ")
 rep("cpp", "in 1985; Ada, CLU and ML shaped its later templates and exceptions.", "in 1985. Its evolution after 1985, including templates (Release 3.0, 1991), drew on ideas from Ada, CLU and ML, and its exception handling on Brian Randell's fault-tolerance work at Newcastle.")

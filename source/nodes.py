@@ -27,7 +27,12 @@ NODES = [('fortran',
   'International committee (ALGOL 58, then ALGOL 60). Block structure and BNF, the grammar notation nearly every later language '
   'inherited.'),
  ('apl', 'APL', 1966, 320, 'array', 'IBM, Kenneth Iverson. A math notation turned language; whole-array operations, read right to left.'),
- ('pascal', 'Pascal', 1970, 440, 'c', 'ETH Zurich, Niklaus Wirth. Built to teach structured programming; ancestor of Modula and Oberon.'),
+ ('pascal',
+  'Pascal',
+  1970,
+  440,
+  'c',
+  'ETH Zurich, Niklaus Wirth. Built to teach structured programming; ancestor of Modula, Oberon and Turbo Pascal.'),
  ('forth', 'Forth', 1970, 1010, 'other', "Chuck Moore. Stack-based, postfix: 2 3 + . The 'German' language, verb last."),
  ('c', 'C', 1972, 530, 'c', 'Bell Labs, Dennis Ritchie. Written to build Unix. The source of braces, semicolons and printf.'),
  ('smalltalk',
@@ -180,7 +185,8 @@ NODES = [('fortran',
   1964,
   1095,
   'edu',
-  'Dartmouth College, John Kemeny and Thomas Kurtz. The original BASIC for students; its heirs are drawn separately (Visual Basic, VBA).'),
+  'Dartmouth College, John Kemeny and Thomas Kurtz. The original BASIC for students; its heirs are drawn separately (QuickBASIC, Visual '
+  'Basic, VBA).'),
  ('logo',
   'Logo',
   1967,
@@ -350,7 +356,21 @@ NODES = [('fortran',
   1993,
   1185,
   'edu',
-  'Microsoft (Excel 5, 1993). Visual Basic embedded in Office: the macro language behind countless Excel and Access tools.')]
+  'Microsoft (Excel 5, 1993). Visual Basic embedded in Office: the macro language behind countless Excel and Access tools.'),
+ ('turbopascal',
+  'Turbo Pascal',
+  1983,
+  1040,
+  'c',
+  'Borland, Anders Hejlsberg. A very fast Pascal compiler with its own editor, sold cheaply; a generation learned programming on it, and '
+  'it grew into Delphi.'),
+ ('quickbasic',
+  'QuickBASIC',
+  1985,
+  1095,
+  'edu',
+  'Microsoft. Structured BASIC without line numbers, with a compiler and editor; its subset QBasic shipped with MS-DOS, and its language '
+  "became Visual Basic's.")]
 
 STATUS = {'fortran': {'maint': 'active',
              'newproj': 'niche',
@@ -1150,7 +1170,27 @@ STATUS = {'fortran': {'maint': 'active',
          'ai': False,
          'ifchange': 'Microsoft retired VBA (down), or Office Scripts and Python in Excel stalled (up).',
          'note': 'Still behind countless Excel and Access tools, but Microsoft no longer evolves it.',
-         'st': 'alive'}}
+         'st': 'alive'},
+ 'turbopascal': {'maint': 'dormant',
+                 'newproj': 'none',
+                 'base': 'historical',
+                 'ol': None,
+                 'conf': None,
+                 'ai': False,
+                 'ifchange': '',
+                 'note': 'Discontinued after version 7 (1992), when Delphi replaced it; Free Pascal keeps a Turbo Pascal compatibility '
+                         'mode.',
+                 'st': 'dead'},
+ 'quickbasic': {'maint': 'dormant',
+                'newproj': 'none',
+                'base': 'historical',
+                'ol': None,
+                'conf': None,
+                'ai': False,
+                'ifchange': '',
+                'note': 'Discontinued after QuickBASIC 4.5 (1988) and QBasic 1.1 (1993); Visual Basic replaced it. QB64 and FreeBASIC are '
+                        'independent successors.',
+                'st': 'dead'}}
 
 FLAGS = {'fortran': ('us', []),
  'lisp': ('us', []),
@@ -1239,7 +1279,9 @@ FLAGS = {'fortran': ('us', []),
  'newsqueak': ('us', ['ca']),
  'j': ('ca', ['hk']),
  'kq': ('us', ['ca']),
- 'vba': ('us', [])}
+ 'vba': ('us', []),
+ 'turbopascal': ('us', ['dk']),
+ 'quickbasic': ('us', [])}
 
 COUNTRY = {'us': 'United States',
  'gb': 'United Kingdom',
@@ -1352,7 +1394,9 @@ INVENTORS = {'fortran': [('John Backus', 'us')],
  'newsqueak': [('Rob Pike', 'ca')],
  'j': [('Kenneth Iverson', 'ca'), ('Roger Hui', 'hk')],
  'kq': [('Arthur Whitney', 'ca')],
- 'vba': [('Microsoft team', None), ('', None), ('', None)]}
+ 'vba': [('Microsoft team', None), ('', None), ('', None)],
+ 'turbopascal': [('Anders Hejlsberg', 'dk')],
+ 'quickbasic': [('Microsoft team', None), ('', None), ('', None)]}
 
 ORG = {'fortran': 'IBM',
  'lisp': 'MIT',
@@ -1441,7 +1485,9 @@ ORG = {'fortran': 'IBM',
  'newsqueak': 'Bell Labs (AT&T)',
  'j': 'Iverson Software (later Jsoftware), Toronto',
  'kq': 'Arthur Whitney; Kx Systems (kdb+)',
- 'vba': 'Microsoft (first in Excel 5)'}
+ 'vba': 'Microsoft (first in Excel 5)',
+ 'turbopascal': 'Borland International (compiler written by Hejlsberg at PolyData, Denmark)',
+ 'quickbasic': 'Microsoft'}
 
 SOFTWARE = {'fortran': [('BLAS and LAPACK', 'the reference linear-algebra libraries that NumPy, R and MATLAB ultimately call'),
              ('WRF', 'the Weather Research and Forecasting model used by forecasters worldwide'),
@@ -1597,7 +1643,9 @@ SOFTWARE = {'fortran': [('BLAS and LAPACK', 'the reference linear-algebra librar
                 ('Reddit (2005)', 'the first version, before a rewrite in Python'),
                 ('Grammarly', 'its core grammar engine runs on Common Lisp')],
  'kq': [('kdb+ tick databases', 'time-series databases used by banks and trading firms')],
- 'vba': [('Excel and Access macros', 'automation in countless business workbooks')]}
+ 'vba': [('Excel and Access macros', 'automation in countless business workbooks')],
+ 'turbopascal': [('ZZT', "Tim Sweeney's 1991 game, first developed in Turbo Pascal")],
+ 'quickbasic': [('Gorillas and Nibbles', 'the QBasic sample games shipped with MS-DOS 5')]}
 
 LOGO_SLUG = {'python': 'python',
  'r': 'r',
@@ -1653,6 +1701,8 @@ SCOPE = {'smalltalk': ('continuing', "Smalltalk-80 and its descendants Squeak an
  'tex': ('continuing', 'TeX and the macro packages built on it, such as LaTeX.'),
  'lisp': ('historical', "McCarthy's LISP (1958) and LISP 1.5 only; later dialects are drawn separately."),
  'algol': ('historical', 'ALGOL 60 (with ALGOL 58 as its precursor); ALGOL 68 is drawn separately.'),
- 'basic': ('historical', 'Dartmouth BASIC and the classic line-numbered BASICs; Visual Basic and VBA are drawn separately.'),
- 'pascal': ('continuing', 'Standard Pascal and Free Pascal; Object Pascal is drawn as Delphi.'),
- 'fortran': ('continuing', 'FORTRAN I to modern Fortran (2023 standard).')}
+ 'basic': ('historical', 'Dartmouth BASIC and the classic line-numbered BASICs; QuickBASIC, Visual Basic and VBA are drawn separately.'),
+ 'pascal': ('continuing', 'Standard Pascal and Free Pascal; Turbo Pascal and Delphi are drawn separately.'),
+ 'fortran': ('continuing', 'FORTRAN I to modern Fortran (2023 standard).'),
+ 'turbopascal': ('aggregated', 'Turbo Pascal 1 to 7 (1983–1992) and Borland Pascal; Delphi is drawn separately.'),
+ 'quickbasic': ('aggregated', 'QuickBASIC 1 to 4.5 (1985–1988) and its interpreter-only subset QBasic (1991).')}

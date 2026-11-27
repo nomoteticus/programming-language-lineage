@@ -300,4 +300,12 @@ DESC = {'fortran': 'IBM built Fortran (Formula Translation) in the mid-1950s und
        'proprietary and expensive, with a small, highly paid talent pool. It runs tick-data and trading analytics at many banks and trading firms.',
  'vba': 'Microsoft introduced Visual Basic for Applications in Excel 5 (1993) to give Office a common macro language based on Visual Basic. Users can record macros and then edit the code behind '
         'them, automating workbooks, Access databases and other Office applications. It is old, Windows-centric and a common security risk, and Microsoft has stopped evolving it in favor of Office '
-        'Scripts (TypeScript) and Python in Excel. It still runs countless business tools, reports and financial models.'}
+        'Scripts (TypeScript) and Python in Excel. It still runs countless business tools, reports and financial models.',
+ 'turbopascal': 'Anders Hejlsberg wrote the compiler in Denmark, and Borland released it as Turbo Pascal in 1983 for CP/M and MS-DOS. It put a very fast compiler and an editor into one small program '
+                'at a price far below other compilers, and a generation of PC programmers and students learned to program on it. It closely followed standard Pascal and then extended it: units for '
+                "separate compilation in version 4 (1987) and objects in version 5.5 (1989), inspired by Apple's Object Pascal and by C++. Version 7 (1992) was the last; Borland replaced it with "
+                'Delphi in 1995. Free Pascal still compiles Turbo Pascal code in a compatibility mode.',
+ 'quickbasic': 'Microsoft released QuickBASIC in 1985 as a compiler for its BASIC, and from version 2 it came with its own editor. It turned the line-numbered BASIC of early PCs into a structured '
+               'language with subprograms and block statements. Version 4.5 (1988) was the last. QBasic, an interpreter-only subset, shipped with MS-DOS 5 in 1991 and introduced many people to '
+               "programming through sample games such as Gorillas and Nibbles. In 1991 Microsoft joined the QuickBASIC language to Alan Cooper's visual form designer to make Visual Basic. QB64 and "
+               'FreeBASIC are independent, compatible successors.'}

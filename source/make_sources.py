@@ -4,7 +4,7 @@
 import json, glob, os
 HERE = os.path.dirname(os.path.abspath(__file__))
 exec(open(os.path.join(HERE, "us_spelling.py"), encoding="utf-8").read())   # us(): US spelling for our own text
-exec(open(os.path.join(HERE, "edges.py")).read())
+exec(open(os.path.join(HERE, "edges_v2.py"), encoding="utf-8").read())   # the version 2 links; version 3 is applied at the end
 
 ALIAS = {
  "lisp": "lisp", "scheme": "scheme", "clojure": "clojure", "java": "java", "ml": "ml", "smalltalk": "smalltalk",
@@ -202,7 +202,74 @@ missing = [k for k in edge_keys if k not in recs]; assert not missing, missing
 for _r in recs.values():
     for _f in ("note", "rel", "feat"):
         _r[_f] = us(_r[_f])
-json.dump({f"{a}>{b}": recs[(a, b)] for a, b in edge_keys}, open(os.path.join(HERE, "sources.json"), "w"), indent=1, ensure_ascii=False)
+# ---------------- version 3: apply the audit (v3_evidence.json, written by make_edges.py) ----------------
+# Kept links keep their version 2 record unless the audit replaced the quote or the source; new links get a new record.
+_E3 = {}
+exec(open(os.path.join(HERE, "edges.py"), encoding="utf-8").read(), _E3)
+EV = json.load(open(os.path.join(HERE, "v3_evidence.json"), encoding="utf-8"))
+BY_URL = {}
+for _k in edge_keys:
+    BY_URL.setdefault(recs[_k]["url"], recs[_k])
+# Corrections from the word-for-word check of every new or changed quote (research/v3_quotematch_*.json).
+QUOTE_FIX = {
+ ("pascal", "modula2"): ("for system programming", "for system-programming", ""),
+ ("lisp", "s"): ("firstclass", "first-class", ""),
+ ("fsharp", "csharp"): ("2012--the", "2012—the", ""),
+ ("haskell", "csharp"): ("via C to the upcoming versions of C 3.0", "via Cω to the upcoming versions of C# 3.0",
+                         "The PDF's text layer drops the characters ω and #; they are restored in the quote."),
+}
+URL_FIX = {
+ "https://pdv.cs.tu-berlin.de/Ada/lrm83/lrm-01-03.html": "https://psc.informatik.uni-jena.de/languages/ada83/LRM-01.txt",
+ "https://cs.unm.edu/~Williams/cs491/Evolution-of-Lisp.pdf": "https://www.dreamsongs.com/Files/Hopl2.pdf",
+ "https://cacmb4.acm.org/blogs/blog-cacm/274388-lessons-from-pl-i-a-most-ambitious-programming-language/fulltext": "https://cacm.acm.org/blogcacm/lessons-from-pl-i-a-most-ambitious-programming-language/",
+}
+# Links whose sentence sits on a different page of the same cited work than the one version 2 linked.
+TIE_URL = {
+ ("objc", "java"): "https://www.oracle.com/java/technologies/object-oriented.html",
+}
+SECONDARY3 = set()          # new links whose source is not the designers' own: none so far
+final = {}
+for _e in _E3["EDGES"]:
+    k = (_e[0], _e[1]); ev = EV[f"{k[0]}>{k[1]}"]
+    kind, strong = _e[4], _e[3] == "s"
+    if not ev["new"]:
+        r = dict(recs[k])
+        if "citation" in ev:
+            r.update(citation=ev["citation"], url=ev["url"], quote=ev["quote"], type="primary", by="version 3 audit",
+                     note="")
+        elif "quote" in ev:
+            r.update(quote=ev["quote"], by="version 3 audit")
+    else:
+        if "citation" in ev:
+            cit, url, typ = ev["citation"], ev["url"], "primary"
+        else:
+            src = BY_URL[ev["src_url"]]; cit, url, typ = src["citation"], src["url"], src["type"]
+        r = dict(verdict=ev["verdict"], type="secondary" if k in SECONDARY3 else typ, citation=cit, url=url, quote=ev["quote"], note="", by="version 3 audit")
+    r["verdict"] = ev["verdict"]
+    r["names_it"] = ev["names_it"]
+    r["audit"] = ev["audit"]
+    if ev["new"] or "citation" in ev or r["verdict"] != recs.get(k, {}).get("verdict"):
+        # three-part evidence, restated for records the audit changed
+        r["rel"] = "documented" if r["verdict"] == "supported" else "indirect support only"
+        if kind in CONTEXT_KINDS: r["feat"] = f"n/a ({kind} route)"
+        else: r["feat"] = "documented" if ev["names_it"] == "yes" else "not stated in the quoted sentence"
+    if kind in CONTEXT_KINDS and not r["note"].startswith("Influence by the"):
+        r["note"] = (f"Influence by the {kind} route. " + r["note"]).strip()
+    if k in QUOTE_FIX:
+        old, new, why = QUOTE_FIX[k]
+        assert old in r["quote"], k
+        r["quote"] = r["quote"].replace(old, new)
+        if why: r["note"] = (r["note"] + " " + why).strip()
+    if k in TIE_URL:
+        r["url"] = TIE_URL[k]
+    if r["url"] in URL_FIX:
+        r["url"] = URL_FIX[r["url"]]
+        r["note"] = (r["note"] + " The URL was replaced in version 3 because the earlier copy went offline.").strip()
+    final[k] = r
+edge_keys = [(e[0], e[1]) for e in _E3["EDGES"]]
+recs = final
+json.dump({f"{a}>{b}": recs[(a, b)] for a, b in edge_keys}, open(os.path.join(HERE, "sources.json"), "w", encoding="utf-8"), indent=1, ensure_ascii=False)
 if __name__ == "__main__":
     print("links:", Counter(recs[k]["verdict"] for k in edge_keys), Counter(recs[k]["type"] for k in edge_keys), "links", len(edge_keys))
+    print("quote names the influence:", Counter(recs[k]["names_it"] for k in edge_keys))
     print("partly:", [f"{a}>{b}" for a, b in edge_keys if recs[(a,b)]["verdict"] == "partly"])

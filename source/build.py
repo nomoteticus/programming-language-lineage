@@ -201,7 +201,7 @@ for i, e in enumerate(edges):
     out.append(f'<path class="{cls}" data-e="{i}" data-f="{e["f"]}" data-t="{e["t"]}" d="{d}"/>')
 out.append('</g><g class="labels">')
 for i, e in enumerate(edges):
-    out.append(f'<text class="elabel{' ctx' if e['sty'] == 'c' else ''}" data-e="{i}" data-f="{e["f"]}" data-t="{e["t"]}" x="{f1(e["lx"])}" y="{f1(e["ly"])}" text-anchor="middle">{html.escape(e["lab"])}</text>')
+    out.append(f'<text class="elabel{' ctx' if e['sty'] == 'c' else ' weak' if e['sty'] == 'd' else ''}" data-e="{i}" data-f="{e["f"]}" data-t="{e["t"]}" x="{f1(e["lx"])}" y="{f1(e["ly"])}" text-anchor="middle">{html.escape(e["lab"])}</text>')
 out.append('</g><g class="nodes">')
 for n in nodes.values():
     x0 = n["x"] - n["w"] / 2; y0 = n["y"] - n["h"] / 2

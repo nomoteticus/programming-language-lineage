@@ -1,0 +1,101 @@
+[
+ {
+  "tie": "algol68>ada",
+  "url": "https://psc.informatik.uni-jena.de/languages/ada83/LRM-01.txt",
+  "url_used": "https://psc.informatik.uni-jena.de/languages/ada83/LRM-01.txt",
+  "result": "exact",
+  "source_wording": "",
+  "method": "page text read in a browser and searched",
+  "comment": "Follow-up to batch 2, which could not reach the page. Checked 27 November 2026."
+ },
+ {
+  "tie": "clu>ada",
+  "url": "https://psc.informatik.uni-jena.de/languages/ada83/LRM-01.txt",
+  "url_used": "https://psc.informatik.uni-jena.de/languages/ada83/LRM-01.txt",
+  "result": "exact",
+  "source_wording": "",
+  "method": "page text read in a browser and searched",
+  "comment": "Same sentence as algol68>ada."
+ },
+ {
+  "tie": "simula>ada",
+  "url": "https://psc.informatik.uni-jena.de/languages/ada83/LRM-01.txt",
+  "url_used": "https://psc.informatik.uni-jena.de/languages/ada83/LRM-01.txt",
+  "result": "exact",
+  "source_wording": "",
+  "method": "page text read in a browser and searched",
+  "comment": "Same sentence as algol68>ada."
+ },
+ {
+  "tie": "cobol>pascal",
+  "url": "http://pascal.hansotten.com/niklaus-wirth/recollections-about-the-development-of-pascal/",
+  "url_used": "http://pascal.hansotten.com/niklaus-wirth/recollections-about-the-development-of-pascal/",
+  "result": "exact",
+  "source_wording": "",
+  "method": "page text read in a browser and searched",
+  "comment": "The page uses curly quotes and a curly apostrophe; otherwise identical. Checked 27 November 2026."
+ },
+ {
+  "tie": "algol>pli",
+  "url": "https://cacmb4.acm.org/blogs/blog-cacm/274388-lessons-from-pl-i-a-most-ambitious-programming-language/fulltext",
+  "url_used": "https://cacm.acm.org/blogcacm/lessons-from-pl-i-a-most-ambitious-programming-language/",
+  "result": "exact",
+  "source_wording": "",
+  "method": "page text read in a browser and searched",
+  "comment": "The cited address is the publisher's old one; the article now lives at the address in url_used, which replaces it in the data. Checked 27 November 2026."
+ },
+ {
+  "tie": "apl>kq",
+  "url": "https://queue.acm.org/detail.cfm?id=1531242",
+  "url_used": "https://queue.acm.org/detail.cfm?id=1531242",
+  "result": "exact",
+  "source_wording": "",
+  "method": "page text read in a browser and searched",
+  "comment": "The publisher blocks automated fetching; read in an ordinary browser on 27 November 2026."
+ },
+ {
+  "tie": "fortran>algol",
+  "url": "https://dl.acm.org/doi/10.1145/800025.1198352",
+  "url_used": "https://dl.acm.org/doi/pdf/10.1145/800025.1198352",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext on the publisher's PDF",
+  "comment": "Page 80 of the volume. The publisher blocks automated fetching; the PDF was obtained through an ordinary browser on 27 November 2026."
+ },
+ {
+  "tie": "cpp>java",
+  "url": "https://www.oracle.com/java/technologies/introduction-to-Java.html",
+  "url_used": "https://www.oracle.com/java/technologies/introduction-to-java.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "page text read in a browser and searched",
+  "comment": "The cited Oracle page blocks automated fetching; read in an ordinary browser on 27 November 2026."
+ },
+ {
+  "tie": "smalltalk>java",
+  "url": "https://www.oracle.com/java/technologies/introduction-to-Java.html",
+  "url_used": "https://www.oracle.com/java/technologies/introduction-to-java.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "page text read in a browser and searched",
+  "comment": "The cited Oracle page blocks automated fetching; read in an ordinary browser on 27 November 2026."
+ },
+ {
+  "tie": "eiffel>java",
+  "url": "https://www.oracle.com/java/technologies/introduction-to-Java.html",
+  "url_used": "https://www.oracle.com/java/technologies/introduction-to-java.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "page text read in a browser and searched",
+  "comment": "The cited Oracle page blocks automated fetching; read in an ordinary browser on 27 November 2026."
+ },
+ {
+  "tie": "objc>java",
+  "url": "https://www.oracle.com/java/technologies/introduction-to-Java.html",
+  "url_used": "https://www.oracle.com/java/technologies/object-oriented.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "page text read in a browser and searched",
+  "comment": "The sentence is in the white paper's chapter on object-oriented design, not on the introduction page that was cited; the link now points to that chapter. Read 27 November 2026."
+ }
+]

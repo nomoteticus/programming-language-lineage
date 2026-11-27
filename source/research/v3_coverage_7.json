@@ -1,0 +1,461 @@
+[
+ {
+  "sid": "S091",
+  "url": "https://forums.swift.org/t/looking-back-on-swift-3-and-ahead-to-swift-4/3610",
+  "url_used": "https://forums.swift.org/t/looking-back-on-swift-3-and-ahead-to-swift-4/3610",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": ["swift"],
+  "named": [
+   {
+    "frm": "rust", "to": "swift", "in_v2": true,
+    "quote": "Adding an (opt-in) Cyclone/Rust inspired memory ownership model to Swift is highly desired by systems programmers and folks who want predictable and deterministic performance (for example, in real time audio processing code).",
+    "quote_verbatim_confidence": "medium",
+    "relation": "influence", "source_names_it": "yes", "kind": "design",
+    "what": "opt-in memory ownership model",
+    "proposed_strength": "weak", "proposed_verdict": "supported",
+    "since": "Swift 5.9", "since_year": 2023,
+    "proposal": "keep",
+    "reason": "The sentence says the planned ownership model is 'Cyclone/Rust inspired'. In 2016 this was a plan, not a shipped feature; the since tag (Swift 5.9, 2023) is from v2 and is not stated in this source. The full sentence was reassembled from two fetched fragments, hence medium confidence."
+   },
+   {
+    "frm": "cyclone", "to": "swift", "in_v2": false,
+    "quote": "Adding an (opt-in) Cyclone/Rust inspired memory ownership model to Swift is highly desired by systems programmers and folks who want predictable and deterministic performance (for example, in real time audio processing code).",
+    "quote_verbatim_confidence": "medium",
+    "relation": "influence", "source_names_it": "yes", "kind": "design",
+    "what": "opt-in memory ownership model",
+    "proposed_strength": "weak", "proposed_verdict": "supported",
+    "since": "Swift 5.9", "since_year": 2023,
+    "proposal": "add",
+    "reason": "The same sentence that supports Rust -> Swift names Cyclone first ('Cyclone/Rust inspired'). Cyclone is on the map, so by the same evidence this is a tie."
+   },
+   {
+    "frm": "cpp", "to": "swift", "in_v2": false,
+    "quote": "For example, we don’t want the C++ “fragile base class\" problem to ever exist in Swift.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "rejected", "source_names_it": "no", "kind": "design",
+    "what": "a C++ problem Swift wants to avoid (ABI resilience)",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "reject",
+    "reason": "C++ is named as something to avoid. The post also lists 'importing C++ APIs' as a possible later feature (interoperability only)."
+   },
+   {
+    "frm": "perl", "to": "swift", "in_v2": false,
+    "quote": "Our goal is to be better at string processing than Perl!",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent", "source_names_it": "no", "kind": "design",
+    "what": "Perl as the benchmark for string processing",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "reject",
+    "reason": "Perl is the bar to beat, with no statement of borrowing here. See S092, where Lattner says Swift 4 is 'learning from Perl'."
+   }
+  ],
+  "v2_quote_check": [
+   {"frm": "rust", "to": "swift", "found_verbatim": true, "comment": "The v2 quote is the first part of the sentence; the sentence continues 'and folks who want predictable and deterministic performance (for example, in real time audio processing code).'"}
+  ],
+  "notes": "The fetch tool returned quotes in fragments of at most 125 characters; longer sentences were reassembled from consecutive fragments. Objective-C appears only through the '@objc' attribute. No other on-map language is named in Lattner's post."
+ },
+ {
+  "sid": "S092",
+  "url": "https://atp.fm/205-chris-lattner-interview-transcript",
+  "url_used": "https://atp.fm/205-chris-lattner-interview-transcript",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": ["swift"],
+  "named": [
+   {
+    "frm": "python", "to": "swift", "in_v2": true,
+    "quote": "just like in Python, you can start with just print(“Hello world”). You can do the exact same thing in Swift",
+    "quote_verbatim_confidence": "medium",
+    "relation": "resemblance", "source_names_it": "no", "kind": "design",
+    "what": "one-line hello world (script-like top level)",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "drop",
+    "reason": "The sentence is a comparison ('just like in Python'), not a statement that Swift took this from Python. Under the inclusion rule it is resemblance. The tie could survive only if re-sourced to a statement of borrowing (the v2 note mentions Lattner's homepage listing Python; that page was not part of this batch)."
+   },
+   {
+    "frm": "haskell", "to": "swift", "in_v2": true,
+    "quote": "If you’re a Haskell nerd, there is tons of Haskell concepts built in. Protocols really are just like a very similar Haskell construct, for example.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence", "source_names_it": "yes", "kind": "type",
+    "what": "Haskell concepts; protocols resemble a Haskell construct (type classes, by inference)",
+    "proposed_strength": "weak", "proposed_verdict": "supported",
+    "since": "", "since_year": null,
+    "proposal": "keep",
+    "reason": "Said in answer to whether Swift was inspired by other languages; Lattner calls it a melting pot and says it is about 'taking the best ideas from them and assembling them together'. 'Haskell concepts built in' in that context states influence; the protocol sentence alone is only resemblance."
+   },
+   {
+    "frm": "perl", "to": "swift", "in_v2": false,
+    "quote": "Perl really has nailed the string processing thing, even in Perl 5, and I think Perl 6 is even better. Swift has a lot to learn from it, and that's something where Swift 4 is really learning from Perl.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "influence", "source_names_it": "yes", "kind": "design",
+    "what": "string processing model",
+    "proposed_strength": "weak", "proposed_verdict": "supported",
+    "since": "Swift 4", "since_year": 2017,
+    "proposal": "add",
+    "reason": "Lattner states that Swift 4 is learning from Perl on string processing. Later-version, single-area influence, so weak. The two sentences were returned as separate fragments; check that they are adjacent in the transcript."
+   },
+   {
+    "frm": "objc", "to": "swift", "in_v2": false,
+    "quote": "Swift 1 and Swift 2 are as similar to Objective-C as we could make them.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "influence", "source_names_it": "yes", "kind": "design",
+    "what": "early Swift deliberately kept close to Objective-C; Objective-C runtime and interop",
+    "proposed_strength": "strong", "proposed_verdict": "partly",
+    "since": "", "since_year": null,
+    "proposal": "add",
+    "reason": "Not a v2 tie of this source (Objective-C -> Swift is probably recorded from another source; if so this is a supporting quote, not a new tie). Much of the interview treats Objective-C as Swift's starting point; it also names what Swift reacts against ('The fundamental problem was Objective-C was built on top of C.')."
+   },
+   {
+    "frm": "go", "to": "swift", "in_v2": false,
+    "quote": "I think that you can probably pick a language and there’s some good idea that came from them, including D or Dart or Go or whatever.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "influence", "source_names_it": "yes", "kind": "design",
+    "what": "unspecified 'good idea'",
+    "proposed_strength": "weak", "proposed_verdict": "partly",
+    "since": "", "since_year": null,
+    "proposal": "add",
+    "reason": "Borderline, for a human decision: Lattner names Go as a language a good idea came from, but hedges ('probably') and names no feature. He also says familiarity is 'not a result of Swift trying to be Go or C# or whatever' and wishes Swift had something like 'Go’s gofmt' (not adopted). Sentence reassembled from two fragments."
+   },
+   {
+    "frm": "dart", "to": "swift", "in_v2": false,
+    "quote": "I think that you can probably pick a language and there’s some good idea that came from them, including D or Dart or Go or whatever.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "influence", "source_names_it": "yes", "kind": "design",
+    "what": "unspecified 'good idea'",
+    "proposed_strength": "weak", "proposed_verdict": "partly",
+    "since": "", "since_year": null,
+    "proposal": "add",
+    "reason": "Borderline, for a human decision: same hedged sentence as Go; no feature named."
+   },
+   {
+    "frm": "csharp", "to": "swift", "in_v2": false,
+    "quote": "It being familiar is actually a success in that way, and it’s not a result of Swift trying to be Go or C# or whatever, it’s about taking the best ideas from them and assembling them together.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "passing", "source_names_it": "no", "kind": "design",
+    "what": "none specific",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "reject",
+    "reason": "Borderline: 'taking the best ideas from them' could be read as naming Go and C# as sources, but the sentence mainly denies imitation and names no feature. Flag for a human; reassembled from two fragments."
+   },
+   {
+    "frm": "rust", "to": "swift", "in_v2": false,
+    "quote": "Unlike Rust, we can’t make that be a core part of the type system that everybody has to use.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing", "source_names_it": "no", "kind": "design",
+    "what": "ownership, as a contrast",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "reject",
+    "reason": "A contrast with Rust, not a statement of borrowing, in this source. The Rust -> Swift tie rests on S091."
+   },
+   {
+    "frm": "c", "to": "swift", "in_v2": false,
+    "quote": "The fundamental problem was Objective-C was built on top of C.",
+    "quote_verbatim_confidence": "high",
+    "relation": "rejected", "source_names_it": "no", "kind": "design",
+    "what": "C's unsafety as what Swift moves away from; C interop kept",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "reject",
+    "reason": "C is named as the root of the safety problem Swift was created to escape; elsewhere only C interoperability is discussed."
+   },
+   {
+    "frm": "cpp", "to": "swift", "in_v2": false,
+    "quote": "or if it was just because I had just finished up Clang’s C++ support and we had launched Clang C++.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "passing", "source_names_it": "no", "kind": "organizational",
+    "what": "Lattner started Swift after finishing Clang's C++ support",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "reject",
+    "reason": "Biographical context only; he describes wanting a much simpler language without a preprocessor. No borrowing stated."
+   },
+   {
+    "frm": "java", "to": "swift", "in_v2": false,
+    "quote": "",
+    "quote_verbatim_confidence": "low",
+    "relation": "passing", "source_names_it": "no", "kind": "design",
+    "what": "moving garbage collectors (as in Java) contrasted with Swift's ARC",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "reject",
+    "reason": "Only a paraphrase was returned: Java-style moving collectors break C interoperability, one reason Swift uses ARC. A contrast, not an influence."
+   }
+  ],
+  "v2_quote_check": [
+   {"frm": "python", "to": "swift", "found_verbatim": true, "comment": "Both sentences are present and adjacent. The transcript uses curly quotation marks around Hello world."},
+   {"frm": "haskell", "to": "swift", "found_verbatim": true, "comment": "Found. The transcript uses a curly apostrophe in 'you’re'."}
+  ],
+  "notes": "Read in two passes (the transcript is about 146,000 characters); the fetch tool returned quotes in fragments of at most 125 characters, so longer sentences were reassembled and are marked medium. Off-map: D is named beside Dart and Go. Lattner: 'Swift does really draw from many, many different sources and it’s really hard to tease them all out.'"
+ },
+ {
+  "sid": "S093",
+  "url": "https://xeroxparcarchive.computerhistory.org/cyan/cedarchest6.0/tex/.TeX.web!1.html",
+  "url_used": "https://xeroxparcarchive.computerhistory.org/cyan/cedarchest6.0/tex/.TeX.web!1.html",
+  "reachable": true,
+  "read_extent": "partial",
+  "targets": ["tex"],
+  "named": [
+   {
+    "frm": "pascal", "to": "tex", "in_v2": true,
+    "quote": "The \\PASCAL\\ program that follows is the definition of \\TeX82, a standard version of \\TeX\\ that is designed to be highly portable",
+    "quote_verbatim_confidence": "medium",
+    "relation": "non_design", "source_names_it": "yes", "kind": "implementation",
+    "what": "TeX82 is written in WEB, which is preprocessed to Pascal",
+    "proposed_strength": "weak", "proposed_verdict": "supported",
+    "since": "", "since_year": null,
+    "proposal": "keep",
+    "reason": "Implementation route only; already weak. The introduction adds that the documentation 'is written in the \\.{WEB} language, which is at a higher level than \\PASCAL' and that the program uses 'the \\PASCAL\\ that was available to the author in 1982' (Pascal-H), avoiding several Pascal features."
+   }
+  ],
+  "v2_quote_check": [
+   {"frm": "pascal", "to": "tex", "found_verbatim": null, "comment": "The first line ('The \\PASCAL\\ program that follows is the definition of \\TeX82, a standard') was confirmed verbatim; the rest of the sentence was not returned by the fetch tool (it is on the next source line), so the full quote is unconfirmed but consistent."}
+  ],
+  "notes": "Only the first 100,000 of about 933,000 characters were read (the introduction, where origin is discussed; the rest is program code). Off-map languages named in the introduction: SAIL (the prototype TeX was written in SAIL) and MESA (a planned conversion of the SAIL code). No other on-map language is named there."
+ },
+ {
+  "sid": "S094",
+  "url": "https://github.com/microsoft/TypeScript",
+  "url_used": "https://github.com/microsoft/TypeScript",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": ["ts"],
+  "named": [
+   {
+    "frm": "js", "to": "ts", "in_v2": true,
+    "quote": "TypeScript adds optional types to JavaScript that support tools for large-scale JavaScript applications for any browser, for any host, on any OS.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "influence", "source_names_it": "yes", "kind": "design",
+    "what": "the whole language: JavaScript plus optional types",
+    "proposed_strength": "strong", "proposed_verdict": "supported",
+    "since": "", "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "The v2 quote is the repository's About line, not README text. The README sentence states the relationship more precisely (TypeScript adds types to JavaScript). It was returned in two fragments, hence medium. Other README sentences: 'TypeScript is a language for application-scale JavaScript.' and 'TypeScript compiles to readable, standards-based JavaScript.'"
+   }
+  ],
+  "v2_quote_check": [
+   {"frm": "js", "to": "ts", "found_verbatim": true, "comment": "Found verbatim in the repository's About description, not in the README body. The citation says 'README'; adjust the citation or use the README sentence."}
+  ],
+  "notes": "The README names no language other than JavaScript."
+ },
+ {
+  "sid": "S095",
+  "url": "https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-oop.html",
+  "url_used": "https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-oop.html",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": ["ts"],
+  "named": [
+   {
+    "frm": "csharp", "to": "ts", "in_v2": true,
+    "quote": "Some of the ways that TypeScript models types are quite different from Java or C#, and it’s important to keep these in mind when learning TypeScript.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing", "source_names_it": "no", "kind": "organizational",
+    "what": "nothing stated; the page addresses C#/Java programmers and stresses differences",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "drop",
+    "reason": "This page does not say TypeScript took anything from C#, and does not mention the shared designer. It says TypeScript offers 'many familiar features' to such developers but that its notion of a type 'is actually quite different from C# or Java’s'. The tie needs a different source (one stating the Hejlsberg link or a borrowed feature) or should go; the v2 verdict 'supported' is not justified by this source."
+   },
+   {
+    "frm": "java", "to": "ts", "in_v2": false,
+    "quote": "TypeScript is a popular choice for programmers accustomed to other languages with static typing, such as C# and Java.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing", "source_names_it": "no", "kind": "design",
+    "what": "nothing; audience comparison",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "reject",
+    "reason": "Java is named exactly as C# is: as the reader's background and as a contrast ('C# and Java are what we might call mandatory OOP languages.')."
+   },
+   {
+    "frm": "js", "to": "ts", "in_v2": false,
+    "quote": "It’s important to remember that TypeScript uses the same runtime as JavaScript, so any resources about how to accomplish specific runtime behavior (converting a string to a number, displaying an alert, writing a file to disk, etc.) will always apply equally well to TypeScript programs.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence", "source_names_it": "yes", "kind": "design",
+    "what": "runtime and language semantics; TypeScript only adds types",
+    "proposed_strength": "strong", "proposed_verdict": "supported",
+    "since": "", "since_year": null,
+    "proposal": "keep",
+    "reason": "Not a v2 tie of this source; JavaScript -> TypeScript is already recorded under S094. This is a supporting quote only, not a new tie."
+   }
+  ],
+  "v2_quote_check": [
+   {"frm": "csharp", "to": "ts", "found_verbatim": true, "comment": "Found verbatim, but it describes the audience, not an influence. No better quote exists on this page."}
+  ],
+  "notes": "No other language is named. The page also says 'certain constructs from C# and Java such as singletons and static classes are unnecessary in TypeScript.'"
+ },
+ {
+  "sid": "S096",
+  "url": "https://learn.microsoft.com/en-us/training/modules/get-started-transact-sql-programming/2-describe-transact-sql-for-programming",
+  "url_used": "https://learn.microsoft.com/en-us/training/modules/get-started-transact-sql-programming/2-describe-transact-sql-for-programming",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": ["tsql"],
+  "named": [
+   {
+    "frm": "sql", "to": "tsql", "in_v2": true,
+    "quote": "Transact-SQL (T-SQL) are a proprietary extension of the open standard Structured Query Language (SQL).",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence", "source_names_it": "yes", "kind": "design",
+    "what": "the whole language: T-SQL extends SQL with procedural programming and local variables",
+    "proposed_strength": "strong", "proposed_verdict": "supported",
+    "since": "", "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "'A proprietary extension of ... SQL' states the derivation directly; the v2 quote describes what T-SQL adds. Either works; the two could be combined. ('are' is the page's own wording.)"
+   }
+  ],
+  "v2_quote_check": [
+   {"frm": "sql", "to": "tsql", "found_verbatim": true, "comment": "Found verbatim (third sentence of the first paragraph)."}
+  ],
+  "notes": "No other language is named. The page was updated in August 2026; wording may differ from earlier versions."
+ },
+ {
+  "sid": "S097",
+  "url": "https://git.captnemo.in/nemo/hn-classics/src/branch/master/_stories/1996/9229434.md",
+  "url_used": null,
+  "reachable": false,
+  "read_extent": "abstract only",
+  "targets": ["vb"],
+  "named": [
+   {
+    "frm": "basic", "to": "vb", "in_v2": true,
+    "quote": "Microsoft took advantage of this dynamic interface to unplug our little shell language and replace it entirely with QuickBasic.",
+    "quote_verbatim_confidence": "low",
+    "relation": "influence", "source_names_it": "no", "kind": "design",
+    "what": "the BASIC language (as Microsoft QuickBasic) became Visual Basic's language",
+    "proposed_strength": "strong", "proposed_verdict": "partly",
+    "since": "", "since_year": null,
+    "proposal": "keep",
+    "reason": "Could not re-read the essay. The quote is the v2 quote, unverified here; a web search summary of the mirror gave near-identical wording. The sentence names QuickBasic, not Dartmouth BASIC, so the tie to the map's node is indirect (hence 'partly'; a human should decide)."
+   }
+  ],
+  "v2_quote_check": [
+   {"frm": "basic", "to": "vb", "found_verbatim": null, "comment": "Source not reachable: the hn-classics mirror failed with a certificate error ('unable to verify the first certificate'), web.archive.org is blocked for the fetch tool, and cooper.com returns 404. A search-result summary of the mirror matched the wording closely but is not a verbatim check."}
+  ],
+  "notes": "Unreachable in this session (three routes tried). Whether the essay names other on-map languages could not be checked. The Computer History Museum's 2017 Fellow profile (https://computerhistory.org/blog/2017-chm-fellow-alan-cooper-father-of-visual-basic/) is a reachable secondary source that says Microsoft paired Ruby with QBasic."
+ },
+ {
+  "sid": "S098",
+  "url": "https://learn.microsoft.com/en-us/previous-versions/msdn10/bb190540(v=msdn.10)",
+  "url_used": "https://learn.microsoft.com/en-us/previous-versions/msdn10/bb190540(v=msdn.10)",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": ["vba"],
+  "named": [
+   {
+    "frm": "vb", "to": "vba", "in_v2": true,
+    "quote": "Microsoft Visual Basic for Applications (VBA) is an embeddable programming environment designed to enable developers to build custom solutions using the full power of Microsoft Visual Basic.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence", "source_names_it": "yes", "kind": "design",
+    "what": "the Visual Basic language and tools, embedded in a host application",
+    "proposed_strength": "strong", "proposed_verdict": "supported",
+    "since": "", "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "The opening definition says VBA was designed to deliver Visual Basic inside other applications, which states the derivation more directly than the v2 quote. A human may want to consider whether this is 'product' lineage (one language core shipped two ways) rather than design; if so the rule makes it weak."
+   },
+   {
+    "frm": "cpp", "to": "vba", "in_v2": false,
+    "quote": "The Microsoft Application Programmability Component (APC), included in VBA, greatly simplifies VBA integration into both Microsoft Visual C++ and Microsoft Visual Basic applications.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing", "source_names_it": "no", "kind": "platform",
+    "what": "nothing; Visual C++ as a host-application language",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "reject",
+    "reason": "Integration only."
+   },
+   {
+    "frm": "excel", "to": "vba", "in_v2": false,
+    "quote": "Visual Basic for Applications 6.5 is a core component in Microsoft Office 2007, and is integrated into Microsoft Access, Microsoft Excel, Microsoft Outlook, Microsoft PowerPoint, and Microsoft Word.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing", "source_names_it": "no", "kind": "platform",
+    "what": "nothing; Excel the application hosts VBA",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "reject",
+    "reason": "Names Excel the application as a host, not the Excel formula language, and states no borrowing."
+   }
+  ],
+  "v2_quote_check": [
+   {"frm": "vb", "to": "vba", "found_verbatim": true, "comment": "Found verbatim; the sentence continues ', and is the best option for customizing software that already meets most of your needs.'"}
+  ],
+  "notes": "Off-map: VBScript ('a lightweight version of the Visual Basic language'). The page is an archived FAQ from the Office 2007 era (VBA 6.5); it says nothing about VBA's 1993 origin."
+ },
+ {
+  "sid": "S099",
+  "url": "https://andrewkelley.me/post/intro-to-zig.html",
+  "url_used": "https://andrewkelley.me/post/intro-to-zig.html",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": ["zig"],
+  "named": [
+   {
+    "frm": "c", "to": "zig", "in_v2": true,
+    "quote": "I am nothing if not ambitious, and my goal is to create a new programming language that is more pragmatic than C.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence", "source_names_it": "no", "kind": "design",
+    "what": "C as the model and the baseline: same niche, direct use of C libraries, C ABI",
+    "proposed_strength": "strong", "proposed_verdict": "partly",
+    "since": "", "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "The v2 quote is a trimmed version of this sentence (see quote check). No sentence says Zig borrowed a feature from C; the post positions Zig as C's successor ('Part of being pragmatic is recognizing C's existing success.', 'Zig embraces C like the mean older brother who you are a little afraid of but you still want to like you and be your friend.', 'In Zig, like in C, you typically do not create a \"wrapper\" or \"bindings\" to a library, you just use it.'). The influence is clear from the whole post but indirect in any single sentence, hence 'partly'. It also names things Zig drops from C (the preprocessor, #include)."
+   },
+   {
+    "frm": "cpp", "to": "zig", "in_v2": false,
+    "quote": "There are no C++ style exceptions or stack unwinding or anything fancy like that.",
+    "quote_verbatim_confidence": "high",
+    "relation": "rejected", "source_names_it": "no", "kind": "design",
+    "what": "C++ exceptions, explicitly not adopted",
+    "proposed_strength": null, "proposed_verdict": null,
+    "since": "", "since_year": null,
+    "proposal": "reject",
+    "reason": "C++ is named only for what Zig avoids (exceptions) and for slow #include compile times."
+   }
+  ],
+  "v2_quote_check": [
+   {"frm": "c", "to": "zig", "found_verbatim": false, "comment": "Not exact: the source reads 'I am nothing if not ambitious, and my goal is to create a new programming language that is more pragmatic than C.' ('more pragmatic than C' is in italics). The v2 quote starts mid-sentence with a capital 'My'. Use the full sentence or mark the trim with an ellipsis."}
+  ],
+  "notes": "Only C and C++ are named. The post credits no language for the maybe type or the error-handling design; Rust, Go and others do not appear."
+ },
+ {
+  "sid": "X-FORTRAN-ALGOL",
+  "found": false,
+  "candidates": [
+   {
+    "citation": "Perlis, A. J. (1978). The American side of the development of ALGOL. HOPL I, ACM SIGPLAN Notices 13(8), 3-14; reprinted in Wexelblat (ed.), History of Programming Languages (1981), 75-91.",
+    "url": "https://dl.acm.org/doi/pdf/10.1145/800025.1198352",
+    "quote": "",
+    "quote_verbatim_confidence": "low",
+    "what_it_shows": "LEAD ONLY, not a quote. A search-engine summary of this paper said that ALGOL 58 'was based on a model strongly derived from FORTRAN' and also that FORTRAN 'was unacceptable as a basis for the new language'. Neither wording was seen in the paper itself (ACM returned HTTP 403). If the first phrase is really Perlis's, it is the positive primary statement wanted; it must be checked in the paper before use."
+   },
+   {
+    "citation": "Backus, J. (1978). The history of FORTRAN I, II and III. HOPL I, ACM SIGPLAN Notices 13(8), 165-180.",
+    "url": "https://softwarepreservation.computerhistory.org/FORTRAN/paper/p25-backus.pdf",
+    "quote": "",
+    "quote_verbatim_confidence": "low",
+    "what_it_shows": "Not readable: the copies found (softwarepreservation.computerhistory.org and https://users-cs.au.dk/askarov/dovs/p165-backus.pdf) are scanned images without a text layer, so the fetch tool returned no text. The closing section on FORTRAN's later impact is the place to look."
+   },
+   {
+    "citation": "Backus, J. W. (1959). The syntax and semantics of the proposed international algebraic language of the Zurich ACM-GAMM Conference. Proc. International Conference on Information Processing, UNESCO, 125-132.",
+    "url": "https://softwarepreservation.computerhistory.org/ALGOL/paper/Backus-Syntax_and_Semantics_of_Proposed_IAL.pdf",
+    "quote": "",
+    "quote_verbatim_confidence": "low",
+    "what_it_shows": "Not read (scanned preprint; URL built from the relative link on the Software Preservation Group's ALGOL page, not opened). The passage Wikipedia's ALGOL 58 article quotes from it is about the conference's motives and, as far as seen, does not mention FORTRAN. Useful mainly as primary evidence of Backus's role at Zurich."
+   },
+   {
+    "citation": "Naur, P. (1978). The European side of the last phase of the development of ALGOL 60. HOPL I, ACM SIGPLAN Notices 13(8), 15-44.",
+    "url": "http://doi.acm.org/10.1145/800025.1198353",
+    "quote": "",
+    "quote_verbatim_confidence": "low",
+    "what_it_shows": "Not read: no open full-text copy found (ACM only)."
+   }
+  ],
+  "notes": "No primary quote positively stating FORTRAN's influence on ALGOL 58/60 could be verified in this session: the ACM Digital Library returned 403, the open copies of the HOPL papers are image scans the fetch tool cannot read, and PDF page rendering is not available locally. What was readable points the other way or is secondary: de Beer's 'The History of ALGOL' (https://heerdebeer.org/ALGOL/creation.html, secondary) says the American subcommittee chose 'to ignore the existence of FORTRAN' because of IBM's dominance, while noting that Backus 'also participated in the creation of IAL at the Zürich meeting'; the Software Preservation Group's ALGOL page quotes the Bauer and Samelson ICIP 1959 abstract, 'There was no question that the language like FORTRAN should be an operational constructive language' (truncated; a European primary source naming FORTRAN as a model for the kind of language, worth reading in full: paper/Bauer_Samelson-ICIP-1959.pdf on that site). Suggested next step: read the Perlis HOPL paper as a PDF by hand (or with OCR) and search for 'FORTRAN'; also the Bauer and Samelson 1959 paper. Until then the tie stays contested, and the only primary-sourced positive fact is organizational (Backus, FORTRAN's lead designer, was one of the four ACM delegates at Zurich), which by the brief's rule would make it weak."
+ }
+]

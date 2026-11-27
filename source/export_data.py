@@ -27,7 +27,7 @@ SRC = json.load(open(os.path.join(HERE, "sources.json"), encoding="utf-8"))
 NODES, STATUS, FLAGS, COUNTRY = N["NODES"], N["STATUS"], N["FLAGS"], N["COUNTRY"]
 INVENTORS, ORG, SOFTWARE, LOGO_SLUG, SCOPE = N["INVENTORS"], N["ORG"], N["SOFTWARE"], N["LOGO_SLUG"], N["SCOPE"]
 FAMILY = dict(N["FAMILIES"])
-EDGES, SHORT = E["EDGES"], E["SHORT"]
+EDGES, SHORT, SINCE_YEAR = E["EDGES"], E["SHORT"], E["SINCE_YEAR"]
 
 NAME = {n[0]: n[1] for n in NODES}
 OUTLOOK = {"bull": "bullish", "steady": "steady", "bear": "bearish", None: ""}
@@ -80,18 +80,18 @@ for nid, label, year, _y, fam, blurb in NODES:
 # ---------------------------------------------------------------- edges
 edge_header = [
     "from_id", "from_name", "to_id", "to_name",
-    "label", "map_label", "strength", "kind", "since",
+    "label", "map_label", "strength", "kind", "since", "since_year",
     "verdict", "source_type", "relationship_evidence", "feature_evidence",
-    "citation", "url", "quote", "note",
+    "citation", "url", "quote", "source_names_it", "note", "audit_note",
 ]
 edge_rows = []
 for a, b, label, strength, kind, since in EDGES:
     r = SRC[f"{a}>{b}"]
     edge_rows.append([
         a, NAME[a], b, NAME[b],
-        label, SHORT.get((a, b), label), STRENGTH[strength], kind, since or "",
+        label, SHORT.get((a, b), label), STRENGTH[strength], kind, since or "", SINCE_YEAR.get((a, b), ""),
         r["verdict"], r["type"], r["rel"], r["feat"],
-        r["citation"], r["url"], r["quote"], r["note"],
+        r["citation"], r["url"], r["quote"], r["names_it"], r["note"], r["audit"],
     ])
 
 # ---------------------------------------------------------------- checks
@@ -99,7 +99,9 @@ assert len({r[0] for r in node_rows}) == len(node_rows), "duplicate node id"
 assert len({(r[0], r[2]) for r in edge_rows}) == len(edge_rows), "duplicate link"
 assert all(r[0] in NAME and r[2] in NAME for r in edge_rows), "link to unknown language"
 assert set(SRC) == {f"{a}>{b}" for a, b, *_ in EDGES}, "links and evidence records differ"
-assert all(r[13] and r[14] for r in edge_rows), "link without citation or url"
+assert all(r[edge_header.index("citation")] and r[edge_header.index("url")] for r in edge_rows), "link without citation or url"
+assert all(r[edge_header.index("strength")] == "weak" for r in edge_rows if r[edge_header.index("kind")] not in ("design", "syntax", "type")), "a link by another route must be weak"
+assert all(bool(r[edge_header.index("since")]) == bool(r[edge_header.index("since_year")]) for r in edge_rows), "later-version link without a year"
 
 write("nodes.csv", node_header, node_rows)
 write("edges.csv", edge_header, edge_rows)

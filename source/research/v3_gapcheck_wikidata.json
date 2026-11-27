@@ -1,0 +1,1921 @@
+{
+ "retrieved": "2026-11-27",
+ "qids": {
+  "fortran": "Q83303",
+  "lisp": "Q132874",
+  "cobol": "Q131140",
+  "algol": "Q1209759",
+  "apl": "Q296187",
+  "pascal": "Q81571",
+  "forth": "Q275472",
+  "c": "Q15777",
+  "smalltalk": "Q235086",
+  "prolog": "Q163468",
+  "ml": "Q860654",
+  "sql": "Q47607",
+  "scheme": "Q187560",
+  "s": "Q1283865",
+  "matlab": "Q169478",
+  "objc": "Q188531",
+  "cpp": "Q2407",
+  "excel": null,
+  "erlang": "Q334879",
+  "perl": "Q42478",
+  "bash": "Q189248",
+  "haskell": "Q34010",
+  "python": "Q28865",
+  "r": "Q206904",
+  "java": "Q251",
+  "js": "Q2005",
+  "ruby": "Q161053",
+  "php": "Q59",
+  "ocaml": "Q212587",
+  "csharp": "Q2370",
+  "scala": "Q460584",
+  "fsharp": "Q648619",
+  "clojure": "Q51798",
+  "dax": "Q5227236",
+  "go": "Q37227",
+  "dart": "Q406009",
+  "kotlin": "Q3816639",
+  "julia": "Q2613697",
+  "ts": "Q978185",
+  "elixir": "Q5362035",
+  "m": null,
+  "swift": "Q17118377",
+  "rust": "Q575650",
+  "simula": "Q212569",
+  "bcpl": "Q810009",
+  "clu": "Q775159",
+  "awk": "Q213970",
+  "sh": "Q844595",
+  "ada": "Q154755",
+  "miranda": "Q780803",
+  "abc": "Q1057802",
+  "self": "Q1864529",
+  "oberon": "Q1323362",
+  "basic": "Q2251017",
+  "logo": "Q201436",
+  "vb": "Q2378",
+  "delphi": "Q4037189",
+  "lua": "Q207316",
+  "scratch": "Q275131",
+  "zig": "Q51885456",
+  "pli": "Q223433",
+  "spss": "Q181596",
+  "sas": "Q7388824",
+  "stata": "Q1204300",
+  "abap": "Q380523",
+  "modula3": "Q1928222",
+  "hack": "Q15971618",
+  "powershell": "Q840410",
+  "mathematica": "Q81294",
+  "tex": "Q5301",
+  "modula2": "Q777358",
+  "eiffel": "Q732089",
+  "icon": "Q1156474",
+  "snobol": "Q522041",
+  "tsql": "Q1411245",
+  "plsql": "Q41574",
+  "mdx": "Q1771973",
+  "cypher": "Q16834355",
+  "cpl": "Q2347334",
+  "algol68": "Q2166735",
+  "iswim": "Q1533797",
+  "b": "Q797302",
+  "commonlisp": "Q849146",
+  "cyclone": "Q79598",
+  "newsqueak": "Q262003",
+  "j": "Q383994",
+  "kq": "Q4042031",
+  "vba": "Q667566"
+ },
+ "agreement": [
+  [
+   "abc",
+   "python"
+  ],
+  [
+   "ada",
+   "cpp"
+  ],
+  [
+   "ada",
+   "plsql"
+  ],
+  [
+   "algol",
+   "algol68"
+  ],
+  [
+   "algol",
+   "cpl"
+  ],
+  [
+   "algol",
+   "pascal"
+  ],
+  [
+   "algol",
+   "simula"
+  ],
+  [
+   "algol68",
+   "c"
+  ],
+  [
+   "algol68",
+   "cpp"
+  ],
+  [
+   "algol68",
+   "sh"
+  ],
+  [
+   "apl",
+   "j"
+  ],
+  [
+   "apl",
+   "kq"
+  ],
+  [
+   "apl",
+   "mathematica"
+  ],
+  [
+   "awk",
+   "perl"
+  ],
+  [
+   "b",
+   "c"
+  ],
+  [
+   "bcpl",
+   "b"
+  ],
+  [
+   "c",
+   "awk"
+  ],
+  [
+   "c",
+   "cpp"
+  ],
+  [
+   "c",
+   "cyclone"
+  ],
+  [
+   "c",
+   "go"
+  ],
+  [
+   "c",
+   "objc"
+  ],
+  [
+   "c",
+   "perl"
+  ],
+  [
+   "c",
+   "php"
+  ],
+  [
+   "c",
+   "zig"
+  ],
+  [
+   "clu",
+   "cpp"
+  ],
+  [
+   "clu",
+   "lua"
+  ],
+  [
+   "clu",
+   "ruby"
+  ],
+  [
+   "cobol",
+   "abap"
+  ],
+  [
+   "cobol",
+   "pli"
+  ],
+  [
+   "cpl",
+   "bcpl"
+  ],
+  [
+   "cpp",
+   "csharp"
+  ],
+  [
+   "cpp",
+   "java"
+  ],
+  [
+   "cpp",
+   "rust"
+  ],
+  [
+   "csharp",
+   "dart"
+  ],
+  [
+   "csharp",
+   "kotlin"
+  ],
+  [
+   "csharp",
+   "powershell"
+  ],
+  [
+   "csharp",
+   "ts"
+  ],
+  [
+   "cyclone",
+   "rust"
+  ],
+  [
+   "delphi",
+   "csharp"
+  ],
+  [
+   "eiffel",
+   "ruby"
+  ],
+  [
+   "erlang",
+   "elixir"
+  ],
+  [
+   "fortran",
+   "algol"
+  ],
+  [
+   "fortran",
+   "basic"
+  ],
+  [
+   "fortran",
+   "pli"
+  ],
+  [
+   "haskell",
+   "rust"
+  ],
+  [
+   "haskell",
+   "scala"
+  ],
+  [
+   "haskell",
+   "swift"
+  ],
+  [
+   "iswim",
+   "ml"
+  ],
+  [
+   "java",
+   "csharp"
+  ],
+  [
+   "java",
+   "dart"
+  ],
+  [
+   "java",
+   "js"
+  ],
+  [
+   "java",
+   "kotlin"
+  ],
+  [
+   "java",
+   "scala"
+  ],
+  [
+   "js",
+   "dart"
+  ],
+  [
+   "js",
+   "ts"
+  ],
+  [
+   "lisp",
+   "clojure"
+  ],
+  [
+   "lisp",
+   "commonlisp"
+  ],
+  [
+   "lisp",
+   "logo"
+  ],
+  [
+   "lisp",
+   "mathematica"
+  ],
+  [
+   "lisp",
+   "scheme"
+  ],
+  [
+   "lisp",
+   "smalltalk"
+  ],
+  [
+   "logo",
+   "scratch"
+  ],
+  [
+   "logo",
+   "smalltalk"
+  ],
+  [
+   "matlab",
+   "julia"
+  ],
+  [
+   "miranda",
+   "haskell"
+  ],
+  [
+   "ml",
+   "haskell"
+  ],
+  [
+   "ml",
+   "ocaml"
+  ],
+  [
+   "ml",
+   "scala"
+  ],
+  [
+   "modula2",
+   "modula3"
+  ],
+  [
+   "modula2",
+   "oberon"
+  ],
+  [
+   "newsqueak",
+   "go"
+  ],
+  [
+   "oberon",
+   "go"
+  ],
+  [
+   "objc",
+   "swift"
+  ],
+  [
+   "ocaml",
+   "fsharp"
+  ],
+  [
+   "ocaml",
+   "rust"
+  ],
+  [
+   "pascal",
+   "ada"
+  ],
+  [
+   "pascal",
+   "delphi"
+  ],
+  [
+   "pascal",
+   "modula2"
+  ],
+  [
+   "perl",
+   "php"
+  ],
+  [
+   "perl",
+   "ruby"
+  ],
+  [
+   "php",
+   "hack"
+  ],
+  [
+   "prolog",
+   "erlang"
+  ],
+  [
+   "python",
+   "js"
+  ],
+  [
+   "python",
+   "swift"
+  ],
+  [
+   "ruby",
+   "elixir"
+  ],
+  [
+   "rust",
+   "swift"
+  ],
+  [
+   "s",
+   "r"
+  ],
+  [
+   "scala",
+   "kotlin"
+  ],
+  [
+   "scheme",
+   "js"
+  ],
+  [
+   "scheme",
+   "lua"
+  ],
+  [
+   "self",
+   "js"
+  ],
+  [
+   "sh",
+   "bash"
+  ],
+  [
+   "simula",
+   "cpp"
+  ],
+  [
+   "simula",
+   "eiffel"
+  ],
+  [
+   "simula",
+   "smalltalk"
+  ],
+  [
+   "smalltalk",
+   "dart"
+  ],
+  [
+   "smalltalk",
+   "java"
+  ],
+  [
+   "smalltalk",
+   "objc"
+  ],
+  [
+   "smalltalk",
+   "ruby"
+  ],
+  [
+   "smalltalk",
+   "self"
+  ],
+  [
+   "snobol",
+   "awk"
+  ],
+  [
+   "snobol",
+   "icon"
+  ],
+  [
+   "vb",
+   "vba"
+  ]
+ ],
+ "dataset_only": [
+  [
+   "apl",
+   "s"
+  ],
+  [
+   "awk",
+   "lua"
+  ],
+  [
+   "basic",
+   "vb"
+  ],
+  [
+   "c",
+   "python"
+  ],
+  [
+   "c",
+   "stata"
+  ],
+  [
+   "cobol",
+   "pascal"
+  ],
+  [
+   "commonlisp",
+   "julia"
+  ],
+  [
+   "cpp",
+   "python"
+  ],
+  [
+   "excel",
+   "dax"
+  ],
+  [
+   "fortran",
+   "matlab"
+  ],
+  [
+   "fortran",
+   "s"
+  ],
+  [
+   "fortran",
+   "spss"
+  ],
+  [
+   "fsharp",
+   "elixir"
+  ],
+  [
+   "fsharp",
+   "m"
+  ],
+  [
+   "fsharp",
+   "r"
+  ],
+  [
+   "hack",
+   "php"
+  ],
+  [
+   "haskell",
+   "excel"
+  ],
+  [
+   "haskell",
+   "python"
+  ],
+  [
+   "icon",
+   "python"
+  ],
+  [
+   "iswim",
+   "abc"
+  ],
+  [
+   "iswim",
+   "miranda"
+  ],
+  [
+   "java",
+   "clojure"
+  ],
+  [
+   "lisp",
+   "iswim"
+  ],
+  [
+   "lisp",
+   "ml"
+  ],
+  [
+   "mdx",
+   "dax"
+  ],
+  [
+   "modula3",
+   "python"
+  ],
+  [
+   "pascal",
+   "matlab"
+  ],
+  [
+   "pascal",
+   "tex"
+  ],
+  [
+   "pli",
+   "sas"
+  ],
+  [
+   "python",
+   "julia"
+  ],
+  [
+   "python",
+   "scala"
+  ],
+  [
+   "r",
+   "julia"
+  ],
+  [
+   "r",
+   "python"
+  ],
+  [
+   "scheme",
+   "r"
+  ],
+  [
+   "sh",
+   "perl"
+  ],
+  [
+   "sh",
+   "powershell"
+  ],
+  [
+   "sql",
+   "cypher"
+  ],
+  [
+   "sql",
+   "dax"
+  ],
+  [
+   "sql",
+   "mdx"
+  ],
+  [
+   "sql",
+   "plsql"
+  ],
+  [
+   "sql",
+   "python"
+  ],
+  [
+   "sql",
+   "r"
+  ],
+  [
+   "sql",
+   "tsql"
+  ],
+  [
+   "vb",
+   "delphi"
+  ]
+ ],
+ "candidates": [
+  {
+   "frm": "ada",
+   "to": "eiffel",
+   "plausibility": "medium",
+   "comment": "Plausible: Meyer knew Ada well and Eiffel's genericity and exception vocabulary are often traced to Ada; check Meyer's own account.",
+   "primary_source": "Meyer, B., Object-Oriented Software Construction / Eiffel: The Language",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ada",
+   "to": "erlang",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ada",
+   "to": "java",
+   "plausibility": "low",
+   "comment": "Sometimes claimed for packages and exceptions, but Gosling's accounts do not stress Ada.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ada",
+   "to": "ruby",
+   "plausibility": "high",
+   "comment": "Stated on the official Ruby site: Ada is one of Matz's five named source languages.",
+   "primary_source": "ruby-lang.org, \"About Ruby\"",
+   "url": "https://www.ruby-lang.org/en/about/",
+   "quote": "blended parts of his favorite languages (Perl, Smalltalk, Eiffel, Ada, and Lisp) to form a new language"
+  },
+  {
+   "frm": "algol",
+   "to": "ada",
+   "plausibility": "medium",
+   "comment": "Ada is in the ALGOL/Pascal line, but the direct design base was Pascal; likely indirect.",
+   "primary_source": "Ichbiah et al. (1979). Rationale for the Design of the Ada Programming Language",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "algol",
+   "to": "basic",
+   "plausibility": "high",
+   "comment": "Kemeny and Kurtz describe BASIC as drawing on Fortran and ALGOL. Wikidata's value is the generic ALGOL family item.",
+   "primary_source": "Kurtz, T. (1978). BASIC. HOPL-I",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "algol",
+   "to": "c",
+   "plausibility": "medium",
+   "comment": "Real but indirect, through CPL, BCPL and B; Ritchie's history discusses the Algol tradition (and Algol 68 for types).",
+   "primary_source": "Ritchie, D. (1993). The Development of the C Language. HOPL-II",
+   "url": "https://www.bell-labs.com/usr/dmr/www/chist.html",
+   "quote": ""
+  },
+  {
+   "frm": "algol",
+   "to": "clu",
+   "plausibility": "medium",
+   "comment": "CLU has ALGOL-like block-structured syntax; Liskov names Simula, Lisp, Pascal and Alphard more prominently.",
+   "primary_source": "Liskov, B. (1993). A History of CLU. HOPL-II",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "algol",
+   "to": "icon",
+   "plausibility": "low",
+   "comment": "Icon's surface syntax is ALGOL/Pascal-like; generic family statement (Wikidata value is the ALGOL family item).",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "algol",
+   "to": "pli",
+   "plausibility": "high",
+   "comment": "Well documented: PL/I was designed to merge ideas of Fortran, ALGOL 60 and COBOL (block structure, recursion from ALGOL). Wikidata value is the ALGOL family item.",
+   "primary_source": "Radin, G. (1978). The Early History and Characteristics of PL/I. HOPL-I",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "algol",
+   "to": "scheme",
+   "plausibility": "high",
+   "comment": "Well documented: Scheme took lexical scope and block structure from ALGOL; the Scheme reports say so in their introductions. Wikidata value is the ALGOL family item.",
+   "primary_source": "Revised Reports on Scheme (R5RS/R7RS introduction); Steele & Gabriel, The Evolution of Lisp",
+   "url": "https://standards.scheme.org/official/r7rs.pdf",
+   "quote": ""
+  },
+  {
+   "frm": "algol68",
+   "to": "ada",
+   "plausibility": "medium",
+   "comment": "ALGOL 68 was studied by the Ada design teams; commonly listed, but check the Rationale.",
+   "primary_source": "Ichbiah et al. (1979). Rationale for the Design of the Ada Programming Language",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "algol68",
+   "to": "bash",
+   "plausibility": "low",
+   "comment": "Inherited through the Bourne shell (fi, esac, Bourne's ALGOL 68 style), not a direct Bash design input.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "apl",
+   "to": "forth",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "apl",
+   "to": "go",
+   "plausibility": "medium",
+   "comment": "Small but real feature: Go's iota constant generator is named after APL's iota (Pike was an APL user).",
+   "primary_source": "Go language specification (Iota); talks by Rob Pike",
+   "url": "https://go.dev/ref/spec#Iota",
+   "quote": ""
+  },
+  {
+   "frm": "awk",
+   "to": "js",
+   "plausibility": "medium",
+   "comment": "Eich has said the 'function' keyword and some scripting flavor came from AWK; covered in the HOPL IV paper.",
+   "primary_source": "Wirfs-Brock, A. & Eich, B. (2020). JavaScript: The First 20 Years. HOPL IV",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "bash",
+   "to": "powershell",
+   "plausibility": "medium",
+   "comment": "PowerShell borrowed from Unix shells generally (the dataset already has Bourne sh -> PowerShell); Bash specifically is plausible but may be redundant.",
+   "primary_source": "Snover, J. (2002). Monad Manifesto",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "basic",
+   "to": "perl",
+   "plausibility": "medium",
+   "comment": "Larry Wall has credited BASIC-PLUS for statement modifiers (trailing if/unless); small feature.",
+   "primary_source": "perlsyn / Larry Wall's talks",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "basic",
+   "to": "ruby",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "bcpl",
+   "to": "c",
+   "plausibility": "medium",
+   "comment": "Real but mostly indirect via B; Ritchie's history treats BCPL as C's grandparent and notes some direct returns to BCPL ideas.",
+   "primary_source": "Ritchie, D. (1993). The Development of the C Language. HOPL-II",
+   "url": "https://www.bell-labs.com/usr/dmr/www/chist.html",
+   "quote": ""
+  },
+  {
+   "frm": "bcpl",
+   "to": "go",
+   "plausibility": "low",
+   "comment": "Indirect at best (via B and C).",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "c",
+   "to": "csharp",
+   "plausibility": "medium",
+   "comment": "C-family syntax, mostly via C++ and Java; the C# standard describes its roots in the C family.",
+   "primary_source": "ECMA-334 introduction",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "c",
+   "to": "java",
+   "plausibility": "medium",
+   "comment": "Java's syntax is deliberately C-like, but the usual account routes it through C++ (check that C++ -> Java is recorded).",
+   "primary_source": "Gosling, J. & McGilton, H. (1996). The Java Language Environment: A White Paper",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "c",
+   "to": "js",
+   "plausibility": "medium",
+   "comment": "JavaScript's syntax is C-like by way of Java; Eich's account says so.",
+   "primary_source": "Wirfs-Brock, A. & Eich, B. (2020). JavaScript: The First 20 Years. HOPL IV",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "c",
+   "to": "mathematica",
+   "plausibility": "low",
+   "comment": "Wolfram Language item; no specific design statement known.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "c",
+   "to": "newsqueak",
+   "plausibility": "medium",
+   "comment": "Pike's Newsqueak has C-like syntax and came out of the Bell Labs C tradition.",
+   "primary_source": "Pike, R. (1989). Newsqueak: A Language for Communicating with Mice",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "c",
+   "to": "s",
+   "plausibility": "medium",
+   "comment": "Plausible: later S (1980s) adopted C-like syntax (braces, operators) and was reimplemented in C.",
+   "primary_source": "Becker, R. (1994). A Brief History of S",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "clojure",
+   "to": "elixir",
+   "plausibility": "high",
+   "comment": "Stated by Elixir's creator: Elixir protocols are based on Clojure's protocols.",
+   "primary_source": "Valim, J. (2013). Elixir Design Goals (elixir-lang.org blog)",
+   "url": "https://elixir-lang.org/blog/2013/08/08/elixir-design-goals/",
+   "quote": "protocols in Elixir are based on Clojure’s protocol"
+  },
+  {
+   "frm": "clu",
+   "to": "swift",
+   "plausibility": "high",
+   "comment": "Named by Swift's original designer.",
+   "primary_source": "Chris Lattner's home page (Swift's original designer)",
+   "url": "https://www.nondot.org/sabre/",
+   "quote": "drawing ideas from Objective-C, Rust, Haskell, Ruby, Python, C#, CLU, and far too many others to list."
+  },
+  {
+   "frm": "commonlisp",
+   "to": "clojure",
+   "plausibility": "medium",
+   "comment": "Hickey was a Common Lisp user and discusses CL at length, while stating Clojure is not a direct descendant of any prior Lisp.",
+   "primary_source": "Hickey, R. (2020). A History of Clojure. HOPL IV",
+   "url": "https://hopl4.sigplan.org/details/hopl-4-papers/9/A-History-of-Clojure",
+   "quote": ""
+  },
+  {
+   "frm": "commonlisp",
+   "to": "scala",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "cpl",
+   "to": "c",
+   "plausibility": "low",
+   "comment": "Indirect only (CPL -> BCPL -> B -> C).",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "cpp",
+   "to": "ada",
+   "plausibility": "medium",
+   "comment": "Reverse of a recorded tie. Would be a later-version tie: Ada 95's object-oriented extensions were designed with C++ in view.",
+   "primary_source": "Ada 95 Rationale",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "cpp",
+   "to": "delphi",
+   "plausibility": "low",
+   "comment": "Delphi's class model resembles C++ in places; no designer statement known.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "cpp",
+   "to": "lua",
+   "plausibility": "high",
+   "comment": "Stated by Lua's designers (one small feature: local variable declarations).",
+   "primary_source": "Ierusalimschy, de Figueiredo & Celes (2001). The Evolution of an Extension Language: A History of Lua",
+   "url": "https://www.lua.org/history.html",
+   "quote": "From C++ we took the neat idea of allowing a local variable to be declared only where we need it."
+  },
+  {
+   "frm": "cpp",
+   "to": "mathematica",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "cpp",
+   "to": "perl",
+   "plausibility": "medium",
+   "comment": "Perl 5's object features and the :: package separator are credited to C++ in Perl's documentation.",
+   "primary_source": "perl documentation (perlobj, perlmod)",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "cpp",
+   "to": "php",
+   "plausibility": "medium",
+   "comment": "PHP's class syntax and the :: operator follow C++; the PHP 5 object model is closer to Java.",
+   "primary_source": "PHP manual, history of PHP",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "cpp",
+   "to": "ruby",
+   "plausibility": "low",
+   "comment": "Not among the languages Matz names on ruby-lang.org.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "cpp",
+   "to": "swift",
+   "plausibility": "medium",
+   "comment": "Swift was built by C++ compiler engineers and interoperates with C++, but C++ is not in Lattner's list of idea sources.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "cpp",
+   "to": "zig",
+   "plausibility": "low",
+   "comment": "Zig positions itself against C++ complexity; a reaction rather than a borrowing.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "csharp",
+   "to": "fsharp",
+   "plausibility": "high",
+   "comment": "Well documented: F# was designed for .NET and adopts the C#/.NET object model and generics.",
+   "primary_source": "Syme, D. (2020). The Early History of F#. HOPL IV (doi:10.1145/3386325, DOI from memory)",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "csharp",
+   "to": "hack",
+   "plausibility": "medium",
+   "comment": "Hack's async/await, nullable types and attributes closely resemble C#; check the Hack team's statements.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "csharp",
+   "to": "java",
+   "plausibility": "medium",
+   "comment": "Reverse of a recorded tie. Would be a later-version tie: Java 5 features (autoboxing, foreach, varargs, annotations) and later lambdas are widely seen as responses to C#.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "csharp",
+   "to": "rust",
+   "plausibility": "high",
+   "comment": "Listed in the Rust Reference.",
+   "primary_source": "The Rust Reference, \"Influences\"",
+   "url": "https://doc.rust-lang.org/reference/influences.html",
+   "quote": "C#: attributes"
+  },
+  {
+   "frm": "csharp",
+   "to": "swift",
+   "plausibility": "high",
+   "comment": "Named by Swift's original designer.",
+   "primary_source": "Chris Lattner's home page (Swift's original designer)",
+   "url": "https://www.nondot.org/sabre/",
+   "quote": "drawing ideas from Objective-C, Rust, Haskell, Ruby, Python, C#, CLU, and far too many others to list."
+  },
+  {
+   "frm": "delphi",
+   "to": "java",
+   "plausibility": "low",
+   "comment": "From the Object Pascal item; no statement by Java's designers known.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "eiffel",
+   "to": "ada",
+   "plausibility": "medium",
+   "comment": "Would be a later-version tie: Ada 2012 contract aspects (pre/postconditions, invariants) follow Eiffel's design by contract.",
+   "primary_source": "Ada 2012 Rationale (Barnes)",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "eiffel",
+   "to": "csharp",
+   "plausibility": "low",
+   "comment": "Code Contracts were a library, not the language.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "eiffel",
+   "to": "java",
+   "plausibility": "medium",
+   "comment": "The Java white paper, as I recall, names Eiffel among the languages Java borrowed from; assertions (Java 1.4) are also Eiffel-like.",
+   "primary_source": "Gosling, J. & McGilton, H. (1996). The Java Language Environment: A White Paper",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "eiffel",
+   "to": "scala",
+   "plausibility": "low",
+   "comment": "The uniform access principle is Meyer's; no direct statement by Odersky known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "erlang",
+   "to": "dart",
+   "plausibility": "medium",
+   "comment": "Dart isolates (no shared memory, message passing) are actor-style and often compared with Erlang; check the Dart team's statements.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "erlang",
+   "to": "fsharp",
+   "plausibility": "medium",
+   "comment": "F#'s MailboxProcessor agents were modeled on Erlang-style message passing.",
+   "primary_source": "Syme, D. (2020). The Early History of F#. HOPL IV (doi:10.1145/3386325, DOI from memory)",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "erlang",
+   "to": "rust",
+   "plausibility": "high",
+   "comment": "Listed in the Rust Reference.",
+   "primary_source": "The Rust Reference, \"Influences\"",
+   "url": "https://doc.rust-lang.org/reference/influences.html",
+   "quote": "Erlang: message passing, thread failure, linked thread failure , lightweight concurrency"
+  },
+  {
+   "frm": "erlang",
+   "to": "scala",
+   "plausibility": "high",
+   "comment": "Well documented: Scala's actor library was explicitly modeled on Erlang's processes and receive.",
+   "primary_source": "Haller, P. & Odersky, M. (2009). Scala Actors: Unifying Thread-Based and Event-Based Programming. Theoretical Computer Science",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "fortran",
+   "to": "c",
+   "plausibility": "low",
+   "comment": "Ritchie's history does not present Fortran as a design source for C.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "fortran",
+   "to": "mathematica",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "fortran",
+   "to": "snobol",
+   "plausibility": "low",
+   "comment": "From Wikidata's FORTRAN II item; no statement known to me in Griswold's SNOBOL history.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "fsharp",
+   "to": "csharp",
+   "plausibility": "high",
+   "comment": "Well documented, a later-version tie: C# 5 async/await derives from F# asynchronous workflows.",
+   "primary_source": "Syme, D. (2020). The Early History of F#. HOPL IV (doi:10.1145/3386325, DOI from memory)",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "go",
+   "to": "zig",
+   "plausibility": "medium",
+   "comment": "Zig's defer and some tooling ideas resemble Go; check Andrew Kelley's statements.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "haskell",
+   "to": "csharp",
+   "plausibility": "high",
+   "comment": "Well documented, a later-version tie: LINQ query comprehensions (C# 3) come from Haskell monad comprehensions via Erik Meijer.",
+   "primary_source": "Meijer, E. (2007). Confessions of a Used Programming Language Salesman. OOPSLA",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "haskell",
+   "to": "fsharp",
+   "plausibility": "high",
+   "comment": "Well documented: sequence expressions, computation expressions (monads) and other features draw on Haskell.",
+   "primary_source": "Syme, D. (2020). The Early History of F#. HOPL IV (doi:10.1145/3386325, DOI from memory)",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "haskell",
+   "to": "hack",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "icon",
+   "to": "csharp",
+   "plausibility": "low",
+   "comment": "Iterators with yield trace to CLU and Icon in general; no C# designer statement known.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "java",
+   "to": "ada",
+   "plausibility": "medium",
+   "comment": "Would be a later-version tie: Ada 2005 interfaces were adopted from Java.",
+   "primary_source": "Barnes, J. Rationale for Ada 2005",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "java",
+   "to": "hack",
+   "plausibility": "medium",
+   "comment": "Hack's generics, interfaces and collections style resemble Java and C#; check the Hack team's statements.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "java",
+   "to": "php",
+   "plausibility": "medium",
+   "comment": "Would be a later-version tie: the PHP 5 object model (interfaces, abstract classes, visibility, exceptions) follows Java.",
+   "primary_source": "PHP manual / Zend Engine 2 design notes",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "java",
+   "to": "swift",
+   "plausibility": "low",
+   "comment": "Not in Lattner's list.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "java",
+   "to": "ts",
+   "plausibility": "medium",
+   "comment": "TypeScript's classes, interfaces and generics look like Java/C#; the recorded C# tie may already cover this.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "js",
+   "to": "kotlin",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "js",
+   "to": "php",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "js",
+   "to": "zig",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "lisp",
+   "to": "clu",
+   "plausibility": "medium",
+   "comment": "Liskov credits Lisp for CLU's object semantics (heap objects, sharing, garbage collection).",
+   "primary_source": "Liskov, B. (1993). A History of CLU. HOPL-II",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "lisp",
+   "to": "erlang",
+   "plausibility": "medium",
+   "comment": "Erlang's dynamic typing, atoms and lists owe to the Lisp/Prolog tradition; check Armstrong's history.",
+   "primary_source": "Armstrong, J. (2007). A History of Erlang. HOPL III",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "lisp",
+   "to": "forth",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "lisp",
+   "to": "haskell",
+   "plausibility": "medium",
+   "comment": "The Haskell history opens with Lisp and the lambda calculus as background, but the direct line is ISWIM/ML/Miranda.",
+   "primary_source": "Hudak, Hughes, Peyton Jones & Wadler (2007). A History of Haskell: Being Lazy with Class. HOPL III",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "lisp",
+   "to": "perl",
+   "plausibility": "medium",
+   "comment": "Larry Wall credits Lisp for Perl's lists; check Perl's documentation.",
+   "primary_source": "perl man page / Larry Wall's talks",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "lisp",
+   "to": "ruby",
+   "plausibility": "high",
+   "comment": "Stated on the official Ruby site: Lisp is one of Matz's five named source languages.",
+   "primary_source": "ruby-lang.org, \"About Ruby\"",
+   "url": "https://www.ruby-lang.org/en/about/",
+   "quote": "blended parts of his favorite languages (Perl, Smalltalk, Eiffel, Ada, and Lisp) to form a new language"
+  },
+  {
+   "frm": "lua",
+   "to": "js",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "lua",
+   "to": "ruby",
+   "plausibility": "low",
+   "comment": "Dubious: the two were developed in parallel (1993-1995).",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "miranda",
+   "to": "erlang",
+   "plausibility": "medium",
+   "comment": "Armstrong mentions functional languages such as ML and Miranda as sources of later features (e.g., list comprehensions); check.",
+   "primary_source": "Armstrong, J. (2007). A History of Erlang. HOPL III",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ml",
+   "to": "clojure",
+   "plausibility": "low",
+   "comment": "Hickey cites ML and Haskell as general functional background only.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ml",
+   "to": "cpp",
+   "plausibility": "medium",
+   "comment": "Stroustrup credits ML (with Ada and CLU) as an inspiration for C++ exception handling; a later-version tie.",
+   "primary_source": "Stroustrup, B. (1993). A History of C++: 1979-1991. HOPL-II; The Design and Evolution of C++",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ml",
+   "to": "csharp",
+   "plausibility": "medium",
+   "comment": "C# generics were designed by Kennedy and Syme from ML-style polymorphism; a later-version tie.",
+   "primary_source": "Kennedy, A. & Syme, D. (2001). Design and Implementation of Generics for the .NET Common Language Runtime. PLDI",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ml",
+   "to": "erlang",
+   "plausibility": "medium",
+   "comment": "See Miranda -> Erlang; check Armstrong's history.",
+   "primary_source": "Armstrong, J. (2007). A History of Erlang. HOPL III",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ml",
+   "to": "fsharp",
+   "plausibility": "high",
+   "comment": "F# is an ML-family language; true, but probably already covered by the OCaml -> F# tie.",
+   "primary_source": "Syme, D. (2020). The Early History of F#. HOPL IV (doi:10.1145/3386325, DOI from memory)",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ml",
+   "to": "kotlin",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ml",
+   "to": "miranda",
+   "plausibility": "high",
+   "comment": "Well documented: Miranda combined lazy evaluation (SASL, KRC) with ML's polymorphic type system.",
+   "primary_source": "Turner, D. (1985). Miranda: A Non-Strict Functional Language with Polymorphic Types. FPCA",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ml",
+   "to": "rust",
+   "plausibility": "high",
+   "comment": "Listed in the Rust Reference (from Wikidata's Standard ML item); may overlap with an OCaml -> Rust tie.",
+   "primary_source": "The Rust Reference, \"Influences\"",
+   "url": "https://doc.rust-lang.org/reference/influences.html",
+   "quote": "SML, OCaml: algebraic data types, pattern matching, type inference, semicolon statement separation"
+  },
+  {
+   "frm": "modula2",
+   "to": "ada",
+   "plausibility": "low",
+   "comment": "Near-contemporaries (1978-1980); no statement known.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "modula2",
+   "to": "erlang",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "modula2",
+   "to": "go",
+   "plausibility": "medium",
+   "comment": "The Go FAQ names the Pascal/Modula/Oberon family as a whole, not Modula-2 specifically.",
+   "primary_source": "Go FAQ, \"What are Go's ancestors?\"",
+   "url": "https://go.dev/doc/faq#ancestors",
+   "quote": "with significant input from the Pascal/Modula/Oberon family (declarations, packages)"
+  },
+  {
+   "frm": "modula2",
+   "to": "lua",
+   "plausibility": "high",
+   "comment": "Stated by Lua's designers; they write 'Modula' (Wikidata lists both Modula and Modula-2 for Lua).",
+   "primary_source": "Ierusalimschy, de Figueiredo & Celes (2001). The Evolution of an Extension Language: A History of Lua",
+   "url": "https://www.lua.org/history.html",
+   "quote": "with syntax borrowed from Modula ( while , if , and repeat until )"
+  },
+  {
+   "frm": "modula3",
+   "to": "csharp",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "modula3",
+   "to": "java",
+   "plausibility": "medium",
+   "comment": "Often cited for Java's exceptions/try-finally, threads and safety model; check the white paper and the JLS preface.",
+   "primary_source": "Gosling, J. & McGilton, H. (1996). The Java Language Environment: A White Paper",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "newsqueak",
+   "to": "rust",
+   "plausibility": "high",
+   "comment": "Listed in the Rust Reference (channels; a feature since removed from the language).",
+   "primary_source": "The Rust Reference, \"Influences\"",
+   "url": "https://doc.rust-lang.org/reference/influences.html",
+   "quote": "Newsqueak, Alef, Limbo: channels, concurrency"
+  },
+  {
+   "frm": "oberon",
+   "to": "java",
+   "plausibility": "low",
+   "comment": "Sometimes claimed; no Gosling statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "objc",
+   "to": "java",
+   "plausibility": "high",
+   "comment": "Well documented: Java interfaces come from Objective-C protocols; Patrick Naughton (Java team) said so, and the white paper, as I recall, names Objective C.",
+   "primary_source": "Naughton, P., \"Java Was Strongly Influenced by Objective-C\" (posted note); Java white paper",
+   "url": "https://cs.gmu.edu/~sean/stuff/java-objc.html",
+   "quote": ""
+  },
+  {
+   "frm": "ocaml",
+   "to": "hack",
+   "plausibility": "low",
+   "comment": "Hack's type checker is written in OCaml; that is implementation, not language design.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ocaml",
+   "to": "scala",
+   "plausibility": "medium",
+   "comment": "Scala's pattern matching and functional core come from the ML family; Odersky's overview cites ML-family languages.",
+   "primary_source": "Odersky et al. (2004). An Overview of the Scala Programming Language",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "pascal",
+   "to": "go",
+   "plausibility": "high",
+   "comment": "Stated in the Go FAQ (family-level: declarations, packages).",
+   "primary_source": "Go FAQ, \"What are Go's ancestors?\"",
+   "url": "https://go.dev/doc/faq#ancestors",
+   "quote": "with significant input from the Pascal/Modula/Oberon family (declarations, packages)"
+  },
+  {
+   "frm": "pascal",
+   "to": "mathematica",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "perl",
+   "to": "js",
+   "plausibility": "high",
+   "comment": "Well documented, an early later-version tie: JavaScript regular expressions are modeled on Perl 5 (stated in the ECMAScript specification).",
+   "primary_source": "ECMA-262, RegExp Objects section; Wirfs-Brock & Eich, HOPL IV",
+   "url": "https://tc39.es/ecma262/",
+   "quote": ""
+  },
+  {
+   "frm": "perl",
+   "to": "powershell",
+   "plausibility": "high",
+   "comment": "Well documented: PowerShell took sigil variables, hash tables and regex operators from Perl; said by its designers.",
+   "primary_source": "Payette, B., Windows PowerShell in Action (ch. 1); Snover, Monad Manifesto",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "pli",
+   "to": "c",
+   "plausibility": "medium",
+   "comment": "Small feature: the /* */ comment came from PL/I via B; Ritchie's history mentions PL/I from the Multics period.",
+   "primary_source": "Ritchie, D. (1993). The Development of the C Language. HOPL-II",
+   "url": "https://www.bell-labs.com/usr/dmr/www/chist.html",
+   "quote": ""
+  },
+  {
+   "frm": "prolog",
+   "to": "mathematica",
+   "plausibility": "low",
+   "comment": "Rule-based pattern matching is loosely similar; no statement known.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "python",
+   "to": "fsharp",
+   "plausibility": "medium",
+   "comment": "F#'s indentation-aware 'light' syntax is credited partly to Python.",
+   "primary_source": "Syme, D. (2020). The Early History of F#. HOPL IV (doi:10.1145/3386325, DOI from memory)",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "python",
+   "to": "kotlin",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "python",
+   "to": "powershell",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "python",
+   "to": "ruby",
+   "plausibility": "medium",
+   "comment": "Matz knew Python and designed Ruby partly in reaction to it; Ruby is often described as borrowing some features (e.g., exceptions).",
+   "primary_source": "Matz interviews (e.g., ruby-talk 1999; The Philosophy of Ruby, 2003)",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ruby",
+   "to": "kotlin",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "ruby",
+   "to": "rust",
+   "plausibility": "high",
+   "comment": "Listed in the Rust Reference.",
+   "primary_source": "The Rust Reference, \"Influences\"",
+   "url": "https://doc.rust-lang.org/reference/influences.html",
+   "quote": "Ruby: closure syntax, block syntax"
+  },
+  {
+   "frm": "ruby",
+   "to": "swift",
+   "plausibility": "high",
+   "comment": "Named by Swift's original designer.",
+   "primary_source": "Chris Lattner's home page (Swift's original designer)",
+   "url": "https://www.nondot.org/sabre/",
+   "quote": "drawing ideas from Objective-C, Rust, Haskell, Ruby, Python, C#, CLU, and far too many others to list."
+  },
+  {
+   "frm": "rust",
+   "to": "csharp",
+   "plausibility": "low",
+   "comment": "Later C# features (ref structs, spans) are sometimes compared with Rust; no clear statement.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "rust",
+   "to": "zig",
+   "plausibility": "low",
+   "comment": "Zig is more a reaction to Rust than a borrower.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "scala",
+   "to": "fsharp",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "scala",
+   "to": "hack",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "scala",
+   "to": "swift",
+   "plausibility": "low",
+   "comment": "Not in Lattner's list.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "scheme",
+   "to": "commonlisp",
+   "plausibility": "high",
+   "comment": "Well documented: Common Lisp adopted lexical scoping and closures from Scheme.",
+   "primary_source": "Steele & Gabriel (1993). The Evolution of Lisp. HOPL-II; Steele, Common Lisp the Language",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "scheme",
+   "to": "rust",
+   "plausibility": "high",
+   "comment": "Listed in the Rust Reference.",
+   "primary_source": "The Rust Reference, \"Influences\"",
+   "url": "https://doc.rust-lang.org/reference/influences.html",
+   "quote": "Scheme: hygienic macros"
+  },
+  {
+   "frm": "scheme",
+   "to": "scala",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "sh",
+   "to": "awk",
+   "plausibility": "medium",
+   "comment": "AWK was designed to be used from the shell and shares conventions; its syntax is mostly from C.",
+   "primary_source": "Aho, Kernighan & Weinberger, The AWK Programming Language",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "simula",
+   "to": "clu",
+   "plausibility": "high",
+   "comment": "Well documented: Liskov credits Simula 67's classes as a starting point for CLU's data abstraction.",
+   "primary_source": "Liskov, B. (1993). A History of CLU. HOPL-II",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "simula",
+   "to": "java",
+   "plausibility": "medium",
+   "comment": "Real but indirect (via C++ and Smalltalk); both the Simula and Simula 67 items are listed.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "simula",
+   "to": "mathematica",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "simula",
+   "to": "pascal",
+   "plausibility": "low",
+   "comment": "Pascal's records trace to Hoare's record proposal and ALGOL W, not Simula.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "smalltalk",
+   "to": "ada",
+   "plausibility": "low",
+   "comment": "Ada 95 object orientation; no specific statement known.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "smalltalk",
+   "to": "delphi",
+   "plausibility": "low",
+   "comment": "From the Object Pascal item; Apple's Object Pascal involved ex-Smalltalk people (Tesler), not Delphi itself.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "smalltalk",
+   "to": "erlang",
+   "plausibility": "medium",
+   "comment": "Armstrong's first experiments were done in Smalltalk before moving to Prolog; check his history.",
+   "primary_source": "Armstrong, J. (2007). A History of Erlang. HOPL III",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "smalltalk",
+   "to": "go",
+   "plausibility": "low",
+   "comment": "Go interfaces are sometimes compared with Smalltalk's duck typing; not in the Go FAQ ancestors.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "smalltalk",
+   "to": "mathematica",
+   "plausibility": "low",
+   "comment": "Wikidata-only as far as I know; no designer statement known to me.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "smalltalk",
+   "to": "scala",
+   "plausibility": "medium",
+   "comment": "Odersky's overview compares Scala's uniform object model with Smalltalk's.",
+   "primary_source": "Odersky et al. (2004). An Overview of the Scala Programming Language",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "smalltalk",
+   "to": "swift",
+   "plausibility": "medium",
+   "comment": "Indirect, through Objective-C.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "snobol",
+   "to": "lua",
+   "plausibility": "medium",
+   "comment": "Lua's string pattern matching is said to draw on SNOBOL/Icon; not found in the 2001 history page, check the HOPL III paper.",
+   "primary_source": "Ierusalimschy, de Figueiredo & Celes (2007). The Evolution of Lua. HOPL III",
+   "url": "https://www.lua.org/doc/hopl.pdf",
+   "quote": ""
+  },
+  {
+   "frm": "sql",
+   "to": "powershell",
+   "plausibility": "low",
+   "comment": "Cmdlet names like Select/Where are SQL-like; weak.",
+   "primary_source": "",
+   "url": "",
+   "quote": ""
+  },
+  {
+   "frm": "swift",
+   "to": "rust",
+   "plausibility": "high",
+   "comment": "Reverse of a recorded tie; a later-version tie (if let).",
+   "primary_source": "The Rust Reference, \"Influences\"",
+   "url": "https://doc.rust-lang.org/reference/influences.html",
+   "quote": "Swift: optional bindings"
+  },
+  {
+   "frm": "vb",
+   "to": "csharp",
+   "plausibility": "medium",
+   "comment": "C# was pitched as combining Visual Basic's productivity (properties, events, RAD) with C++; check Hejlsberg interviews.",
+   "primary_source": "Hejlsberg interviews (2000)",
+   "url": "",
+   "quote": ""
+  }
+ ],
+ "notes": "Source: Wikidata property P737 (influenced by), read 2026-11-27 via the Wikidata search API and the SPARQL endpoint (read-only). 86 of 88 languages mapped; not mapped: 'm' (the only item named M, Q1537488, is Microsoft's 2008 'Oslo' modeling language, not Power Query M) and 'excel' (only Microsoft Excel the application, Q11272, exists; it has no P737 values, so it is recorded as null). Items that are software products rather than languages: bash = GNU Bash, spss, stata, tex, scratch, matlab (Q169478), mathematica (Q81294). Extra items also queried and merged into the same node: ml also Standard ML (Q597330); matlab also Q37805571; basic also BASIC (Q42979; primary is Dartmouth BASIC); delphi also Object Pascal (Q633894); mathematica also Wolfram Language (Q15241057); kq also Q (Q7265638; primary is K); algol also the generic ALGOL family item (Q188436); simula also Simula 67 (Q10371720); fortran also FORTRAN II (Q28555914). Candidates that come only from a merged or generic item say so in the comment where it matters (ALGOL -> BASIC, Icon, PL/I, Scheme; Standard ML -> Rust; Object Pascal -> Java and Smalltalk -> Object Pascal; all Mathematica candidates come from the Wolfram Language item; FORTRAN II -> SNOBOL). Mapped nodes with no P737 values at all: apl, cypher, dax, iswim, matlab, mdx, sas, spss, stata, tex, tsql, vb; their dataset ties necessarily fall under dataset_only. Wikidata P737 values outside the 88 that are close to a node but were NOT merged: Unix shell -> Perl (dataset has sh -> perl), Modula and Oberon-2 -> Go, Modula -> Lua and Modula-2, ALGOL W -> Pascal, KornShell and C shell -> Bash. P737 is uncurated and largely mirrors Wikipedia infoboxes: treat every candidate as a lead. Plausibility and comments are from the checker's own knowledge and are unverified unless a quote is given. Quotes were read on 2026-11-27 from 6 pages (Rust Reference, Go FAQ, Lattner's page, ruby-lang.org, Elixir blog, Lua history); whitespace is normalized and the Rust lines are list items. 9 pages were fetched in total (the Swift book, Kotlin FAQ and F# docs pages gave nothing usable). Sources without a quote, and all DOIs, are from memory and need checking. Counts: 331 P737 statements read, 240 distinct pairs within the 88; 103 agree with the dataset, 137 candidates (31 high, 52 medium, 54 low), 44 dataset ties not in Wikidata."
+}

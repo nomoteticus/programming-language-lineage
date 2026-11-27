@@ -1,10 +1,10 @@
 # Programming Language Lineage
 
-No programming language starts from nothing. Python took its indentation-based blocks from ABC, R its closures and lexical scoping from Scheme, and JavaScript its prototype-based objects from Self. This project traces those borrowings as an interactive directed graph on a timeline: 88 languages as nodes, from Fortran (1957) to Zig (2016), and 147 documented influences as arrows between them. It is written for data scientists, so it includes the statistics, data and BI languages that general histories often skip.
+No programming language starts from nothing. Python took its indentation-based blocks from ABC, R its closures and lexical scoping from Scheme, and JavaScript its prototype-based objects from Self. This project traces those borrowings as an interactive directed graph on a timeline: 90 languages as nodes, from Fortran (1957) to Zig (2016), and 218 documented influences as arrows between them. It is written for data scientists, so it includes the statistics, data and BI languages that general histories often skip.
 
 **[Open the map](https://nomoteticus.github.io/programming-language-lineage/)** · [Data](data/) · [Method note](docs/method.md)
 
-[![The map around C++: its direct ancestors in brown, the languages it influenced in green, and the top of its card on the right](docs/screenshot.png)](https://nomoteticus.github.io/programming-language-lineage/)
+[![The map around C++: its direct ancestors in brown, the languages it influenced in green, and its card on the right](docs/screenshot.png)](https://nomoteticus.github.io/programming-language-lineage/)
 
 **Preview:** *C++ selected, with what shaped it (brown), what it went on to shape (green), and the top of its card.*
 
@@ -16,9 +16,9 @@ You can use it to:
 
 ## Features
 
-- **A directed graph on a timeline.** The horizontal axis is time: each language sits at the year it was first announced or released. The vertical position carries no value; it is chosen for readability, with related languages near each other. Counting only influences on a language's original design, the graph is acyclic (a DAG); the later-version links add one cycle, between PHP and Hack.
+- **A directed graph on a timeline.** The horizontal axis is time: each language sits at the year it was first announced or released. The vertical position carries no value; it is chosen for readability, with related languages near each other. A language keeps changing after its first release, so a few links run from a younger language to a later version of an older one, and with those the graph has cycles. The links that respect time order form an acyclic graph (a DAG).
 - **Nine families.** Each language is colored by its family: Lisp, ML & Haskell, Arrays & statistics, C & systems, JVM & .NET, Scripting & web, Data & BI, Teaching & visual, or Other lineages.
-- **Labeled influences.** An arrow runs from a language to one it influenced and says what was passed on, for example *C plus classes* from C to C++. A solid line is a strong influence and a dotted line a weaker or partial one. Where the influence arrived in a later version of the language, the label carries that version, for example *generators · Python 2.2*.
+- **Labeled influences.** An arrow runs from a language to one it influenced and says what was passed on, for example *C plus classes* from C to C++. A solid line is a strong influence and a dotted line a weaker or partial one. The labels of dotted lines appear when you hover or select a language, and a checkbox in the key hides the dotted lines altogether. Where the influence arrived in a later version of the language, the label carries that version, for example *generators · Python 2.2*.
 - **Direct and indirect influence.** Click or hover a language to highlight what shaped it (ancestors, in brown) and what it went on to shape (successors, in green). For each direction you choose how far to follow the chain: none, direct, second degree, or all.
 - **Two flags per language.** The right flag shows where the language was built; the left flag shows where its designer was born, when that differs. Hover a flag for the designers' names.
 - **Health today.** A badge rates each language as 🔥 Thriving, 🌿 Alive, 🪫 Fading or 💀 Dead. It is derived from three dimensions shown on the card: maintenance, new projects and installed base.
@@ -31,7 +31,7 @@ The [method note](docs/method.md) gives the full design: what counts as a node a
 
 ## Background and disclosure
 
-I am a data scientist, not a programming-language historian. When I started I knew fewer than half of these languages and had used fewer than 20 of them. This is a learning project. Every link cites a source (137 of 147 are primary: designers' papers, ACM HOPL histories, official FAQs and documentation), so you don't have to take my word, or an AI's, for any of it. The health and outlook badges are AI judgments, not measurements: Claude proposed them, the two AI reviewers challenged them, and I decided the disputed ones. Each comes with a one-line reason and, for outlooks, a confidence level and a condition that would change it.
+I am a data scientist, not a programming-language historian. When I started I knew fewer than half of these languages and had used fewer than 20 of them. This is a learning project. Every link cites a source (210 of 218 are primary: designers' papers, ACM HOPL histories, official FAQs and documentation), so you don't have to take my word, or an AI's, for any of it. The health and outlook badges are AI judgments, not measurements: Claude proposed them, the two AI reviewers challenged them, and I decided the disputed ones. Each comes with a one-line reason and, for outlooks, a confidence level and a condition that would change it.
 
 ## How it was made
 
@@ -41,9 +41,11 @@ I was studying PySpark with Claude, and a snippet looked strange to me as an R a
 
 From there I directed and Claude (Anthropic) built. I asked for each feature in turn: coverage of all major programming languages, flags for where a language was built and where its designers were born, health and outlook badges, cards with sources, filters, and pruning of minor influences. That became version 1: 82 languages and 129 links.
 
-I then had it reviewed by two other AI models, **Gemini 3.1 Pro** and **ChatGPT 6.1 Sol**, acting as adversarial reviewers over three rounds. I decided each point, conceding or arguing on the merits, and afterwards made a further revision of my own. The result is version 2, the version shown here. Three models checked each other, and a human decided.
+I then had it reviewed by two other AI models, **Gemini 3.1 Pro** and **ChatGPT 6.1 Sol**, acting as adversarial reviewers over three rounds. I decided each point, conceding or arguing on the merits, and afterwards made a further revision of my own. The result was version 2. Three models checked each other, and a human decided.
 
-Version 1 is kept in this repository under the tag [`v1-pre-review`](https://github.com/nomoteticus/programming-language-lineage/tree/v1-pre-review).
+An AI audit of version 2 then found that the cited sources named more influences than I had recorded, because I had collected links one quote at a time. For version 3, the version shown here, every cited source was re-read in full against a written inclusion rule, Wikidata's *influenced by* property served as a checklist for further candidates, and I decided the disputed cases.
+
+Version 1 is kept in this repository under the tag [`v1-pre-review`](https://github.com/nomoteticus/programming-language-lineage/tree/v1-pre-review), and version 2 under the tag [`v2`](https://github.com/nomoteticus/programming-language-lineage/tree/v2).
 
 ## Data and method
 
@@ -51,7 +53,9 @@ Version 1 is kept in this repository under the tag [`v1-pre-review`](https://git
 |---|---|
 | [`site/index.html`](site/index.html) | The map, as one stand-alone page. It also works offline, except for the web fonts. |
 | [`data/nodes.csv`](data/nodes.csv) | One row per language: year, family, country, designers, health, outlook, description. |
-| [`data/edges.csv`](data/edges.csv) | One row per link: label, strength, kind, later-version tag, and the evidence record. |
+| [`data/edges.csv`](data/edges.csv) | One row per link: label, strength, kind, later-version tag and year, the evidence record, and what changed from version 2. |
+| [`data/edges-v2-to-v3.csv`](data/edges-v2-to-v3.csv) | What changed in the links between version 2 and version 3, with the reason. |
+| [`data/languages-v2-to-v3.csv`](data/languages-v2-to-v3.csv) | The two languages added in version 3. |
 | [`data/edges-v1-to-v2.csv`](data/edges-v1-to-v2.csv) | What changed in the links between version 1 and version 2. |
 | [`data/languages-v1-to-v2.csv`](data/languages-v1-to-v2.csv) | The languages added, removed, renamed or re-dated between version 1 and version 2. |
 | [`docs/method.md`](docs/method.md) | The method note: what a node and a link are, the health and outlook rules, limitations, and the full link table with sources. |
@@ -60,7 +64,25 @@ Version 1 is kept in this repository under the tag [`v1-pre-review`](https://git
 
 A missing link means the influence was not documented in the sources I checked, not that there was none. The method note lists the other limitations.
 
-## What changed after AI review
+## What changed in version 3
+
+| | Version 2 | Version 3 |
+|---|---|---|
+| Languages | 88 | 90 |
+| Links | 147 | 218 |
+| Strong / weak links | 104 / 43 | 104 / 114 |
+
+- **More links, from the same sources.** Re-reading every cited source in full added 79 links. Many were named in a source that version 2 already cited: the Rust Reference, for example, names more influences than version 2 had drawn.
+- **A written inclusion rule.** A link needs a source saying that one language took something from the other, or that its designers wanted it to match the other in a named respect. Six links were removed because the source showed only a rival product, a rejected candidate, a precedent, or that one language was written in the other (for example Visual Basic → Delphi and SQL → DAX).
+- **Strength.** Of the 139 links kept, 12 went from strong to weak and 2 from weak to strong. Fortran → ALGOL 60 became strong: Alan Perlis, who chaired the American committee, wrote that ALGOL 58 "was based on a model strongly derived from FORTRAN and its contemporaries".
+- **Other routes are always weak.** A link that is not about design, syntax or types (a platform, a library, a shared designer) is drawn dotted, without exception.
+- **Dates.** All 32 later-version links now carry the year in which the influence arrived.
+- **Two languages.** Turbo Pascal and QuickBASIC were added as the documented routes from Pascal to Delphi and from BASIC to Visual Basic.
+- **New columns.** `data/edges.csv` now says whether the quoted sentence itself names the influence, and what changed from version 2.
+
+[`data/edges-v2-to-v3.csv`](data/edges-v2-to-v3.csv) lists every link of either version with what changed and why.
+
+## What changed after AI review (version 1 to version 2)
 
 | | Version 1 | Version 2 |
 |---|---|---|
@@ -86,7 +108,7 @@ A missing link means the influence was not documented in the sources I checked, 
 - O'Reilly, [*History of Programming Languages*](https://www.cs.toronto.edu/~gpenn/csc324/PLhistory.pdf) poster (2004; copy hosted by the University of Toronto).
 - Ramiro Gómez, [*Programming Languages Influence Network*](https://exploring-data.com/vis/programming-languages-influence-network/), an interactive influence network.
 - Peter Gleeson, [*How to visualize the programming language influence graph*](https://www.freecodecamp.org/news/how-to-visualize-the-programming-language-influence-graph-7f1b765b44d1/) (freeCodeCamp, 2017).
-- The ACM [History of Programming Languages (HOPL)](https://dl.acm.org/conference/hopl/proceedings) conference papers, which 27 of the 147 links cite.
+- The ACM [History of Programming Languages (HOPL)](https://dl.acm.org/conference/hopl/proceedings) conference papers, which 50 of the 218 links cite.
 
 **Assets and tools**
 
@@ -102,7 +124,8 @@ This section is a guide to changing the map and regenerating everything that dep
 
 | To change | Edit |
 |---|---|
-| A link, its label or its strength | `edges.py` |
+| A link, its strength or its evidence | `research/v3_reconcile.csv` (the audit table; `edges.py` is generated from it) |
+| A link's label | `v3_labels.py` |
 | A language, its health or its outlook | `make_nodes.py` |
 | The text on a card | `make_desc.py` |
 | The evidence for a link | `make_sources.py` (or a file in `research/`) |
@@ -113,10 +136,12 @@ Then regenerate. The data files and the method note need only Python 3 (standard
 ```bash
 python -X utf8 make_nodes.py      # languages          -> nodes.py
 python -X utf8 make_desc.py       # card text          -> desc.py
+python -X utf8 make_edges.py      # links              -> edges.py, v3_evidence.json
 python -X utf8 make_sources.py    # evidence records   -> sources.json
 python -X utf8 make_method.py     # method note        -> ../docs/method.md
 python -X utf8 export_data.py     # data files         -> ../data/nodes.csv, ../data/edges.csv
 python -X utf8 compare_v1_v2.py   # change tables      -> ../data/edges-v1-to-v2.csv, ../data/languages-v1-to-v2.csv
+python -X utf8 compare_v2_v3.py   # change tables      -> ../data/edges-v2-to-v3.csv, ../data/languages-v2-to-v3.csv
 ```
 
 The `-X utf8` flag matters on Windows. Regenerating the page itself also needs the flag and logo image packages, at pinned versions so the result is reproducible:
@@ -127,7 +152,7 @@ npm pack simple-icons@16.34.0 && mkdir -p si && tar xzf simple-icons-16.34.0.tgz
 python -X utf8 build.py           # the page           -> ../site/index.html
 ```
 
-`build.py` also prints layout warnings (`NODE OVERLAP`, `EDGE HITS NODE`, `LABEL CLASH`); about fifty minor ones are normal.
+`build.py` also prints layout warnings (`NODE OVERLAP`, `EDGE HITS NODE`, `LABEL CLASH`); about a hundred are normal with this many links.
 
 ## License
 

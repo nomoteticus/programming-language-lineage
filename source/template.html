@@ -84,6 +84,11 @@ figcaption { font-size: 13px; color: var(--muted); }
 .tick { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
 .edge { fill: none; stroke: var(--edge); stroke-width: 1.3; marker-end: url(#ah); transition: opacity .15s, stroke .15s; }
 .edge.dashed { stroke-dasharray: 5 4; }
+#map.noweak .edge.dashed, #map.noweak .elabel.weak { display: none; }
+/* labels of weaker links stay hidden until the link is highlighted (hover, selection or filter) */
+#map:not(.focus):not(.filter) .elabel.weak, #map.filter .elabel.weak:not(.half):not(.match) { opacity: 0; }
+.weaktog { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.weaktog input { margin: 0; accent-color: var(--fg); }
 .edge.ctx { stroke-dasharray: 1 3.2; stroke-linecap: round; stroke-width: 1.1; opacity: .7; }
 .elabel.ctx { font-style: italic; opacity: .8; }
 #map.filter .edge.ctx, #map.focus .edge.ctx { stroke-dasharray: 1 3.2; }
@@ -232,7 +237,7 @@ footer { font-size: 13px; color: var(--muted); max-width: 80ch; }
 
 <div class="wrap">
   <header>
-    <p class="eyebrow">From FORTRAN to Zig · 88 languages · 1957 to 2016</p>
+    <p class="eyebrow">From FORTRAN to Zig · 90 languages · 1957 to 2016</p>
     <h1>Programming Language Lineage</h1>
     <p class="lede">Each language sits at the year it appeared. Arrows point from a language to the ones it influenced, and say what was passed on. Flags show where each was built and, on the left, where its designers were born when that differs. The corner badges give its health today and a 20-year outlook, assuming AI keeps writing more of the world's code; both are AI judgments, with the reason on each card. Hover a language to isolate its family, or click it to open its card; Ctrl-click (⌘-click on a Mac) adds more languages to the selection, and <b>Hide panel</b> folds the card away so you can see the whole map.</p>
   </header>
@@ -245,7 +250,7 @@ footer { font-size: 13px; color: var(--muted); max-width: 80ch; }
     </div></div>
     <div class="lrow"><span class="lhead">Key</span><div class="lkeys static">
       <span><span class="key-line"></span>strong influence</span>
-      <span><span class="key-line dashed"></span>weaker or partial influence</span>
+      <label class="weaktog"><input type="checkbox" id="showWeak" checked><span class="key-line dashed"></span>weaker or partial influence (untick to hide)</label>
       <span><span class="key-line root"></span>roots: what shaped the selected language</span>
       <span><span class="key-line leaf"></span>leaves: what it went on to shape</span>
       <span><span class="key-dead"></span>dashed outline: dead language</span>
@@ -258,7 +263,7 @@ footer { font-size: 13px; color: var(--muted); max-width: 80ch; }
     <div class="scroller">
       %%SVG%%
     </div>
-    <figcaption>Only documented influences are drawn, typically one to four per language, and every link has a source (see the method note). Solid: a substantial influence. Dotted: a weaker or partial one. Most influences are on design; some came by another route (built on the other language's code or runtime, through a library, or from the same team), and the card says which. A version after a label (for example <i>generators · Python 2.2</i>) means the influence arrived in a later version of the language, not its original design. Years are first public announcement or release. Health and the 2046 outlook are AI judgments as of October 2026, not measurements; hover a badge for the reasoning and confidence. Flags are simplified: committee languages (ALGOL 60, ALGOL 68, Haskell) get a globe, and only the lead designers' birthplaces are shown.</figcaption>
+    <figcaption>Only documented influences are drawn, and every link has a source (see the method note). Solid: a substantial influence. Dotted: a weaker or partial one, whose label appears when you hover or select a language. Most influences are on design; some came by another route (built on the other language's code or runtime, through a library, or from the same team), and the card says which. A version after a label (for example <i>generators · Python 2.2</i>) means the influence arrived in a later version of the language, not its original design. Years are first public announcement or release. Health and the 2046 outlook are AI judgments as of October 2026, not measurements; hover a badge for the reasoning and confidence. Flags are simplified: committee languages (ALGOL 60, ALGOL 68, Haskell) get a globe, and only the lead designers' birthplaces are shown.</figcaption>
   </figure>
 
 
@@ -328,6 +333,7 @@ resetBtn.addEventListener('click', () => { active.clear(); applyFilter(); });
 
 /* ---------- hover / pin highlight ---------- */
 const depth = { up: 1, down: 1 };
+let hideWeak = false;     // weaker links are shown by default; the legend checkbox hides them
 const inE = {}, outE = {};
 DATA.edges.forEach((e, i) => { (inE[e.t] ||= []).push(i); (outE[e.f] ||= []).push(i); });
 function reach(id, dir, max) {
@@ -338,6 +344,7 @@ function reach(id, dir, max) {
     const next = [];
     frontier.forEach(cur => ((dir === 'up' ? inE : outE)[cur] || []).forEach(i => {
       const e = DATA.edges[i], other = dir === 'up' ? e.f : e.t;
+      if (hideWeak && e.d) return;
       if (e.c && lvl > 1) return;
       if (!edges.has(i)) edges.set(i, lvl);
       if (!nodes.has(other)) { nodes.set(other, { lvl, via: cur }); if (!e.c) next.push(other); }
@@ -369,7 +376,12 @@ function highlight(ids) {
     if (ids.includes(n.dataset.id)) n.classList.add('sel');
   });
 }
-document.querySelectorAll('.segb').forEach(b => b.addEventListener('click', () => {
+document.getElementById('showWeak').addEventListener('change', ev => {
+  hideWeak = !ev.target.checked;
+  svg.classList.toggle('noweak', hideWeak);
+  highlight(selected.length ? selected : null);
+});
+document.querySelectorAll('.segb[data-dir]').forEach(b => b.addEventListener('click', () => {
   depth[b.dataset.dir] = +b.dataset.depth;
   document.querySelectorAll(`.segb[data-dir="${b.dataset.dir}"]`).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
   if (pinned) { highlight(selected); renderCard(pinned); }

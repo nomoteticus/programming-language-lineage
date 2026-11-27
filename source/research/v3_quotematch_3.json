@@ -1,0 +1,353 @@
+[
+ {
+  "tie": "lisp>ruby",
+  "url": "https://www.ruby-lang.org/en/about/",
+  "url_used": "https://www.ruby-lang.org/en/about/",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Matches; the source has a footnote marker (3) between 'culture' and the closing period."
+ },
+ {
+  "tie": "csharp>rust",
+  "url": "https://doc.rust-lang.org/reference/influences.html",
+  "url_used": "https://doc.rust-lang.org/reference/influences.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (full list returned verbatim)",
+  "comment": "List item matches exactly."
+ },
+ {
+  "tie": "erlang>rust",
+  "url": "https://doc.rust-lang.org/reference/influences.html",
+  "url_used": "https://doc.rust-lang.org/reference/influences.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (full list returned verbatim)",
+  "comment": "List item matches exactly."
+ },
+ {
+  "tie": "newsqueak>rust",
+  "url": "https://doc.rust-lang.org/reference/influences.html",
+  "url_used": "https://doc.rust-lang.org/reference/influences.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (full list returned verbatim)",
+  "comment": "List item matches exactly."
+ },
+ {
+  "tie": "ruby>rust",
+  "url": "https://doc.rust-lang.org/reference/influences.html",
+  "url_used": "https://doc.rust-lang.org/reference/influences.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (full list returned verbatim)",
+  "comment": "List item matches exactly."
+ },
+ {
+  "tie": "scheme>rust",
+  "url": "https://doc.rust-lang.org/reference/influences.html",
+  "url_used": "https://doc.rust-lang.org/reference/influences.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (full list returned verbatim)",
+  "comment": "List item matches exactly."
+ },
+ {
+  "tie": "swift>rust",
+  "url": "https://doc.rust-lang.org/reference/influences.html",
+  "url_used": "https://doc.rust-lang.org/reference/influences.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (full list returned verbatim)",
+  "comment": "List item matches exactly."
+ },
+ {
+  "tie": "algol>s",
+  "url": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "url_used": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Sentence found verbatim in the PDF text."
+ },
+ {
+  "tie": "c>s",
+  "url": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "url_used": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Sentence found verbatim in the PDF text."
+ },
+ {
+  "tie": "commonlisp>s",
+  "url": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "url_used": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Sentence found verbatim in the PDF text."
+ },
+ {
+  "tie": "cpp>s",
+  "url": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "url_used": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Sentence found verbatim in the PDF text."
+ },
+ {
+  "tie": "lisp>s",
+  "url": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "url_used": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Matches; 'first-class' is hyphenated at a line end in the source ('first-' / 'class'), so the quote's 'firstclass' is a line-break artifact; the source word is 'first-class'."
+ },
+ {
+  "tie": "sh>s",
+  "url": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "url_used": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Sentence found verbatim in the PDF text."
+ },
+ {
+  "tie": "smalltalk>s",
+  "url": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "url_used": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Sentence found verbatim in the PDF text."
+ },
+ {
+  "tie": "csharp>scala",
+  "url": "https://www.artima.com/pins1ed/a-scalable-language.html",
+  "url_used": "https://www.artima.com/pins1ed/a-scalable-language.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Sentence returned verbatim (in fragments where long)."
+ },
+ {
+  "tie": "eiffel>scala",
+  "url": "https://www.artima.com/pins1ed/a-scalable-language.html",
+  "url_used": "https://www.artima.com/pins1ed/a-scalable-language.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Sentence returned verbatim (in fragments where long)."
+ },
+ {
+  "tie": "erlang>scala",
+  "url": "https://www.artima.com/pins1ed/a-scalable-language.html",
+  "url_used": "https://www.artima.com/pins1ed/a-scalable-language.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Sentence returned verbatim (in fragments where long)."
+ },
+ {
+  "tie": "apl>self",
+  "url": "https://worrydream.com/refs/Ungar_2007_-_Self_(HOPL).pdf",
+  "url_used": "https://worrydream.com/refs/Ungar_2007_-_Self_(HOPL).pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Sentence found verbatim in the PDF text (section 2.3)."
+ },
+ {
+  "tie": "perl>swift",
+  "url": "https://atp.fm/205-chris-lattner-interview-transcript",
+  "url_used": "https://atp.fm/205-chris-lattner-interview-transcript",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Both sentences match; source uses a curly apostrophe in 'that’s'."
+ },
+ {
+  "tie": "lua>julia",
+  "url": "https://docs.julialang.org/en/v1/",
+  "url_used": "https://docs.julialang.org/en/v1/",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Sentence matches; language names are hyperlinks in the source."
+ },
+ {
+  "tie": "scheme>commonlisp",
+  "url": "https://www.lispworks.com/documentation/HyperSpec/Body/01_ab.htm",
+  "url_used": "https://www.lispworks.com/documentation/HyperSpec/Body/01_ab.htm",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Both sentences match, checked in three fragments."
+ },
+ {
+  "tie": "commonlisp>clojure",
+  "url": "https://dl.acm.org/doi/10.1145/3386321",
+  "url_used": "https://dl.acm.org/doi/10.1145/3386321",
+  "result": "exact",
+  "source_wording": "",
+  "method": "read directly by the maintainer",
+  "comment": "Not fetched; verified by hand by the maintainer."
+ },
+ {
+  "tie": "ml>clojure",
+  "url": "https://dl.acm.org/doi/10.1145/3386321",
+  "url_used": "https://dl.acm.org/doi/10.1145/3386321",
+  "result": "exact",
+  "source_wording": "",
+  "method": "read directly by the maintainer",
+  "comment": "Not fetched; verified by hand by the maintainer."
+ },
+ {
+  "tie": "haskell>clojure",
+  "url": "https://dl.acm.org/doi/10.1145/3386321",
+  "url_used": "https://dl.acm.org/doi/10.1145/3386321",
+  "result": "exact",
+  "source_wording": "",
+  "method": "read directly by the maintainer",
+  "comment": "Not fetched; verified by hand by the maintainer."
+ },
+ {
+  "tie": "haskell>csharp",
+  "url": "https://people.willamette.edu/~fruehr/talks/webcs/MeijerICFP06.pdf",
+  "url_used": "https://people.willamette.edu/~fruehr/talks/webcs/MeijerICFP06.pdf",
+  "result": "minor",
+  "source_wording": "To actually bring this within the reach of mainstream programmers we have worked tirelessly on transferring functional programming technology from pure Haskell, via Cω to the upcoming versions of C# 3.0 and Visual Basic 9 and the LINQ framework.",
+  "method": "pdftotext",
+  "comment": "The quote matches the PDF text layer exactly, but that layer drops two glyphs throughout the paper (it also reads 'Polyphonic C group', 'C 2.0', 'the C language'). The printed text therefore reads 'via Cω' (C-omega) and 'C# 3.0'. The source wording given is inferred from that pattern; the page could not be rendered to confirm the glyphs visually (no pdftoppm)."
+ },
+ {
+  "tie": "lisp>clu",
+  "url": "https://www.cs.tufts.edu/~nr/cs257/archive/barbara-liskov/clu-history.pdf",
+  "url_used": "https://www.cs.tufts.edu/~nr/cs257/archive/barbara-liskov/clu-history.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Both sentences found verbatim, consecutive."
+ },
+ {
+  "tie": "algol>clu",
+  "url": "https://www.cs.tufts.edu/~nr/cs257/archive/barbara-liskov/clu-history.pdf",
+  "url_used": "https://www.cs.tufts.edu/~nr/cs257/archive/barbara-liskov/clu-history.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Both sentences found verbatim, consecutive."
+ },
+ {
+  "tie": "awk>js",
+  "url": "https://www.wirfs-brock.com/allen/jshopl.pdf",
+  "url_used": "https://www.wirfs-brock.com/allen/jshopl.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Matches; the source has footnote marker 16 after 'function declarations'."
+ },
+ {
+  "tie": "perl>js",
+  "url": "https://www.wirfs-brock.com/allen/jshopl.pdf",
+  "url_used": "https://www.wirfs-brock.com/allen/jshopl.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Sentence found verbatim."
+ },
+ {
+  "tie": "apl>go",
+  "url": "https://go.googlesource.com/website/+/33b532a2f57ccceaeaf826d86ca10b069ce5cd9e/_content/talks/2014/hellogophers.slide",
+  "url_used": "https://go.googlesource.com/website/+/33b532a2f57ccceaeaf826d86ca10b069ce5cd9e/_content/talks/2014/hellogophers.slide",
+  "result": "minor",
+  "source_wording": "Some of the languages that influenced and informed the design of Go: [...] APL: `iota`",
+  "method": "webfetch fragments",
+  "comment": "Heading line matches. In the .slide source file 'iota' is wrapped in backticks (code markup), so the raw line is APL: `iota`; the rendered slide shows it without them. Markup-only difference."
+ },
+ {
+  "tie": "bcpl>go",
+  "url": "https://go.googlesource.com/website/+/33b532a2f57ccceaeaf826d86ca10b069ce5cd9e/_content/talks/2014/hellogophers.slide",
+  "url_used": "https://go.googlesource.com/website/+/33b532a2f57ccceaeaf826d86ca10b069ce5cd9e/_content/talks/2014/hellogophers.slide",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Heading line and list line both returned verbatim from the 'Not just C' slide."
+ },
+ {
+  "tie": "smalltalk>go",
+  "url": "https://go.googlesource.com/website/+/33b532a2f57ccceaeaf826d86ca10b069ce5cd9e/_content/talks/2014/hellogophers.slide",
+  "url_used": "https://go.googlesource.com/website/+/33b532a2f57ccceaeaf826d86ca10b069ce5cd9e/_content/talks/2014/hellogophers.slide",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Heading line and list line both returned verbatim from the 'Not just C' slide."
+ },
+ {
+  "tie": "java>ada",
+  "url": "https://www.adaic.org/resources/add_content/standards/05rat/html/Rat-1-3-1.html",
+  "url_used": "https://www.adaic.org/resources/add_content/standards/05rat/html/Rat-1-3-1.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Sentence returned verbatim."
+ },
+ {
+  "tie": "b>go",
+  "url": "https://go.dev/doc/faq",
+  "url_used": "https://go.dev/doc/faq",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Sentence returned verbatim in two fragments."
+ },
+ {
+  "tie": "pascal>turbopascal",
+  "url": "https://archive.decromancer.ca/bitsavers.org/pdf/borland/turbo_pascal/TURBO_Pascal_Reference_Manual_CPM_Version_3_Dec88.pdf",
+  "url_used": "https://archive.decromancer.ca/bitsavers.org/pdf/borland/turbo_pascal/TURBO_Pascal_Reference_Manual_CPM_Version_3_Dec88.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext (OCR layer of a scan, PDF page 15)",
+  "comment": "Matches except that the OCR layer garbles the word 'Report' as 'Re po ri'; every other character matches. The scan image could not be rendered to read that one word directly."
+ },
+ {
+  "tie": "turbopascal>delphi",
+  "url": "https://www.welcometothejungle.com/en-GB/articles/video/anders-hejlsberg-microsoft-career",
+  "url_used": "https://www.welcometothejungle.com/en-GB/articles/video/anders-hejlsberg-microsoft-career",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Sentence returned verbatim."
+ },
+ {
+  "tie": "cpp>turbopascal",
+  "url": "https://archive.decromancer.ca/bitsavers.org/pdf/borland/turbo_pascal/Turbo_Pascal_Version_5.5_Object-Oriented_Programming_Guide_1989.pdf",
+  "url_used": "https://archive.decromancer.ca/bitsavers.org/pdf/borland/turbo_pascal/Turbo_Pascal_Version_5.5_Object-Oriented_Programming_Guide_1989.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext (OCR layer of a scan, PDF page 8)",
+  "comment": "Matches; 'Addison-Wesley' is hyphenated at a line end in the source."
+ },
+ {
+  "tie": "basic>quickbasic",
+  "url": "https://qbmikehawk.neocities.org/interviews/GregWhitten",
+  "url_used": "https://qbmikehawk.neocities.org/interviews/GregWhitten",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "All three sentences (both parts around the omission) returned verbatim."
+ },
+ {
+  "tie": "quickbasic>vb",
+  "url": "https://discmaster.textfiles.com/view/16184/MAX_PROGRAMMERS.iso/VISUAL_B/ARQS_ZIP/VBFACTS.ZIP/VBFACTS.TXT",
+  "url_used": "https://discmaster.textfiles.com/view/16184/MAX_PROGRAMMERS.iso/VISUAL_B/ARQS_ZIP/VBFACTS.ZIP/VBFACTS.TXT",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Both sentences returned verbatim."
+ }
+]

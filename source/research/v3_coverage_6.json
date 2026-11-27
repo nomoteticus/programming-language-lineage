@@ -1,0 +1,1505 @@
+[
+ {
+  "sid": "S076",
+  "url": "https://doc.rust-lang.org/reference/influences.html",
+  "url_used": "https://doc.rust-lang.org/reference/influences.html",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "rust"
+  ],
+  "named": [
+   {
+    "frm": "cyclone",
+    "to": "rust",
+    "in_v2": true,
+    "quote": "ML Kit, Cyclone: region based memory management",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "region-based memory management (lifetimes)",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "List item under the heading 'Influences', introduced by 'design elements coming from a wide range of sources'."
+   },
+   {
+    "frm": "cpp",
+    "to": "rust",
+    "in_v2": true,
+    "quote": "C++: references, RAII, smart pointers, move semantics, monomorphization, memory model",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "references, RAII, smart pointers, move semantics, monomorphization, memory model",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Longest list item; several defining features."
+   },
+   {
+    "frm": "ocaml",
+    "to": "rust",
+    "in_v2": true,
+    "quote": "SML, OCaml: algebraic data types, pattern matching, type inference, semicolon statement separation",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "algebraic data types, pattern matching, type inference, semicolon statement separation",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Stated directly. The page does not mention that the first compiler was written in OCaml (that part of the v2 note is from elsewhere)."
+   },
+   {
+    "frm": "haskell",
+    "to": "rust",
+    "in_v2": true,
+    "quote": "Haskell (GHC): typeclasses, type families",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "type",
+    "what": "type classes (traits), type families",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Stated directly."
+   },
+   {
+    "frm": "ml",
+    "to": "rust",
+    "in_v2": false,
+    "quote": "SML, OCaml: algebraic data types, pattern matching, type inference, semicolon statement separation",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "algebraic data types, pattern matching, type inference, semicolon statement separation",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Standard ML is named first in the same item as OCaml, with the same features. A human should decide whether to record both ML and OCaml or only one (possible double counting); if both, ML could be weak."
+   },
+   {
+    "frm": "newsqueak",
+    "to": "rust",
+    "in_v2": false,
+    "quote": "Newsqueak, Alef, Limbo: channels, concurrency",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "channels, concurrency",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Named directly. Secondary feature; the list 'includ[es] elements that have since been removed' and channels now live in the standard library."
+   },
+   {
+    "frm": "erlang",
+    "to": "rust",
+    "in_v2": false,
+    "quote": "Erlang: message passing, thread failure, linked thread failure, lightweight concurrency",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "message passing, thread failure, lightweight concurrency",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Named directly. Mostly early-Rust task features that were later removed or moved to libraries, so weak."
+   },
+   {
+    "frm": "swift",
+    "to": "rust",
+    "in_v2": false,
+    "quote": "Swift: optional bindings",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "optional bindings (if let)",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "Rust 0.12",
+    "since_year": 2014,
+    "proposal": "add",
+    "reason": "Named directly; single feature. Swift (2014) is younger than Rust (2010), so this is a later-version tie. The 'since' value (if let, RFC 160, landed 2014, shipped in Rust 0.12) is from my own knowledge, not from this page; please verify."
+   },
+   {
+    "frm": "scheme",
+    "to": "rust",
+    "in_v2": false,
+    "quote": "Scheme: hygienic macros",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "hygienic macros",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Named directly; single feature."
+   },
+   {
+    "frm": "csharp",
+    "to": "rust",
+    "in_v2": false,
+    "quote": "C#: attributes",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "attributes",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Named directly; single feature."
+   },
+   {
+    "frm": "ruby",
+    "to": "rust",
+    "in_v2": false,
+    "quote": "Ruby: closure syntax, block syntax",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "closure syntax, block syntax",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Named directly; surface syntax."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "cyclone",
+    "to": "rust",
+    "found_verbatim": true,
+    "comment": ""
+   },
+   {
+    "frm": "cpp",
+    "to": "rust",
+    "found_verbatim": true,
+    "comment": ""
+   },
+   {
+    "frm": "ocaml",
+    "to": "rust",
+    "found_verbatim": true,
+    "comment": ""
+   },
+   {
+    "frm": "haskell",
+    "to": "rust",
+    "found_verbatim": true,
+    "comment": ""
+   }
+  ],
+  "notes": "Whole page read; it is a short list. Intro sentence (verbatim): 'Rust is not a particularly original language, with design elements coming from a wide range of sources. Some of these are listed below (including elements that have since been removed):'. The page names 11 on-map languages: SML (ml), OCaml, C++, Cyclone, Haskell, Newsqueak, Erlang, Swift, Scheme, C#, Ruby. Off-map: ML Kit, Alef, Limbo, NIL, Hermes (typestate), Unicode Annex #31. The list gives no dates and no strengths; strengths above are my proposals."
+ },
+ {
+  "sid": "S077",
+  "url": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "url_used": "https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "s"
+  ],
+  "named": [
+   {
+    "frm": "apl",
+    "to": "s",
+    "in_v2": true,
+    "quote": "From APL we borrowed the concept of the multi-way array (although we did not make it our basic data structure), and the overall consistency of operations.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "multi-way array, consistency of operations; also typeless (no declarations), boundary cases",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Explicit 'we borrowed'. Also: 'The notion of a typeless language (with no declarations) was also present in APL and PPL.' (precedent wording) and a footnote on APL's boundary cases."
+   },
+   {
+    "frm": "fortran",
+    "to": "s",
+    "in_v2": true,
+    "quote": "We wanted the basic syntax of the language to be familiar, so we used standard arithmetic expressions such as those found in Fortran or C.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "arithmetic expression syntax (design); S as interactive interface to a Fortran library and first implemented in Fortran (non-design)",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, change strength to weak",
+    "reason": "The v2 quote documents the implementation route (interface to the SCS Fortran library; 'The implementation was done in Fortran for many reasons.'), which the rule makes weak. The only design statement is this shared, minor syntax point, so the tie can be recoded as syntax but stays weak."
+   },
+   {
+    "frm": "c",
+    "to": "s",
+    "in_v2": false,
+    "quote": "Certainly C and Ratfor contributed the notion that a braced expression was an expression, thus allowing S to get by without need for special syntax like BEGIN/END or IF/FI or CASE/ESAC.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "braced expressions; arithmetic expression syntax ('such as those found in Fortran or C')",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Explicit 'contributed'. Also non-design: 'New S was implemented primarily in C' (1988). Could be argued strong given S's C-like surface; proposed weak because the source credits two specific syntax points."
+   },
+   {
+    "frm": "algol",
+    "to": "s",
+    "in_v2": false,
+    "quote": "We wanted to emphasize that the assignment operation was different from an equality test so, like Algol, we used a special operator.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "a distinct assignment operator (the specific '<-' came from PPL)",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "'like Algol, we used' in the paragraph that opens 'most of the features present in S were influenced by some other languages'. 'Algol' taken as ALGOL 60. Single surface feature."
+   },
+   {
+    "frm": "lisp",
+    "to": "s",
+    "in_v2": false,
+    "quote": "Some of the more innovative ideas in data structuring came from LISP: the lambda calculus form of function declarations, the storage of functions as objects in the language, the notion of functions as firstclass objects, property lists attached to data.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "function declarations, functions as first-class objects, property lists (attributes)",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "New S (1988)",
+    "since_year": 1988,
+    "proposal": "add",
+    "reason": "Explicit 'came from LISP', and these are defining features of S. They entered with New S (1988): 'This made functions into truly first-class S objects'; attributes were 'clearly implemented' only in the 1988 release. 'firstclass' is the PDF's line-break hyphenation. A human should decide strong vs weak."
+   },
+   {
+    "frm": "cpp",
+    "to": "s",
+    "in_v2": false,
+    "quote": "More recently, we borrowed ideas about classes and inheritance from languages like C++, CLOS, and Smalltalk.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "classes and inheritance",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "S 1991 release (White Book)",
+    "since_year": 1991,
+    "proposal": "add",
+    "reason": "Explicit 'we borrowed', but one of three named sources ('languages like'). Classes and methods arrived with the 1991 release ('Statistical Models in S', the 'White Book')."
+   },
+   {
+    "frm": "smalltalk",
+    "to": "s",
+    "in_v2": false,
+    "quote": "More recently, we borrowed ideas about classes and inheritance from languages like C++, CLOS, and Smalltalk.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "classes and inheritance",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "S 1991 release (White Book)",
+    "since_year": 1991,
+    "proposal": "add",
+    "reason": "Same sentence as C++."
+   },
+   {
+    "frm": "commonlisp",
+    "to": "s",
+    "in_v2": false,
+    "quote": "More recently, we borrowed ideas about classes and inheritance from languages like C++, CLOS, and Smalltalk.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "classes and inheritance (from CLOS)",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "S 1991 release (White Book)",
+    "since_year": 1991,
+    "proposal": "add",
+    "reason": "The source names CLOS (the Common Lisp Object System), mapped here to Common Lisp; a human should confirm the mapping."
+   },
+   {
+    "frm": "sh",
+    "to": "s",
+    "in_v2": false,
+    "quote": "The UNIX shell also contributed to the notion of continuation lines.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "continuation lines with a special prompt; '!' escape credited to the UNIX system",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Explicit 'contributed', single minor feature. S predates the Bourne shell (1979); the source does not say which shell or when, so 'since' is left empty (S moved to UNIX around 1980-81)."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "apl",
+    "to": "s",
+    "found_verbatim": true,
+    "comment": ""
+   },
+   {
+    "frm": "fortran",
+    "to": "s",
+    "found_verbatim": true,
+    "comment": "Both halves are verbatim; the '...' joins two sentences in the same section ('...was carried out using a large, well-documented Fortran library known as SCS (Statistical Computing Subroutines).' and 'Our initial goals were not lofty; we simply wanted an interactive interface to the algorithms in the SCS library.')."
+   }
+  ],
+  "notes": "Full text read (WebFetch saved the PDF; text layer extracted locally with pdftotext to check wording). The key passage is near the end: 'most of the features present in S were influenced by some other languages. We often found a good concept in an existing system and adapted it to our purposes.' v2 used only two of the influences listed there. Off-map major influences: Troll ('The Troll system contributed in many ways: the need for a time-series data type...; the power of functions as a basic way of expressing computations'), PPL (the '<-' operator, typeless values), Ratfor (braced expressions; implementation language), IBM 360 Assembler and JCL (positional/keyword arguments with defaults). Precedent only: 'the parse/eval/print loop, was a well-explored concept, occurring in APL, Troll, LISP, and PPL'. The pre-S Bell Labs language 'did not directly influence S'."
+ },
+ {
+  "sid": "S078",
+  "url": "http://blog.pmean.com/history-of-sas/",
+  "url_used": null,
+  "reachable": false,
+  "read_extent": "abstract only",
+  "targets": [
+   "sas"
+  ],
+  "named": [
+   {
+    "frm": "pli",
+    "to": "sas",
+    "in_v2": true,
+    "quote": "In 1985, the millions of lines of SAS code (mostly Pl/1, FORTRAN, and IBM Assembler) were translated into C",
+    "quote_verbatim_confidence": "low",
+    "relation": "non_design",
+    "source_names_it": "yes",
+    "kind": "implementation",
+    "what": "early SAS partly written in PL/I",
+    "proposed_strength": "weak",
+    "proposed_verdict": "partly",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Source could not be read, so the quote is the v2 quote, unchecked. As recorded it is an implementation tie, already weak. Note the same sentence would equally support fortran -> sas and c -> sas (implementation, weak) if the project wants consistency."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "pli",
+    "to": "sas",
+    "found_verbatim": null,
+    "comment": "Source unreachable: blog.pmean.com returns a TLS error (http and https), web.archive.org is blocked for the fetch tool, and www.pmean.com/posts/history-of-sas/ also fails."
+   }
+  ],
+  "notes": "Unreachable in this session (4 attempts). Nothing new could be extracted. If the v2 quote is right, FORTRAN and C are named in the same implementation sentence (candidates fortran -> sas and c -> sas, non_design, weak), not listed above as records because unverified."
+ },
+ {
+  "sid": "S079",
+  "url": "https://www.artima.com/weblogs/viewpost.jsp?thread=163733",
+  "url_used": "https://www.scala-lang.org/node/239",
+  "reachable": true,
+  "read_extent": "partial",
+  "targets": [
+   "scala"
+  ],
+  "named": [
+   {
+    "frm": "java",
+    "to": "scala",
+    "in_v2": true,
+    "quote": "Scala is not an extension of Java, but it is completely interoperable with it. Scala translates to Java bytecodes, and the efficiency of its compiled programs usually equals Java's.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "non_design",
+    "source_names_it": "no",
+    "kind": "platform",
+    "what": "runs on the JVM, interoperates with Java",
+    "proposed_strength": "weak",
+    "proposed_verdict": "partly",
+    "since": "",
+    "since_year": null,
+    "proposal": "recode kind",
+    "reason": "In this text the quote shows only interoperability and the platform (and says Scala is 'not an extension of Java'), which by the rule is a weak platform tie. The strong design tie is stated in S080 (Programming in Scala): 'Scala adopts a large part of the syntax of Java and C#' and 'adopts other elements of Java, such as its basic types, its class libraries, and its execution model'. Suggest keeping java -> scala strong but citing S080 for it."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "java",
+    "to": "scala",
+    "found_verbatim": true,
+    "comment": "Found verbatim, but in the equivalent copy 'Scala's Prehistory' by Odersky on scala-lang.org; the Artima page itself returned HTTP 500."
+   }
+  ],
+  "notes": "The Artima URL returned HTTP 500 and the Wayback Machine is blocked for the fetch tool. Read instead Odersky's 'Scala's Prehistory' (scala-lang.org/node/239), which contains the v2 quote word for word and appears to be the same text; I could not confirm it is identical to the Artima post, hence 'partial'. Other languages named there are off-map: Pizza and GJ (Odersky's earlier Java extensions: 'This work on Pizza led eventually to GJ, the new javac compiler, and Java generics.') and Funnel ('Scala, which took some of the ideas of Funnel and put them into a more pragmatic language'). On-map but not about Scala's design: Modula-2 and Oberon (Odersky was Wirth's Ph.D. student 'on Modula-2 and Oberon'), a same-person biographical mention only."
+ },
+ {
+  "sid": "S080",
+  "url": "https://www.artima.com/pins1ed/a-scalable-language.html",
+  "url_used": "https://www.artima.com/pins1ed/a-scalable-language.html",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "scala"
+  ],
+  "named": [
+   {
+    "frm": "ml",
+    "to": "scala",
+    "in_v2": true,
+    "quote": "Its approach to functional programming is quite similar in spirit to the ML family of languages, which has SML, OCaml, and F# as prominent members.",
+    "quote_verbatim_confidence": "high",
+    "relation": "resemblance",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "functional programming style",
+    "proposed_strength": "weak",
+    "proposed_verdict": "partly",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, change strength to weak",
+    "reason": "The sentence says 'similar in spirit', which the rule treats as resemblance, not borrowing. It sits in the paragraph opened by 'Scala also owes much to other languages.', so indirect support exists; no better sentence in this source. Borderline: a human should choose between weak/partly and drop."
+   },
+   {
+    "frm": "haskell",
+    "to": "scala",
+    "in_v2": true,
+    "quote": "Scala's implicit parameters were motivated by Haskell's type classes; they achieve analogous results in a more classical object-oriented setting.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "type",
+    "what": "implicit parameters, motivated by type classes",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "States the influence directly. Implicits are a defining Scala feature, so strong is defensible; it is a single feature, so weak is also arguable. Also: 'Many higher-order functions in Scala's standard library are also present in ML or Haskell.' (resemblance)."
+   },
+   {
+    "frm": "java",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "At the surface level, Scala adopts a large part of the syntax of Java and C#, which in turn borrowed most of their syntactic conventions from C and C++.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "syntax; also basic types, class libraries, execution model",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "Not a v2 tie of this source, but java -> scala is a v2 tie cited to S079, whose quote shows only interoperability. This chapter states the borrowing: also 'Besides syntax, Scala adopts other elements of Java, such as its basic types, its class libraries, and its execution model.' Move the citation here."
+   },
+   {
+    "frm": "csharp",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "At the surface level, Scala adopts a large part of the syntax of Java and C#, which in turn borrowed most of their syntactic conventions from C and C++.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "syntax",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Named together with Java as a source of syntax; the following sentences detail only Java, so weak."
+   },
+   {
+    "frm": "c",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "At the surface level, Scala adopts a large part of the syntax of Java and C#, which in turn borrowed most of their syntactic conventions from C and C++.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "syntax",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Indirect: C is named as the source of Java's and C#'s conventions, not of Scala's."
+   },
+   {
+    "frm": "cpp",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "At the surface level, Scala adopts a large part of the syntax of Java and C#, which in turn borrowed most of their syntactic conventions from C and C++.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "syntax",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Indirect, as for C. Later in the section C++ is only compared (extensible through operator overloading and templates)."
+   },
+   {
+    "frm": "smalltalk",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "Its uniform object model was pioneered by Smalltalk and taken up subsequently by Ruby.",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "uniform object model (every value is an object)",
+    "proposed_strength": "weak",
+    "proposed_verdict": "partly",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Worded as precedent ('pioneered by'), but it directly follows 'Scala also owes much to other languages.', which frames the list as debts. Borderline; proposed as weak/partly for a human to decide. Smalltalk is also credited, with Iswim, for infix operators as functions."
+   },
+   {
+    "frm": "ruby",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "Its uniform object model was pioneered by Smalltalk and taken up subsequently by Ruby.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Ruby is named only as another language that took up Smalltalk's model."
+   },
+   {
+    "frm": "eiffel",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "Its uniform access principle for method invocation and field selection comes from Eiffel.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "uniform access principle",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Explicit 'comes from Eiffel'; single feature."
+   },
+   {
+    "frm": "erlang",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "Scala's actor-based concurrency library was heavily inspired by Erlang.",
+    "quote_verbatim_confidence": "high",
+    "relation": "non_design",
+    "source_names_it": "yes",
+    "kind": "library",
+    "what": "actor-based concurrency library",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Explicit and strong wording, but about a library, so weak by the rule. Section 1.2 adds: 'Scala also implements most of Erlang's other concurrent programming constructs' (fragment)."
+   },
+   {
+    "frm": "algol",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "Its idea of universal nesting (almost every construct in Scala can be nested inside any other construct) is also present in Algol, Simula, and, more recently in Beta and gbeta.",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "universal nesting",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "'is also present in' is precedent wording, even though the paragraph is about debts. Flag for a human."
+   },
+   {
+    "frm": "simula",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "Its idea of universal nesting (almost every construct in Scala can be nested inside any other construct) is also present in Algol, Simula, and, more recently in Beta and gbeta.",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "universal nesting",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Same sentence as Algol; precedent wording."
+   },
+   {
+    "frm": "iswim",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "The specific idea of treating an infix operator as a function can be traced back to Iswim and Smalltalk.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "infix operator as a function; function literals as parameters",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "'can be traced back to' is precedent. The paragraph also cites Landin's 1966 Iswim paper for the idea of extensible languages. Flag for a human."
+   },
+   {
+    "frm": "ocaml",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "Its approach to functional programming is quite similar in spirit to the ML family of languages, which has SML, OCaml, and F# as prominent members.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Named only as a member of the ML family; later named among functional languages that acquired an object system (comparison)."
+   },
+   {
+    "frm": "fsharp",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "Its approach to functional programming is quite similar in spirit to the ML family of languages, which has SML, OCaml, and F# as prominent members.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Named only as a member of the ML family (F# is also younger than Scala)."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "ml",
+    "to": "scala",
+    "found_verbatim": true,
+    "comment": ""
+   },
+   {
+    "frm": "haskell",
+    "to": "scala",
+    "found_verbatim": true,
+    "comment": ""
+   }
+  ],
+  "notes": "Section 1.4 read. The fetch tool would only return sentences as short consecutive fragments, which I rejoined; sentences marked 'high' were returned complete, 'medium' came from a less complete pass. The rest of the section (after the Erlang sentence) was returned only as a summary: it names Smalltalk and Lisp (flexible syntax for internal DSLs), C++ (extensibility), Ruby, Smalltalk and Python (functional elements in OO languages), OCaml, F# and PLT-Scheme (functional languages with object systems), and a footnote saying the 'variable: Type' syntax resembles Pascal, Modula-2 and Eiffel; all are comparisons, not stated borrowings (lisp, python, scheme, pascal, modula2 -> scala: passing/resemblance, not listed as records because I did not see exact wording). Off-map: Beta, gbeta, Pizza, Nice, Multi-Java."
+ },
+ {
+  "sid": "S081",
+  "url": "https://github.com/scala/scala3/pull/7083",
+  "url_used": "https://github.com/scala/scala3/pull/7083",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "scala"
+  ],
+  "named": [
+   {
+    "frm": "python",
+    "to": "scala",
+    "in_v2": true,
+    "quote": "The most widely taught language is now (or will be soon, in any case) Python, which is indentation based.",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "syntax",
+    "what": "significant indentation (optional braces)",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "Scala 3",
+    "since_year": 2021,
+    "proposal": "drop",
+    "reason": "Python is cited as evidence that indentation syntax is familiar and widely taught, not as something Scala took from Python; by the rule this is precedent, not a tie. Borderline, since it is the first reason given for the change: if a human keeps it, it should be weak, verdict partly, since 'Scala 3' (2021)."
+   },
+   {
+    "frm": "haskell",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "Other popular functional languages are also indentation based (e..g Haskell, F#, Elm, Agda, Idris).",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "syntax",
+    "what": "significant indentation",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Listed as another indentation-based language; precedent only. (haskell -> scala exists in v2 for type classes, from S080.)"
+   },
+   {
+    "frm": "fsharp",
+    "to": "scala",
+    "in_v2": false,
+    "quote": "Other popular functional languages are also indentation based (e..g Haskell, F#, Elm, Agda, Idris).",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "syntax",
+    "what": "significant indentation",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Listed as another indentation-based language; precedent only."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "python",
+    "to": "scala",
+    "found_verbatim": true,
+    "comment": ""
+   }
+  ],
+  "notes": "PR description and thread read (about 102,000 characters; the last 2,000, page footer, not read). The three sentences naming other languages are all in Odersky's rationale; '(e..g' is the source's own typo. Off-map: Elm, Agda, Idris, Markdown, YAML ('Documentation and configuration files have shifted from HTML and XML to markdown and yaml, which are both indentation based.')."
+ },
+ {
+  "sid": "S082",
+  "url": "https://cs.unm.edu/~Williams/cs491/Evolution-of-Lisp.pdf",
+  "url_used": "https://www.dreamsongs.com/Files/Hopl2.pdf",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "scheme",
+   "commonlisp"
+  ],
+  "named": [
+   {
+    "frm": "lisp",
+    "to": "scheme",
+    "in_v2": true,
+    "quote": "Using MacLisp as a working environment, they decided to construct a tiny Lisp interpreter and then add the necessary mechanisms for creating actors and sending messages.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "Scheme began as a tiny Lisp interpreter built in MacLisp; a dialect of Lisp",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "The v2 quote ('a very spare language...') does not name Lisp. This sentence, or the section's opening 'The dialect of Lisp known as Scheme was originally an attempt by Gerald Jay Sussman and Guy Steele during Autumn 1975 to explicate for themselves some aspects of Carl Hewitt's theory of actors', states the parentage."
+   },
+   {
+    "frm": "algol",
+    "to": "scheme",
+    "in_v2": false,
+    "quote": "Because Sussman had just been studying Algol [Naur, 1963], he suggested starting with a lexically scoped dialect of Lisp.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "lexical scoping",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Direct causal statement by a co-designer; the citation [Naur, 1963] is the ALGOL 60 revised report. Lexical scoping is Scheme's defining departure from earlier Lisps, so strong is proposed. The paper adds that the 'Revised Report' title 'was intended as a tribute to Algol'."
+   },
+   {
+    "frm": "smalltalk",
+    "to": "scheme",
+    "in_v2": false,
+    "quote": "Hewitt's model was object-oriented (and influenced by Smalltalk); every object was a computationally active entity capable of receiving and reacting to messages.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Indirect: Smalltalk influenced Hewitt's actor model, which Scheme set out to explicate. The source does not say Scheme took anything from Smalltalk."
+   },
+   {
+    "frm": "lisp",
+    "to": "commonlisp",
+    "in_v2": true,
+    "quote": "Common Lisp originated in an attempt to focus the work of several implementation groups, each of which was constructing successor implementations of MacLisp for different computers.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "consolidation of the MacLisp successor dialects",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "States the origin. Supporting text: 'Common Lisp should cull the best experience from a variety of dialects, including not only MacLisp but Interlisp.' and 'Common Lisp should strive to be compatible with Zetalisp, MacLisp, and Interlisp, in that order.'"
+   },
+   {
+    "frm": "scheme",
+    "to": "commonlisp",
+    "in_v2": false,
+    "quote": "Many of those who would later become members of the Common Lisp Group would proclaim a deep-seated love of Scheme and a not-so-secret desire to see something like it become the next Lisp standard.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "lexical scoping with full closures (not attributed to Scheme in the text)",
+    "proposed_strength": null,
+    "proposed_verdict": "partly",
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "The planned features of Common Lisp start with 'Lexical scoping, including full closures', but I found no sentence in this paper that credits Scheme for it; the only Scheme statements are this one and the later failed attempts to merge the communities. If scheme -> commonlisp is wanted, it needs another source (for example Common Lisp: The Language). One adjacent fact: IF 'was itself introduced into Lisp-Machine Lisp, probably under the influence of Scheme'."
+   },
+   {
+    "frm": "smalltalk",
+    "to": "commonlisp",
+    "in_v2": false,
+    "quote": "If Alan Kay was the inspiration for the idea around 1973, he was in the midst of his early Smalltalk involvement.",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "SETF (generalized assignment), traced back to Alan Kay",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "The paper traces SETF 'through Symbolics Zetalisp and MacLisp to the influence of MIT Lisp-Machine Lisp and then back through Greenblatt's proposal to Peter Deutsch and thence to Alan Kay'; Smalltalk is named only as what Kay was working on. Too indirect for a tie."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "lisp",
+    "to": "scheme",
+    "found_verbatim": true,
+    "comment": "Verbatim in section 2.8."
+   },
+   {
+    "frm": "lisp",
+    "to": "commonlisp",
+    "found_verbatim": true,
+    "comment": "Verbatim in section 2.10.1, as the first of the stated goals ('Commonality: ...'), which the paper itself quotes from the Common Lisp manual."
+   }
+  ],
+  "notes": "The v2 URL (UNM course mirror) now returns 404. Read the dreamsongs.com copy named in the brief (WebFetch saved the PDF; text layer extracted locally with pdftotext). This is the long, uncut version of the paper; section numbers may differ from the HOPL-II proceedings version. Quotes are normalized only for PDF ligatures (fi, fl, ff). Many Lisp dialects named as inputs to Common Lisp are off-map and fold into the 'lisp' node: MacLisp, Lisp-Machine Lisp/Zetalisp ('Multiple values, of a form like Lisp-Machine Lisp'; 'Complex lambda-list declarations, similar to Lisp-Machine Lisp'), S-1 Lisp ('Fancy floating point numbers, including complex and rational numbers (this was the primary influence of S-1 Lisp)'), NIL, Spice Lisp (the first manual was 'based on the Spice Lisp manual'), Interlisp. CLOS (1986 on) was 'based on CommonLoops and New Flavors', also off-map. For Scheme, the main off-map sources are Hewitt's actors/PLASMA, Planner and Conniver, and the lambda calculus. Fortran, APL, C, Pascal, PL/I, BASIC and Prolog appear only in comparisons."
+ },
+ {
+  "sid": "S083",
+  "url": "https://mres.medium.com/10-sparks-that-lit-the-flame-of-scratch-595a27d44334",
+  "url_used": "https://openlearning.mit.edu/news/10-sparks-lit-flame-scratch",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "scratch"
+  ],
+  "named": [
+   {
+    "frm": "logo",
+    "to": "scratch",
+    "in_v2": true,
+    "quote": "The Logo programming language was, in many ways, the most important inspiration for Scratch.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "main inspiration; the top-down view of the sprite carried over from the Logo turtle",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "States the influence directly, by Scratch's lead designer. Also: 'we used a top-down view as a carryover from the Logo programming language, which used a top-down view of a turtle.'"
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "logo",
+    "to": "scratch",
+    "found_verbatim": true,
+    "comment": "Verbatim in the MIT Open Learning copy of the post; the Medium URL returned HTTP 403."
+   }
+  ],
+  "notes": "Medium returned 403; read the MIT Open Learning republication named in the brief. No other on-map language is named. Off-map systems named as sources: Squeak Etoys ('We were inspired by the \"liveness\" of Etoys: children could change their programs even as they were running and see the effects right away.'; Alan Kay 'encouraged us to use ideas and open-source code from Etoys whenever we found it useful'), LogoBlocks (the group's earlier block prototype), StarLogo, LEGO bricks. Etoys is built on Squeak, a Smalltalk, and early Scratch was implemented in Squeak, but this post never names Smalltalk, so a smalltalk -> scratch tie (non_design, weak) would need another source."
+ },
+ {
+  "sid": "S084",
+  "url": "https://worrydream.com/refs/Ungar_2007_-_Self_(HOPL).pdf",
+  "url_used": "https://worrydream.com/refs/Ungar_2007_-_Self_(HOPL).pdf",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "self"
+  ],
+  "named": [
+   {
+    "frm": "smalltalk",
+    "to": "self",
+    "in_v2": true,
+    "quote": "Inspired by Smith’s Alternate Reality Kit [Smi87] and their years of working with Smalltalk [GR83], they wanted to improve upon Smalltalk by increasing both expressive power and simplicity, while obtaining a more concrete feel.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "starting point for the whole design; syntax; objects all the way down",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "States the influence directly (abstract). Also: 'In settling on a syntax for Self, we automatically borrowed from Smalltalk, as the two languages already had so much in common already.'"
+   },
+   {
+    "frm": "apl",
+    "to": "self",
+    "in_v2": false,
+    "quote": "The design of Self was also influenced by APL; after all, APL had no such thing as classes: arrays were created either ab initio or by copying other arrays, just as objects are in Self.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "no classes, creation by copying; live dynamic workspace; (implementation) customization",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "add",
+    "reason": "Explicit statement by the designers. Also on the implementation side: 'it is quite likely that Ungar, although not consciously aware of it at the time, was inspired by APL when he came up with the technique of customization for Self'. Secondary to Smalltalk, so weak."
+   },
+   {
+    "frm": "cpp",
+    "to": "self",
+    "in_v2": false,
+    "quote": "However, its efficiency and support for some object orientation led Ungar and the students to adopt it later as an implementation language and performance benchmark for Self; we built the Self virtual machine in C++, and aimed to have applications written in Self match the performance of those written in (optimized) C++.",
+    "quote_verbatim_confidence": "high",
+    "relation": "non_design",
+    "source_names_it": "yes",
+    "kind": "implementation",
+    "what": "Self virtual machine written in C++",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "Stanford Self virtual machine (1988)",
+    "since_year": 1988,
+    "proposal": "add",
+    "reason": "Implementation tie only, so weak. The preceding sentence denies design influence: 'As we designed and built Self in 1987, C++'s complicated and noninterpretive nature prevented us from being influenced by its language design.' One later exception: 'Influenced by Smalltalk and, to a lesser extent, by C++, the Self group (then at Stanford) sought to fix this by adding privacy to the language.' A human should decide whether an implementation tie is wanted at all."
+   },
+   {
+    "frm": "simula",
+    "to": "self",
+    "in_v2": false,
+    "quote": "Although Simula’s influence on Self was profound, it was indirect: Simula famously inspired Alan Kay, who in the 1970s led the Smalltalk group at the Learning Research Laboratory in Xerox PARC.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "The authors themselves call the influence indirect (through Smalltalk); already represented by simula -> smalltalk -> self."
+   },
+   {
+    "frm": "lisp",
+    "to": "self",
+    "in_v2": false,
+    "quote": "Although much work had been done to optimize LISP systems that ran on stock hardware, Ungar was not very aware of that work when the Self system was built.",
+    "quote_verbatim_confidence": "high",
+    "relation": "rejected",
+    "source_names_it": "no",
+    "kind": "implementation",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "The source denies an implementation debt to LISP. LISP is otherwise named only as sharing a taste for simplicity ('this aesthetic can also be found in APL, LISP, and Smalltalk')."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "smalltalk",
+    "to": "self",
+    "found_verbatim": true,
+    "comment": "Verbatim in the abstract. The note's phrase 'gave us a strong push to eliminate classes when we designed Self' is also verbatim."
+   }
+  ],
+  "notes": "Full paper read (WebFetch saved the PDF; text layer extracted locally with pdftotext). Off-map sources named as influences: Smith's Alternate Reality Kit (ARK), Borning's ThingLab and Sutherland's Sketchpad (prototypes), Lieberman's delegation model ('We implemented inheritance with a variation on what Henry Lieberman called a \"delegation\" model'), Hoare's 'Hints on Programming Language Design' (keep the language small). Java, Pascal, PL/I, Beta and Scheme appear only in comparisons or as languages Self later influenced."
+ },
+ {
+  "sid": "S085",
+  "url": "https://www.computerwoche.de/article/2720775/the-a-z-of-programming-languages-bourne-shell.html",
+  "url_used": "https://www.computerwoche.de/article/2720775/the-a-z-of-programming-languages-bourne-shell.html",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "sh"
+  ],
+  "named": [
+   {
+    "frm": "algol68",
+    "to": "sh",
+    "in_v2": true,
+    "quote": "At Cambridge I had worked on the language ALGOL68 with Mike Guy. ... There was a reason that I put the ALGOL-like syntax in there.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "syntax",
+    "what": "closed compound statements with unique closing keywords (if...fi, case...esac)",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "The two sentences are from different answers, joined by '...'. A one-sentence alternative that names both: 'I imagine some people prefer the C-style syntax, as opposed to the ALGOL68-like syntax of the shell.' The designer says he put the syntax in deliberately."
+   },
+   {
+    "frm": "c",
+    "to": "sh",
+    "in_v2": false,
+    "quote": "I always found, and this is the language design issue, that I would read a C program and get to a closing brace",
+    "quote_verbatim_confidence": "medium",
+    "relation": "rejected",
+    "source_names_it": "no",
+    "kind": "syntax",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "C is named as what the shell's syntax avoids: 'In the C language, for example, a closing brace could be the end of an if or switch or a number of other things.' The quote is a fragment (the sentence continues; I did not see its end)."
+   },
+   {
+    "frm": "lisp",
+    "to": "sh",
+    "in_v2": false,
+    "quote": "I think this was a new idea that I, at least, had not seen in scripting languages, except perhaps LISP.",
+    "quote_verbatim_confidence": "high",
+    "relation": "precedent",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "command substitution",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Bourne says command substitution was his own addition and mentions LISP only as a possible earlier example."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "algol68",
+    "to": "sh",
+    "found_verbatim": true,
+    "comment": "Both sentences found verbatim; they are not adjacent in the interview (the '...' in the v2 quote covers a gap of several answers)."
+   }
+  ],
+  "notes": "Interview read through the fetch tool, which returns sentences but not whole paragraphs. Off-map: the Thompson shell ('It was a significant redesign with some of the original flavor of the Thompson shell still there.'), the Mashey/PWB shell, ALGOL68C (the Cambridge compiler Bourne worked on). The C shell, Korn shell, Bash, Perl, Python, PHP, Ruby on Rails, Java, C++ and PowerShell are mentioned as later or unrelated languages. On Bash, Bourne says: 'I believe that Bash is an open source clone of the Bourne shell.' (relevant to sh -> bash, not a target here)."
+ },
+ {
+  "sid": "S086",
+  "url": "https://hannemyr.com/cache/knojd_acm78.pdf",
+  "url_used": "https://hannemyr.com/cache/knojd_acm78.pdf",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "simula"
+  ],
+  "named": [
+   {
+    "frm": "algol",
+    "to": "simula",
+    "in_v2": true,
+    "quote": "By far the most important language ancestor of SIMULA I is of course ALGOL 60 itself.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "base language; block structure",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "States the parentage directly. Also: 'our present idea is that the first SIMULA compiler should be ALGOL-based'."
+   },
+   {
+    "frm": "fortran",
+    "to": "simula",
+    "in_v2": false,
+    "quote": "A later version may be FORTRAN-based, using the same basic concepts.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "Fortran was only a possible base for a later version that was never built, and an example of 'a general algebraic and dynamic language'."
+   },
+   {
+    "frm": "lisp",
+    "to": "simula",
+    "in_v2": false,
+    "quote": "Jan V. Garwick, back from work in the US, had shown us a niCe compacting garbage collector (now well known, said to have been deSigned for the implementation of a language called LISP 21.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "implementation",
+    "what": "compacting garbage collector for the SIMULA 67 implementation",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "An implementation technique said to come from a LISP 2 implementation, at second hand; too indirect for a tie. The quote is from an OCR text layer: 'niCe', 'deSigned' and 'LISP 21' are OCR errors (probably 'nice', 'designed', 'LISP 2)' followed by a period)."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "algol",
+    "to": "simula",
+    "found_verbatim": true,
+    "comment": "Verbatim (OCR text layer of a scanned PDF)."
+   }
+  ],
+  "notes": "Scanned PDF with an OCR text layer (WebFetch saved it; text extracted locally with pdftotext and searched). OCR quality is uneven, so a language name garbled by OCR could have been missed. Off-map influences the authors name: SIMSCRIPT ('In this respect we were influenced by the design of SIMSCRIPT; certainly the term \"set\" was borrowed from that language'), Weizenbaum's reference counts ('an idea borrowed from weizenbaum (1962)'), and, for SIMULA 67, Hoare's record classes ('The subclass idea of Hoare (68) was a natural starting point'). Considered but not used: GPSS ('we did not study it very closely'), SOL ('came to our attention too late (July 1964) to have an effect on our design'), CSL (discussions with its designers). COBOL and PL/I appear only in a remark about which languages would survive."
+ },
+ {
+  "sid": "S087",
+  "url": "https://worrydream.com/EarlyHistoryOfSmalltalk/",
+  "url_used": "https://worrydream.com/EarlyHistoryOfSmalltalk/",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "smalltalk"
+  ],
+  "named": [
+   {
+    "frm": "lisp",
+    "to": "smalltalk",
+    "in_v2": true,
+    "quote": "I had originally made the boast because McCarthy's self-describing LISP interpreter was written in itself. It was about \"a page\", and as far as power goes, LISP was the whole nine-yards for functional languages. I was quite sure I could do the same for object-oriented languages",
+    "quote_verbatim_confidence": "medium",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "language defined in itself in about a page (Lisp's eval); 'LISPlike universal syntax'",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "These are three consecutive sentences (the third continues: 'plus be able to do a reasonable syntax for the code a la some of the FLEX machine techniques.'); together they state that Smalltalk-72's design set out to do for objects what LISP's interpreter did. Also: '(6) implies a LISPlike universal syntax, but with the receiving object as the first item followed by the message.' and, later, 'Smalltalk's LISPlike flexibility'."
+   },
+   {
+    "frm": "simula",
+    "to": "smalltalk",
+    "in_v2": true,
+    "quote": "It is not too much of an exaggeration to say that most of my ideas from then on took their roots from Simula—but not as an attempt to improve it.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "objects and classes (instances created from descriptions)",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "The v2 quote describes Simula but does not say Smalltalk took anything; this sentence does. Also: 'In 1966, SIMULA was the \"better old thing,\" which if looked at as \"almost a new thing\" became the precursor of Smalltalk in 1972.' (two fragments rejoined) and Ingalls's class scheme 'that was Simula-like in its semantics'."
+   },
+   {
+    "frm": "logo",
+    "to": "smalltalk",
+    "in_v2": true,
+    "quote": "This Smalltalk language (today labeled -71) was very influenced by FLEX, PLANNER, LOGO, META II, and my own derivatives from them.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "children as the audience; turtle graphics",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep, better quote",
+    "reason": "The v2 quote shows inspiration from seeing children program in LOGO but does not name the language as an influence on Smalltalk; this sentence does, for the first (unimplemented) Smalltalk-71 design. Also: 'One of the next classes to be implemented on the Interim Dynabook (after the basics of numbers, strings, etc.) was an object-oriented version of the LOGO turtle implemented by Ted.'"
+   },
+   {
+    "frm": "apl",
+    "to": "smalltalk",
+    "in_v2": false,
+    "quote": "LISP, APL— and Smalltalk—are the second kind.",
+    "quote_verbatim_confidence": "medium",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "APL is only grouped with LISP and Smalltalk in a classification of languages; no borrowing is stated in this paper. (The Self paper, S084, says Ingalls reported APL's influence on Smalltalk in a 1981 article, which would be the source to check.) The quote is a sentence fragment."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "lisp",
+    "to": "smalltalk",
+    "found_verbatim": true,
+    "comment": "Both sentences found verbatim; they come from different places in the paper (the v2 quote marks this with ' / ')."
+   },
+   {
+    "frm": "simula",
+    "to": "smalltalk",
+    "found_verbatim": null,
+    "comment": "First sentence found verbatim ('What Simula was allocating were structures very much like the instances of Sketchpad.'); I did not see the second sentence returned, so it is unchecked."
+   },
+   {
+    "frm": "logo",
+    "to": "smalltalk",
+    "found_verbatim": null,
+    "comment": "Second sentence found verbatim (the source italicizes 'really'); the first sentence ('Here were children doing real programming...') was not returned to me, so it is unchecked."
+   }
+  ],
+  "notes": "Whole web page read in two passes through the fetch tool, which returns short exact fragments rather than paragraphs; quotes marked 'high' were returned as complete sentences, 'medium' were rejoined from fragments. Off-map systems Kay names as sources: his own FLEX machine, PLANNER (Hewitt), META II ('I think the awkward quoting conventions come from META'), Sketchpad, Irons's IMP, the Burroughs B5000, EULER (via FLEX). ALGOL appears as Simula's base, BASIC only as the language Ingalls first coded the interpreter in ('He had coded it up (in BASIC!)'), which is a possible weak implementation mention and not a tie."
+ },
+ {
+  "sid": "S088",
+  "url": "https://eprints-gro.gold.ac.uk/5823/2/SPSS_as_an_insciption_device_final_word_version_-_unproofe%E2%80%A6.pdf",
+  "url_used": "https://research.gold.ac.uk/id/eprint/5823/2/SPSS_as_an_insciption_device_final_word_version_-_unproofe%E2%80%A6.pdf",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "spss"
+  ],
+  "named": [
+   {
+    "frm": "fortran",
+    "to": "spss",
+    "in_v2": true,
+    "quote": "The first versions of SPSS available in the UK were written in Fortran, so users still required quite high level programming skills.",
+    "quote_verbatim_confidence": "high",
+    "relation": "non_design",
+    "source_names_it": "yes",
+    "kind": "implementation",
+    "what": "first versions written in Fortran",
+    "proposed_strength": "weak",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "Implementation tie, already weak. A second sentence in the same paper: 'SPSS was developed in 1968 by Norman Nie, Tex Hull and Dale Bent – all then at Stanford University – as an alternative Fortran based program, specifically designed to analyse quickly the large amounts of quantitative social data being gathered by Faculty and Graduate students.' The source is a secondary, sociological account, not a statement by SPSS's designers."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "fortran",
+    "to": "spss",
+    "found_verbatim": true,
+    "comment": ""
+   }
+  ],
+  "notes": "The v2 host name (eprints-gro.gold.ac.uk) no longer resolves; the same file is at research.gold.ac.uk/id/eprint/5823/ (WebFetch saved the PDF; text layer extracted locally with pdftotext). No other programming language is named in connection with SPSS; before SPSS, researchers had to 'use the high level programming language Fortran to write their own programmes'. 'SPSS syntax' is mentioned as the command language, with no source named for it."
+ },
+ {
+  "sid": "S089",
+  "url": "https://www.stata.com/manuals/m-2syntax.pdf",
+  "url_used": "https://www.stata.com/manuals/m-2syntax.pdf",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "stata"
+  ],
+  "named": [
+   {
+    "frm": "c",
+    "to": "stata",
+    "in_v2": true,
+    "quote": "Mata is a C-like compiled-into-pseudocode language with matrix extensions and runtime linking.",
+    "quote_verbatim_confidence": "high",
+    "relation": "resemblance",
+    "source_names_it": "no",
+    "kind": "syntax",
+    "what": "Mata's C-like syntax",
+    "proposed_strength": null,
+    "proposed_verdict": "partly",
+    "since": "Stata 9",
+    "since_year": 2005,
+    "proposal": "drop",
+    "reason": "'C-like' is a statement of resemblance by the vendor; the page never says Mata borrowed from or was modeled on C, and by the rule resemblance is not a tie. Borderline, because the resemblance is plainly deliberate (the grammar on this page is C's: if/else, for(;;), while, do...while, break, continue, goto, return, ++, --, &&, ||, pointers, void). If a human keeps it: weak, verdict partly, since 'Stata 9' (2005)."
+   },
+   {
+    "frm": "fortran",
+    "to": "stata",
+    "in_v2": false,
+    "quote": "Oldtimers will have heard of the FORTRAN programmer who called a subroutine and passed to it a second argument of 1.",
+    "quote_verbatim_confidence": "high",
+    "relation": "passing",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "An anecdote about a pitfall that 'cannot happen in Mata'; the only reference is Gould (2005), 'Mata Matters: Translating Fortran'. No influence stated."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "c",
+    "to": "stata",
+    "found_verbatim": true,
+    "comment": "Verbatim; it is the whole Description section."
+   }
+  ],
+  "notes": "Whole manual entry read (9 pages; WebFetch saved the PDF; text layer extracted locally with pdftotext). The 'since Stata 9 (2005)' date is not on this page; it comes from the v2 record. The entry concerns Mata only, not Stata's command or ado language."
+ },
+ {
+  "sid": "S090",
+  "url": "https://www.swift.org/about/",
+  "url_used": "https://www.swift.org/about/",
+  "reachable": true,
+  "read_extent": "full",
+  "targets": [
+   "swift"
+  ],
+  "named": [
+   {
+    "frm": "objc",
+    "to": "swift",
+    "in_v2": true,
+    "quote": "Swift also borrows from other languages, for instance named parameters brought forward from Objective-C are expressed in a clean syntax that makes APIs in Swift easy to read and maintain.",
+    "quote_verbatim_confidence": "high",
+    "relation": "influence",
+    "source_names_it": "yes",
+    "kind": "design",
+    "what": "named parameters; (platform) Objective-C runtime on Apple platforms",
+    "proposed_strength": "strong",
+    "proposed_verdict": "supported",
+    "since": "",
+    "since_year": null,
+    "proposal": "keep",
+    "reason": "States the borrowing directly, but for one feature only; the rest of the v2 label (ARC, Obj-C interop) is not on this page. The page adds a platform fact: 'The primary example is that the Apple platforms include the Objective-C runtime, which is required to access Apple platform frameworks such as UIKit and AppKit.' Strong is justified by Objective-C being Swift's predecessor, which this page implies but does not state; a stricter reading of this source alone would give weak."
+   },
+   {
+    "frm": "c",
+    "to": "swift",
+    "in_v2": false,
+    "quote": "Swift was designed from the outset to be safer than C-based languages, and eliminates entire classes of unsafe code.",
+    "quote_verbatim_confidence": "high",
+    "relation": "rejected",
+    "source_names_it": "no",
+    "kind": "design",
+    "what": "",
+    "proposed_strength": null,
+    "proposed_verdict": null,
+    "since": "",
+    "since_year": null,
+    "proposal": "reject",
+    "reason": "C-based languages are named as what Swift improves on (safety) and as a performance yardstick, not as a source."
+   }
+  ],
+  "v2_quote_check": [
+   {
+    "frm": "objc",
+    "to": "swift",
+    "found_verbatim": true,
+    "comment": "Verbatim (rejoined from two consecutive fragments returned by the fetch tool)."
+   }
+  ],
+  "notes": "Page read through the fetch tool. 'Swift also borrows from other languages' names only Objective-C as an example; no other source language is given on this page (C++ appears only in 'C/C++/Swift toolchains')."
+ }
+]

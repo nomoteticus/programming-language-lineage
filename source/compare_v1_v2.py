@@ -3,7 +3,8 @@
   ../data/edges-v1-to-v2.csv       every link of either version, v1 and v2 values side by side
   ../data/languages-v1-to-v2.csv   languages added, removed, renamed or re-dated
 
-v1 comes from the frozen v1 generator (v1ref/build.py); v2 from nodes.py and edges.py.
+v1 comes from the frozen v1 generator (v1ref/build.py); v2 from nodes.py (without the two languages
+added in version 3) and the frozen edges_v2.py.
 v1 links had a label and a strength only; link kinds and later-version tags were introduced afterwards.
 """
 import ast, csv, os
@@ -13,6 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 exec(open(os.path.join(HERE, "us_spelling.py"), encoding="utf-8").read())   # us(): US spelling for our own text
 OUT = os.path.join(HERE, "..", "data")
 STRENGTH = {"s": "strong", "d": "weak"}
+V3_NEW = {"turbopascal", "quickbasic"}
 
 
 def v1_data():
@@ -26,9 +28,10 @@ def v1_data():
 
 def v2_data():
     ns = {}
-    for name in ("nodes.py", "edges.py"):
+    for name in ("nodes.py", "edges_v2.py"):          # edges_v2.py: the version 2 links, frozen
         exec(open(os.path.join(HERE, name), encoding="utf-8").read(), ns)
-    return ns["NODES"], ns["EDGES"], dict(ns["FAMILIES"])
+    nodes = [n for n in ns["NODES"] if n[0] not in V3_NEW]   # languages added in version 3 are not part of version 2
+    return nodes, ns["EDGES"], dict(ns["FAMILIES"])
 
 
 def write(name, header, rows):

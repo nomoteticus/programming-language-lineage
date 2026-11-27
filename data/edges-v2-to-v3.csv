@@ -1,0 +1,227 @@
+from_id,from_name,to_id,to_name,change,v2_label,v3_label,v2_strength,v3_strength,v2_kind,v3_kind,v2_verdict,v3_verdict,v3_since,reason
+lisp,LISP,scheme,Scheme,quote changed,minimal dialect,minimal dialect,strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+lisp,LISP,clojure,Clojure,unchanged,"Lisp dialect: code as data, macros","Lisp dialect: code as data, macros",strong,strong,design,design,supported,supported,,
+java,Java,clojure,Clojure,strength changed,designed to be hosted on the JVM,designed to be hosted on the JVM,strong,weak,platform,platform,supported,supported,,Version 3: strength strong to weak.
+lisp,LISP,ml,ML,kind changed; label changed,"ML began as LCF's meta-language, implemented in Lisp","a design influence on LCF/ML, and its implementation language",weak,weak,implementation,design,supported,supported,,Version 3: kind implementation to design; label revised.
+lisp,LISP,smalltalk,Smalltalk,unchanged,language defined in itself (Lisp's eval),language defined in itself (Lisp's eval),strong,strong,design,design,supported,supported,,
+lisp,LISP,commonlisp,Common Lisp,unchanged,unified Maclisp line,unified Maclisp line,strong,strong,design,design,supported,supported,,
+commonlisp,Common Lisp,julia,Julia,strength changed; verdict changed; label changed,Lisp macros; generic functions (CLOS precedent),generic functions (CLOS as an earlier system),strong,weak,design,design,supported,partly,,Version 3: strength strong to weak; verdict supported to partly; label revised.
+lisp,LISP,iswim,ISWIM,unchanged,"functional core, without lists and brackets","functional core, without lists and brackets",strong,strong,design,design,supported,supported,,
+lisp,LISP,logo,Logo,unchanged,Lisp without parentheses,Lisp without parentheses,strong,strong,design,design,supported,supported,,
+lisp,LISP,mathematica,Mathematica,quote changed,early SMP sketches (with APL),early SMP sketches (with APL),weak,weak,design,design,supported,supported,,Version 3: quote and source updated.
+scheme,Scheme,r,R,unchanged,"closures, lexical scope","closures, lexical scope",strong,strong,design,design,supported,supported,,
+scheme,Scheme,js,JavaScript,unchanged,first-class functions,first-class functions,strong,strong,design,design,supported,supported,,
+scheme,Scheme,lua,Lua,quote changed,"closures, first-class functions","closures, first-class functions",strong,strong,design,design,supported,supported,Lua 3.1,Version 3: quote replaced by one that states the influence.
+clu,CLU,lua,Lua,unchanged,multiple assignment and returns,multiple assignment and returns,weak,weak,design,design,supported,supported,,
+awk,AWK,lua,Lua,strength changed,associative arrays (tables),associative arrays (tables),weak,strong,design,design,supported,supported,,Version 3: strength weak to strong.
+apl,APL,s,S,unchanged,"multi-way arrays, consistent operations","multi-way arrays, consistent operations",strong,strong,design,design,supported,supported,,
+apl,APL,mathematica,Mathematica,quote changed,some APL ideas (Wolfram),some APL ideas (Wolfram),weak,weak,design,design,supported,supported,,Version 3: quote and source updated.
+apl,APL,j,J,unchanged,Iverson's ASCII successor,Iverson's ASCII successor,strong,strong,design,design,supported,supported,,
+apl,APL,kq,K / q,quote changed,"Whitney's APL line, in ASCII","Whitney's APL line, in ASCII",strong,strong,design,design,supported,supported,,Version 3: quote and source updated.
+s,S,r,R,unchanged,S-like syntax and features,S-like syntax and features,strong,strong,design,design,supported,supported,,
+fortran,Fortran,matlab,MATLAB,strength changed; kind changed,built to call Fortran's LINPACK/EISPACK routines,built to call Fortran's LINPACK/EISPACK routines,strong,weak,implementation,library,supported,supported,,Version 3: strength strong to weak; kind implementation to library.
+pascal,Pascal,matlab,MATLAB,verdict changed,syntax via Wirth's PL/0,syntax via Wirth's PL/0,strong,strong,syntax,syntax,supported,partly,,Version 3: verdict supported to partly.
+matlab,MATLAB,julia,Julia,unchanged,familiar mathematical notation,familiar mathematical notation,strong,strong,syntax,syntax,supported,supported,,Version 3: quote and source updated.
+python,Python,julia,Julia,label changed; quote changed,general-purpose ease (2012 manifesto),general-purpose usability as a design aim,weak,weak,design,design,supported,supported,,Version 3: quote and source updated; label revised.
+r,R,julia,Julia,label changed; quote changed,statistics (2012 manifesto),ease for statistics as a design aim,weak,weak,design,design,supported,supported,,Version 3: quote and source updated; label revised.
+fortran,Fortran,s,S,strength changed; kind changed; label changed,interactive front-end to Fortran statistical routines,arithmetic expression syntax; first written in Fortran,strong,weak,implementation,syntax,supported,supported,,Version 3: strength strong to weak; kind implementation to syntax; label revised.
+fortran,Fortran,spss,SPSS,unchanged,first written in Fortran,first written in Fortran,weak,weak,implementation,implementation,supported,supported,,
+c,C,stata,Stata,strength changed; verdict changed,Mata's C-like syntax,Mata's C-like syntax,strong,weak,syntax,syntax,supported,partly,Stata 9,Version 3: strength strong to weak; verdict supported to partly.
+fortran,Fortran,algol,ALGOL 60,strength changed; verdict changed; label changed; quote changed,algebraic-language precedent; Backus on the committee,ALGOL 58 was based on a model derived from FORTRAN,weak,strong,design,design,partly,supported,,Version 3: strength weak to strong; verdict partly to supported; quote and source updated; label revised.
+algol,ALGOL 60,cpl,CPL,unchanged,ALGOL 60 as its base,ALGOL 60 as its base,strong,strong,design,design,supported,supported,,
+cpl,CPL,bcpl,BCPL,unchanged,CPL minus the hard parts,CPL minus the hard parts,strong,strong,design,design,supported,supported,,
+bcpl,BCPL,b,B,unchanged,cut-down BCPL (Thompson),cut-down BCPL (Thompson),strong,strong,design,design,supported,supported,,
+b,B,c,C,unchanged,B plus types,B plus types,strong,strong,design,design,supported,supported,,
+algol,ALGOL 60,algol68,ALGOL 68,unchanged,"successor, an orthogonal redesign","successor, an orthogonal redesign",strong,strong,design,design,supported,supported,,
+algol68,ALGOL 68,sh,Bourne sh,unchanged,"if…fi, case…esac","if…fi, case…esac",strong,strong,syntax,syntax,supported,supported,,
+algol68,ALGOL 68,c,C,unchanged,type composition (Ritchie),type composition (Ritchie),weak,weak,type,type,supported,supported,,
+algol68,ALGOL 68,cpp,C++,quote changed,"operator overloading, declarations anywhere","operator overloading, declarations anywhere",strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+algol,ALGOL 60,simula,Simula,unchanged,extension of ALGOL 60,extension of ALGOL 60,strong,strong,design,design,supported,supported,,
+algol,ALGOL 60,pascal,Pascal,unchanged,"precursor, via ALGOL W","precursor, via ALGOL W",strong,strong,design,design,supported,supported,,
+pascal,Pascal,modula2,Modula-2,label changed; quote changed,modules,Pascal's successor (Modula-2 adds modules),strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence; label revised.
+modula2,Modula-2,oberon,Oberon,quote changed,simplified successor,simplified successor,strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+modula2,Modula-2,modula3,Modula-3,unchanged,"safety, objects","safety, objects",strong,strong,design,design,supported,supported,,
+pascal,Pascal,ada,Ada,unchanged,Pascal-family base,Pascal-family base,strong,strong,design,design,supported,supported,,
+pascal,Pascal,tex,TeX,unchanged,"written in WEB, Knuth's Pascal-based system","written in WEB, Knuth's Pascal-based system",weak,weak,implementation,implementation,supported,supported,,
+fortran,Fortran,pli,PL/I,unchanged,the scientific half,the scientific half,strong,strong,design,design,supported,supported,,
+cobol,COBOL,pli,PL/I,unchanged,the business half,the business half,strong,strong,design,design,supported,supported,,
+cobol,COBOL,abap,ABAP,unchanged,COBOL-like keyword statements,COBOL-like keyword statements,weak,weak,syntax,syntax,partly,partly,,
+cobol,COBOL,pascal,Pascal,kind changed; quote changed,"record types (via Hoare, ALGOL W)","record types (via Hoare, ALGOL W)",weak,weak,design,type,supported,supported,,Version 3: kind design to type; quote and source updated.
+c,C,cpp,C++,unchanged,C plus classes,C plus classes,strong,strong,design,design,supported,supported,,
+simula,Simula,cpp,C++,quote changed,"classes, virtual functions","classes, virtual functions",strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+ada,Ada,cpp,C++,strength changed; label changed,templates from Ada generics; exceptions,named source of later ideas (no feature given),strong,weak,design,design,supported,supported,C++ after 1985,Version 3: strength strong to weak; label revised.
+clu,CLU,cpp,C++,unchanged,"parameterized types, exceptions","parameterized types, exceptions",weak,weak,design,design,supported,supported,C++ after 1985,
+c,C,objc,Objective-C,unchanged,C plus messages,C plus messages,strong,strong,design,design,supported,supported,,
+smalltalk,Smalltalk,objc,Objective-C,verdict changed; quote changed,Smalltalk-like messaging syntax,Smalltalk-like messaging syntax,strong,strong,design,design,supported,partly,,Version 3: verdict supported to partly; quote replaced by one that states the influence.
+c,C,zig,Zig,verdict changed; quote changed,a more pragmatic C (Kelley),a more pragmatic C (Kelley),strong,strong,design,design,supported,partly,,Version 3: verdict supported to partly; quote replaced by one that states the influence.
+c,C,go,Go,unchanged,C-style expression syntax,C-style expression syntax,strong,strong,syntax,syntax,supported,supported,,
+oberon,Oberon,go,Go,unchanged,"declarations, packages","declarations, packages",strong,strong,design,design,supported,supported,,
+newsqueak,Newsqueak,go,Go,unchanged,"channels, goroutines (via Alef, Limbo)","channels, goroutines (via Alef, Limbo)",strong,strong,design,design,supported,supported,,
+c,C,cyclone,Cyclone,quote changed,safe C dialect,safe C dialect,strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+cyclone,Cyclone,rust,Rust,unchanged,region-based memory (lifetimes),region-based memory (lifetimes),strong,strong,design,design,supported,supported,,
+cpp,C++,rust,Rust,unchanged,"RAII, move semantics, monomorphization","RAII, move semantics, monomorphization",strong,strong,design,design,supported,supported,,
+ocaml,OCaml,rust,Rust,unchanged,"algebraic data types, pattern matching","algebraic data types, pattern matching",strong,strong,design,design,supported,supported,,
+haskell,Haskell,rust,Rust,unchanged,traits from type classes,traits from type classes,strong,strong,type,type,supported,supported,,
+objc,Objective-C,swift,Swift,unchanged,"named parameters, ARC, Obj-C interop","named parameters, ARC, Obj-C interop",strong,strong,design,design,supported,supported,,
+rust,Rust,swift,Swift,unchanged,opt-in ownership model,opt-in ownership model,weak,weak,design,design,supported,supported,Swift 5.9,
+python,Python,swift,Swift,quote changed,"approachability, script-like top level","approachability, script-like top level",weak,weak,design,design,supported,supported,,Version 3: quote and source updated.
+haskell,Haskell,swift,Swift,unchanged,protocols akin to type classes,protocols akin to type classes,weak,weak,type,type,supported,supported,,
+ada,Ada,plsql,PL/SQL,unchanged,based on Ada,based on Ada,strong,strong,design,design,supported,supported,,
+simula,Simula,smalltalk,Smalltalk,quote changed,classes & objects,classes & objects,strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+logo,Logo,smalltalk,Smalltalk,quote changed,learning by programming,learning by programming,weak,weak,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+simula,Simula,eiffel,Eiffel,unchanged,"classes, inheritance","classes, inheritance",strong,strong,design,design,supported,supported,,
+smalltalk,Smalltalk,self,Self,unchanged,"simpler Smalltalk: prototypes, no classes","simpler Smalltalk: prototypes, no classes",strong,strong,design,design,supported,supported,,
+cpp,C++,java,Java,unchanged,"syntax, minus pointers","syntax, minus pointers",strong,strong,syntax,syntax,supported,supported,,
+smalltalk,Smalltalk,java,Java,strength changed; label changed,OO ideas; Smalltalk VM know-how,object-oriented concepts (no feature given),strong,weak,design,design,supported,supported,,Version 3: strength strong to weak; label revised.
+java,Java,csharp,C#,unchanged,"type safety, exceptions, GC","type safety, exceptions, GC",strong,strong,design,design,supported,supported,,
+cpp,C++,csharp,C#,kind changed,C-family syntax,C-family syntax,strong,strong,syntax,design,supported,supported,,Version 3: kind syntax to design.
+delphi,Delphi,csharp,C#,unchanged,"properties, events, is/as (same designer, Hejlsberg)","properties, events, is/as (same designer, Hejlsberg)",strong,strong,design,design,supported,supported,,
+java,Java,scala,Scala,kind changed,"classes, JVM interop","classes, JVM interop",strong,strong,design,syntax,supported,supported,,Version 3: kind design to syntax.
+ml,ML,scala,Scala,strength changed; kind changed; verdict changed; label changed; quote changed,functional style (ML family),"abstract types, after ML's module systems",strong,weak,design,type,supported,partly,,Version 3: strength strong to weak; kind design to type; verdict supported to partly; quote and source updated; label revised.
+haskell,Haskell,scala,Scala,unchanged,type classes,type classes,strong,strong,type,type,supported,supported,,
+python,Python,scala,Scala,verdict changed,indentation syntax,indentation syntax,weak,weak,syntax,syntax,supported,partly,Scala 3,Version 3: verdict supported to partly.
+java,Java,kotlin,Kotlin,quote changed,"classes, 100% JVM interop","classes, 100% JVM interop",strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+scala,Scala,kotlin,Kotlin,unchanged,"val/var, name: Type, primary constructors, object singletons","val/var, name: Type, primary constructors, object singletons",weak,weak,design,design,supported,supported,,
+csharp,C#,kotlin,Kotlin,verdict changed,extension functions (Breslav talk),extension functions (Breslav talk),weak,weak,design,design,partly,supported,,Version 3: verdict partly to supported.
+sh,Bourne sh,powershell,PowerShell,quote changed,"pipelines, but of objects","pipelines, but of objects",strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+csharp,C#,powershell,PowerShell,unchanged,C#-like syntax (glide path to C#),C#-like syntax (glide path to C#),weak,weak,syntax,syntax,supported,supported,,
+iswim,ISWIM,ml,ML,unchanged,"let/where, expression language","let/where, expression language",strong,strong,design,design,supported,supported,,
+iswim,ISWIM,miranda,Miranda,unchanged,"ISWIM's applicative core, via PAL, SASL and KRC","ISWIM's applicative core, via PAL, SASL and KRC",strong,strong,design,design,supported,supported,,
+ml,ML,haskell,Haskell,quote changed,Hindley-Milner types,Hindley-Milner types,strong,strong,type,type,supported,supported,,Version 3: quote replaced by one that states the influence.
+miranda,Miranda,haskell,Haskell,quote changed,"lazy, pure (open rewrite)","lazy, pure (open rewrite)",strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+ml,ML,ocaml,OCaml,unchanged,dialect + objects,dialect + objects,strong,strong,design,design,supported,supported,,
+ocaml,OCaml,fsharp,F#,unchanged,OCaml for .NET,OCaml for .NET,strong,strong,design,design,supported,supported,,
+fsharp,F#,elixir,Elixir,unchanged,pipe operator |>,pipe operator |>,weak,weak,syntax,syntax,supported,supported,,
+fsharp,F#,m,Power Query M,unchanged,functional; 'similar to F#' (Microsoft),functional; 'similar to F#' (Microsoft),weak,weak,design,design,partly,partly,,
+fsharp,F#,r,R,unchanged,"pipe |>, via magrittr; native in R 4.1","pipe |>, via magrittr; native in R 4.1",weak,weak,library,library,supported,supported,R 4.1,
+haskell,Haskell,excel,Excel formulas,unchanged,LAMBDA (MSR functional-programming research),LAMBDA (MSR functional-programming research),weak,weak,design,design,partly,partly,LAMBDA 2020,
+sh,Bourne sh,bash,Bash,unchanged,Bourne Again,Bourne Again,strong,strong,design,design,supported,supported,,
+sh,Bourne sh,perl,Perl,unchanged,shell features (Wall names sh),shell features (Wall names sh),strong,strong,syntax,syntax,supported,supported,,
+awk,AWK,perl,Perl,quote changed,"awk-style text scanning, reports","awk-style text scanning, reports",strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+c,C,perl,Perl,quote changed,C-like syntax,C-like syntax,strong,strong,syntax,syntax,supported,supported,,Version 3: quote replaced by one that states the influence.
+c,C,awk,AWK,quote changed,C-like syntax,C-like syntax,strong,strong,syntax,syntax,supported,supported,,Version 3: quote replaced by one that states the influence.
+snobol,SNOBOL,awk,AWK,quote changed,associative arrays (likened to SNOBOL4 tables),associative arrays (likened to SNOBOL4 tables),weak,weak,design,design,supported,supported,,Version 3: quote and source updated.
+snobol,SNOBOL,icon,Icon,unchanged,SNOBOL4 patterns recast as string scanning,SNOBOL4 patterns recast as string scanning,strong,strong,design,design,supported,supported,,
+icon,Icon,python,Python,strength changed; label changed; version tag changed; quote changed,generators (yield),string slicing; later generators (Python 2.2),strong,weak,design,design,supported,supported,,Version 3: strength strong to weak; quote and source updated; label revised.
+abc,ABC,python,Python,quote changed,"indentation, built-in types","indentation, built-in types",strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+modula3,Modula-3,python,Python,unchanged,"modules, exceptions, explicit self","modules, exceptions, explicit self",strong,strong,design,design,supported,supported,,
+cpp,C++,python,Python,strength changed,class mechanism (with Modula-3),class mechanism (with Modula-3),strong,weak,design,design,supported,supported,,Version 3: strength strong to weak.
+c,C,python,Python,unchanged,"keywords, operator precedence","keywords, operator precedence",strong,strong,syntax,syntax,supported,supported,,
+haskell,Haskell,python,Python,strength changed,list comprehensions,list comprehensions,strong,weak,syntax,syntax,supported,supported,Python 2.0,Version 3: strength strong to weak.
+sql,SQL,python,Python,verdict changed; label changed,"joins, group-by, via pandas",SQL-style joins and group-by in pandas,weak,weak,library,library,supported,partly,pandas 2008,Version 3: verdict supported to partly; label revised.
+r,R,python,Python,strength changed,"data frames, via pandas","data frames, via pandas",strong,weak,library,library,supported,supported,pandas 2008,Version 3: strength strong to weak.
+c,C,php,PHP,unchanged,"C-like syntax, function names","C-like syntax, function names",strong,strong,syntax,syntax,supported,supported,,
+perl,Perl,php,PHP,quote changed,"syntax, $ variables","syntax, $ variables",strong,strong,syntax,syntax,supported,supported,,Version 3: quote and source updated.
+php,PHP,hack,Hack,unchanged,PHP plus gradual typing,PHP plus gradual typing,strong,strong,design,design,supported,supported,,
+smalltalk,Smalltalk,ruby,Ruby,unchanged,everything is an object,everything is an object,strong,strong,design,design,supported,supported,,
+clu,CLU,ruby,Ruby,unchanged,"iterators, yield","iterators, yield",weak,weak,design,design,partly,partly,,
+eiffel,Eiffel,ruby,Ruby,unchanged,"end-delimited syntax, rescue/ensure","end-delimited syntax, rescue/ensure",weak,weak,syntax,syntax,partly,partly,,
+perl,Perl,ruby,Ruby,unchanged,"regex, scripting","regex, scripting",strong,strong,design,design,supported,supported,,
+ruby,Ruby,elixir,Elixir,verdict changed; quote changed,Ruby-like surface syntax,Ruby-like surface syntax,weak,weak,syntax,syntax,partly,supported,,Version 3: verdict partly to supported; quote and source updated.
+erlang,Erlang,elixir,Elixir,quote changed,"processes, OTP, the BEAM","processes, OTP, the BEAM",strong,strong,design,design,supported,supported,,Version 3: quote and source updated.
+prolog,Prolog,erlang,Erlang,quote changed,"syntax, pattern matching; began as Prolog with processes","syntax, pattern matching; began as Prolog with processes",strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+self,Self,js,JavaScript,unchanged,prototypes,prototypes,strong,strong,design,design,supported,supported,,
+java,Java,js,JavaScript,quote changed,"syntax, by marketing mandate","syntax, by marketing mandate",weak,weak,syntax,syntax,supported,supported,,Version 3: quote replaced by one that states the influence.
+python,Python,js,JavaScript,unchanged,generators and iterators,generators and iterators,weak,weak,design,design,supported,supported,ES2015,
+js,JavaScript,ts,TypeScript,unchanged,superset + types,superset + types,strong,strong,design,design,supported,supported,,
+csharp,C#,ts,TypeScript,verdict changed; label changed; quote changed,"generics <T>, enums, access modifiers, async/await (same designer, Hejlsberg)",same lead designer (Anders Hejlsberg),weak,weak,organizational,organizational,supported,partly,,Version 3: verdict supported to partly; quote and source updated; label revised.
+js,JavaScript,dart,Dart,kind changed,"single-threaded event loop, closures","single-threaded event loop, closures",weak,weak,design,syntax,supported,supported,,Version 3: kind design to syntax.
+java,Java,dart,Dart,quote changed,"class-based, single inheritance","class-based, single inheritance",strong,strong,syntax,syntax,supported,supported,,Version 3: quote replaced by one that states the influence.
+smalltalk,Smalltalk,dart,Dart,quote changed,"pure objects, mixins, optional types (via Strongtalk)","pure objects, mixins, optional types (via Strongtalk)",strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+csharp,C#,dart,Dart,unchanged,async/await,async/await,weak,weak,design,design,supported,supported,Dart 1.9,
+fortran,Fortran,basic,Dartmouth BASIC,unchanged,"keywords, operators from FORTRAN II","keywords, operators from FORTRAN II",strong,strong,design,design,supported,supported,,
+vb,Visual Basic,vba,VBA,quote changed,VB inside Office,VB inside Office,strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+logo,Logo,scratch,Scratch,unchanged,"Papert's Logo: turtle, low floor","Papert's Logo: turtle, low floor",strong,strong,design,design,supported,supported,,
+sql,SQL,tsql,T-SQL,quote changed,SQL plus procedural code,SQL plus procedural code,strong,strong,design,design,supported,supported,,Version 3: quote replaced by one that states the influence.
+sql,SQL,plsql,PL/SQL,unchanged,SQL plus procedural code,SQL plus procedural code,strong,strong,design,design,supported,supported,,
+sql,SQL,mdx,MDX,kind changed; verdict changed; quote changed,SELECT syntax for cubes,SELECT syntax for cubes,strong,strong,syntax,design,supported,partly,,Version 3: kind syntax to design; verdict supported to partly; quote and source updated.
+sql,SQL,cypher,Cypher,quote changed,SQL-like clauses for graphs (MATCH … WHERE … RETURN),SQL-like clauses for graphs (MATCH … WHERE … RETURN),strong,strong,syntax,syntax,supported,supported,,Version 3: quote and source updated.
+sql,SQL,r,R,unchanged,"SQL-inspired verbs, via dplyr","SQL-inspired verbs, via dplyr",weak,weak,library,library,supported,supported,dplyr 2014,
+excel,Excel formulas,dax,DAX,unchanged,formula syntax,formula syntax,strong,strong,syntax,syntax,supported,supported,,
+algol68,ALGOL 68,ada,Ada,added,,named among Ada's sources (no feature given),,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+clu,CLU,ada,Ada,added,,named among Ada's sources (no feature given),,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+simula,Simula,ada,Ada,added,,named among Ada's sources (no feature given),,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+algol,ALGOL 60,basic,Dartmouth BASIC,added,,FOR…TO…STEP loops,,weak,,syntax,,supported,,New in version 3 (named in a source that version 2 already cited).
+pli,PL/I,c,C,added,,loose structure pointers in early C; file inclusion,,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+bcpl,BCPL,cpp,C++,added,,// comments,,weak,,syntax,,supported,,New in version 3 (named in a source that version 2 already cited).
+ml,ML,cpp,C++,added,,"exception handling: throw an object, catch it by type",,weak,,design,,supported,C++ after 1985,New in version 3 (named in a source that version 2 already cited).
+ml,ML,cyclone,Cyclone,added,,early design choices carried over from ML,,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+erlang,Erlang,dart,Dart,added,,actor-style concurrency (isolates),,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+csharp,C#,fsharp,F#,added,,"objects, properties, events; later LINQ",,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+haskell,Haskell,fsharp,F#,added,,"background for computation expressions (do notation, comprehensions)",,weak,,design,,partly,F# 2007,New in version 3 (named in a source that version 2 already cited).
+python,Python,fsharp,F#,added,,indentation-aware syntax,,weak,,syntax,,supported,F# 2006,New in version 3 (named in a source that version 2 already cited).
+eiffel,Eiffel,java,Java,added,,object-oriented concepts (no feature given),,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+objc,Objective-C,java,Java,added,,"interfaces, from Objective-C protocols",,strong,,type,,supported,,New in version 3 (named in a source that version 2 already cited).
+c,C,julia,Julia,added,,the speed of C as a design aim,,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+lisp,LISP,julia,Julia,added,,homoiconicity and true macros,,strong,,design,,supported,,New in version 3 (from a source not cited in version 2).
+js,JavaScript,kotlin,Kotlin,added,,named inspiration (no feature given),,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+cpp,C++,lua,Lua,added,,local variables declared where needed,,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+modula2,Modula-2,lua,Lua,added,,"control-structure syntax (while, if, repeat…until)",,weak,,syntax,,supported,,New in version 3 (named in a source that version 2 already cited).
+ml,ML,miranda,Miranda,added,,Milner's polymorphic types; type-variable notation,,strong,,type,,supported,,New in version 3 (named in a source that version 2 already cited).
+pascal,Pascal,perl,Perl,added,,'vestiges' of Pascal (no feature given),,weak,,syntax,,supported,,New in version 3 (named in a source that version 2 already cited).
+algol,ALGOL 60,pli,PL/I,added,,one of the three languages PL/I set out to combine,,strong,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+algol68,ALGOL 68,python,Python,added,,string slicing,,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+sh,Bourne sh,python,Python,added,,script runner and interactive prompt,,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+sh,Bourne sh,r,R,added,,"Unix pipes, a motivation for the magrittr pipe",,weak,,library,,supported,magrittr 2014,New in version 3 (named in a source that version 2 already cited).
+lisp,LISP,ruby,Ruby,added,,closures and blocks; truth values,,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+csharp,C#,rust,Rust,added,,attributes,,weak,,syntax,,supported,,New in version 3 (named in a source that version 2 already cited).
+erlang,Erlang,rust,Rust,added,,"message passing, lightweight concurrency",,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+newsqueak,Newsqueak,rust,Rust,added,,"channels, concurrency",,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+ruby,Ruby,rust,Rust,added,,closure and block syntax,,weak,,syntax,,supported,,New in version 3 (named in a source that version 2 already cited).
+scheme,Scheme,rust,Rust,added,,hygienic macros,,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+swift,Swift,rust,Rust,added,,optional bindings (if let),,weak,,syntax,,supported,Rust 0.12,New in version 3 (named in a source that version 2 already cited).
+algol,ALGOL 60,s,S,added,,a separate assignment operator,,weak,,syntax,,supported,,New in version 3 (named in a source that version 2 already cited).
+c,C,s,S,added,,braced expressions; arithmetic syntax,,weak,,syntax,,supported,,New in version 3 (named in a source that version 2 already cited).
+commonlisp,Common Lisp,s,S,added,,classes and inheritance (from CLOS),,weak,,design,,supported,S 1991,New in version 3 (named in a source that version 2 already cited).
+cpp,C++,s,S,added,,classes and inheritance,,weak,,design,,supported,S 1991,New in version 3 (named in a source that version 2 already cited).
+lisp,LISP,s,S,added,,functions as first-class objects; attributes,,strong,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+sh,Bourne sh,s,S,added,,continuation lines,,weak,,syntax,,partly,S on UNIX,New in version 3 (named in a source that version 2 already cited).
+smalltalk,Smalltalk,s,S,added,,classes and inheritance,,weak,,design,,supported,S 1991,New in version 3 (named in a source that version 2 already cited).
+csharp,C#,scala,Scala,added,,surface syntax (with Java),,weak,,syntax,,supported,,New in version 3 (named in a source that version 2 already cited).
+eiffel,Eiffel,scala,Scala,added,,uniform access principle,,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+erlang,Erlang,scala,Scala,added,,actor-based concurrency library,,weak,,library,,supported,,New in version 3 (named in a source that version 2 already cited).
+algol,ALGOL 60,scheme,Scheme,added,,lexical scoping,,strong,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+apl,APL,self,Self,added,,no classes: objects made by copying; live workspace,,weak,,design,,supported,,New in version 3 (named in a source that version 2 already cited).
+perl,Perl,swift,Swift,added,,string processing model,,weak,,design,,supported,Swift 4,New in version 3 (named in a source that version 2 already cited).
+java,Java,php,PHP,added,,syntax (with C and Perl),,weak,,syntax,,supported,,New in version 3 (from a source not cited in version 2).
+clojure,Clojure,elixir,Elixir,added,,protocols,,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+ruby,Ruby,swift,Swift,added,,named source of ideas (no feature given),,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+csharp,C#,swift,Swift,added,,named source of ideas (no feature given),,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+clu,CLU,swift,Swift,added,,named source of ideas (no feature given),,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+python,Python,cypher,Cypher,added,,named inspiration (no feature given),,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+perl,Perl,julia,Julia,added,,string processing as a design aim,,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+lua,Lua,julia,Julia,added,,named among the dynamic languages Julia borrows from,,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+ruby,Ruby,julia,Julia,added,,the dynamism of Ruby as a design aim,,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+smalltalk,Smalltalk,scala,Scala,added,,uniform object model: every value an object,,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+scheme,Scheme,commonlisp,Common Lisp,added,,lexical scoping and closures,,strong,,design,,supported,,New in version 3 (from a source not cited in version 2).
+commonlisp,Common Lisp,clojure,Clojure,added,,"multimethods, from generic functions",,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+ml,ML,clojure,Clojure,added,,references as the model for state,,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+fsharp,F#,csharp,C#,added,,"async/await, from F# async workflows",,weak,,design,,supported,C# 5.0,New in version 3 (from a source not cited in version 2).
+haskell,Haskell,csharp,C#,added,,LINQ query comprehensions,,weak,,design,,supported,C# 3.0,New in version 3 (from a source not cited in version 2).
+icon,Icon,csharp,C#,added,,iterators (yield),,weak,,design,,supported,C# 2.0,New in version 3 (from a source not cited in version 2).
+python,Python,csharp,C#,added,,dynamic typing (the dynamic type),,weak,,type,,supported,C# 4.0,New in version 3 (from a source not cited in version 2).
+lisp,LISP,clu,CLU,added,,"object semantics: heap objects, references",,strong,,design,,supported,,New in version 3 (from a source not cited in version 2).
+algol,ALGOL 60,clu,CLU,added,,ALGOL-like syntax,,weak,,syntax,,supported,,New in version 3 (from a source not cited in version 2).
+awk,AWK,js,JavaScript,added,,the function keyword; for…in,,weak,,syntax,,supported,,New in version 3 (from a source not cited in version 2).
+perl,Perl,js,JavaScript,added,,regular expressions; array and string methods,,weak,,syntax,,supported,JavaScript 1.2,New in version 3 (from a source not cited in version 2).
+apl,APL,go,Go,added,,"iota, the constant counter",,weak,,syntax,,supported,,New in version 3 (from a source not cited in version 2).
+bcpl,BCPL,go,Go,added,,automatic semicolon rule,,weak,,syntax,,supported,,New in version 3 (from a source not cited in version 2).
+smalltalk,Smalltalk,go,Go,added,,methods,,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+java,Java,ada,Ada,added,,interfaces,,weak,,type,,supported,Ada 2005,New in version 3 (from a source not cited in version 2).
+fortran,Fortran,b,B,added,,"declaration syntax: a specifier, then a list of names",,weak,,syntax,,supported,,New in version 3 (named in a source that version 2 already cited).
+sh,Bourne sh,julia,Julia,added,,gluing programs together as a design aim,,weak,,design,,supported,,New in version 3 (from a source not cited in version 2).
+haskell,Haskell,clojure,Clojure,added,,"protocols as an open system, like type classes",,weak,,type,,supported,Clojure 1.2,New in version 3 (from a source not cited in version 2).
+b,B,go,Go,added,,same designer (Ken Thompson),,weak,,organizational,,partly,,New in version 3 (from a source not cited in version 2).
+pascal,Pascal,turbopascal,Turbo Pascal,added (new language),,"standard Pascal, extended",,strong,,design,,supported,,New in version 3 (from a source not cited in version 2).
+turbopascal,Turbo Pascal,delphi,Delphi,added (new language),,Object Pascal; the same compiler line,,strong,,design,,supported,,New in version 3 (from a source not cited in version 2).
+cpp,C++,turbopascal,Turbo Pascal,added (new language),,object-oriented extensions,,weak,,design,,supported,Turbo Pascal 5.5,New in version 3 (from a source not cited in version 2).
+basic,Dartmouth BASIC,quickbasic,QuickBASIC,added (new language),,"Microsoft's BASIC, compiled and structured",,strong,,design,,supported,,New in version 3 (from a source not cited in version 2).
+quickbasic,QuickBASIC,vb,Visual Basic,added (new language),,the BASIC language behind the forms,,strong,,design,,supported,,New in version 3 (from a source not cited in version 2).
+basic,Dartmouth BASIC,vb,Visual Basic,rerouted through a new language,BASIC + visual forms,,strong,,design,,supported,,,"replaced by the two-step route through QuickBASIC, now its own node."
+hack,Hack,php,PHP,removed,nullable types ?T,,weak,,type,,supported,,,The RFC that shipped in PHP 7.1 never mentions Hack; the cited one is an unvoted draft naming HHVM.
+iswim,ISWIM,abc,ABC,removed,indentation for grouping,,weak,,syntax,,partly,,,"Slides read 27 Nov 2026 from a saved copy: the v2 quote is verbatim, but the next slides say 'Readability, rather than the convention in mathematical communication, was also the motivation for adopting this in ABC', crediting Plauger (1975). ISWIM is a precedent, not the source."
+mdx,MDX,dax,DAX,removed,measures and calculation context from cubes (same team),,weak,,organizational,,supported,,,The quote denies it and MDX was considered and rejected.
+pascal,Pascal,delphi,Delphi,rerouted through a new language,Object Pascal,,strong,,design,,supported,,,"replaced by the two-step route through Turbo Pascal, now its own node."
+pli,PL/I,sas,SAS,removed,early SAS partly written in PL/I,,weak,,implementation,,partly,,,"Quote verified 27 Nov 2026 from a saved copy, but it documents only that early SAS was written in PL/I. Under a plain 'implemented in' is not a tie. (Proposed to the author; drop unless he objects.)"
+sql,SQL,dax,DAX,removed,relational ideas (SQL considered),,weak,,design,,partly,,,SQL was considered and rejected.
+vb,Visual Basic,delphi,Delphi,removed,"visual form designer, event-driven RAD (Borland's answer to VB)",,weak,,product,,supported,,,"Sources show Visual Basic as the competitor to beat, not a design source."

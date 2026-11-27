@@ -17,18 +17,41 @@ conf = Counter(s["conf"] for s in STATUS.values() if s["ol"]); ai = sum(1 for s 
 ln = Counter(e[3] for e in EDGES); kd = Counter(e[4] for e in EDGES)
 ver = Counter(SRC[f"{e[0]}>{e[1]}"]["verdict"] for e in EDGES); typ = Counter(SRC[f"{e[0]}>{e[1]}"]["type"] for e in EDGES)
 late = [e for e in EDGES if e[5]]
+_v2 = {}
+exec(open(os.path.join(HERE, "edges_v2.py"), encoding="utf-8").read(), _v2)
+V2E = _v2["EDGES"]
+V2S = {(e[0], e[1]): e[3] for e in V2E}; V3S = {(e[0], e[1]): e[3] for e in EDGES}
+KEPT = [k for k in V2S if k in V3S]; ADDED = [k for k in V3S if k not in V2S]; GONE = [k for k in V2S if k not in V3S]
+REROUTED = [k for k in GONE if k in (("pascal", "delphi"), ("basic", "vb"))]
+_YEAR = {n[0]: n[2] for n in NODES}
+BACK = [(e[0], e[1]) for e in EDGES if _YEAR[e[0]] > _YEAR[e[1]]]
 
 o = []
 w = o.append
 w("# Programming Language Lineage: method and link list\n")
-w(f"*Version 2, November 2026 · {len(NODES)} languages · {len(EDGES)} links ({ln['s']} solid, {ln['d']} dotted) · revised after three rounds of AI review*\n")
+w(f"*Version 3, November 2026 · {len(NODES)} languages · {len(EDGES)} links ({ln['s']} solid, {ln['d']} dotted) · every cited source re-read against a written inclusion rule*\n")
 w("## How this version was made\n")
 w("Version 1 (October 2026: 82 languages, 129 links) was built with Claude (Anthropic) from the author's prompts. It was then reviewed adversarially over three rounds by two other AI models, "
   "Gemini 3.1 Pro and ChatGPT 6.1 Sol, acting as reviewers. The author decided each point, conceding or arguing on the merits, and afterwards revised it further. "
-  "This note describes the result, version 2. The file `data/edges-v1-to-v2.csv` lists every link that was added, removed, re-weighted or relabeled between version 1 and version 2.\n")
-w("## What changed after AI review (from version 1)\n")
+  "The result was version 2 (88 languages, 147 links). The file `data/edges-v1-to-v2.csv` lists every link that was added, removed, re-weighted or relabeled between version 1 and version 2.\n")
+w("An AI audit of version 2 then found that the cited sources named more influences than were recorded, because links had been collected one quote at a time. "
+  "For version 3 every cited source was re-read in full with the written inclusion rule below, so that each influence a source names is either recorded or rejected for a stated reason. "
+  "Wikidata's *influenced by* property was used as a checklist to find further candidates, which became links only with a primary source and a quote. "
+  "The work was done with Claude; the author decided the disputed cases. This note describes version 3. "
+  "The file `data/edges-v2-to-v3.csv` lists every link of either version with what changed and why.\n")
+w("## What changed in version 3\n")
+w(f"- **Links: {len(V2E)} to {len(EDGES)}.** {len(KEPT)} links were kept, {len(ADDED)} added, {len(GONE) - len(REROUTED)} removed and {len(REROUTED)} rerouted through a new language. "
+  f"Of the kept links, {sum(V2S[k] != V3S[k] for k in KEPT)} changed strength ({sum(V2S[k] == 's' and V3S[k] == 'd' for k in KEPT)} to weak, {sum(V2S[k] == 'd' and V3S[k] == 's' for k in KEPT)} to strong).")
+w("- **A written inclusion rule** (see *What a link is*). Links were removed where the quoted source showed only a rival product, a rejected candidate, a denial, or that one language was written in the other.")
+w("- **Links by another route are always weak.** A link that is not about design, syntax or the type system (a platform, a library, an implementation, a shared designer) is drawn dotted, without exception.")
+w("- **Strength and evidence are separate.** A solid link can now be partly supported, and a dotted link fully supported; version 2 had tied the two together.")
+w("- **Every later-version link has a year** (`since_year` in the data), so that paths can respect time order.")
+w("- **Two columns were added** to `data/edges.csv`: `source_names_it` (whether the quoted sentence itself names the influence) and `audit_note` (what changed from version 2).")
+w("- **Two languages were added**, Turbo Pascal and QuickBASIC, under a rule for intermediates (see *Which languages are included*). The direct links Pascal → Delphi and Dartmouth BASIC → Visual Basic now run through them.")
+w("- **New links are not added when an intermediary already explains them.** For example, C → Java is not drawn, because the source says the C heritage came by way of C++.\n")
+w("## What changed after AI review (from version 1 to version 2)\n")
 w("- **Every link has a type and a source.** Links are classified by kind: design, syntax or type-system influence, or an influence by another route (platform, implementation, library, product, organizational). "
-  f"Each link cites a source: {typ['primary']} of {len(EDGES)} are primary (designers' papers, HOPL histories, official FAQs and documentation), {typ['secondary']} secondary. Many labels were rewritten to say what was passed on.")
+  "Each link cites a source, mostly primary (designers' papers, HOPL histories, official FAQs and documentation). Many labels were rewritten to say what was passed on.")
 w("- **Strength was reconsidered** in both directions; for example COBOL → ABAP and Ruby → Elixir became weak (dotted).")
 w("- **Later features are tagged.** A link that entered a later version of the receiving language carries that version (for example *ES2015*, *Python 2.2*, *PHP 7.1*), so it can be told apart from the language's original design.")
 w("- **Evidence has three parts.** Each link records evidence for the *relationship*, evidence for the *feature* named in the label, and its *strength* (the line style).")
@@ -56,6 +79,14 @@ w("**Years** are the first public announcement or release (Rust 2010, Go 2009, K
 
 w("## What a link is\n")
 w("A link records a documented influence of one language on another and names what was passed on.\n")
+w("**Inclusion rule.** A link A → B is recorded when a source documents that B took something from A:\n")
+w("- the source says B borrowed, adopted, was based on, was inspired by or derived from A, or its designers say they wanted B to match A in a named respect (a link);")
+w("- the source names A in a list of B's influences without naming a feature (a link, weak);")
+w("- the influence came by another route: a platform, a major library, or an implementation language that shaped the new language (a link, always weak);")
+w("- the two languages share a lead designer and no documented link already joins them (a link, weak, marked partly supported).\n")
+w("Not links: resemblance stated by a third party, compatibility or interoperability alone, a precedent cited without saying it was the source, a candidate that was considered and rejected, a rival product, and a language that the other was merely written in. "
+  "A new link is also left out when a language already between the two explains it. "
+  f"The sources come from the designers' side: {typ['primary']} of {len(EDGES)} links cite a primary source, {typ['secondary']} a secondary one.\n")
 w("Every link is drawn solid (strong) or dotted (weak). Its *kind* records how the influence traveled:\n")
 w("| Route | Kind | Meaning | Links |"); w("|---|---|---|---|")
 w(f"| design | design | ideas, semantics or structure taken into the language's design | {kd['design']} |")
@@ -67,17 +98,19 @@ w(f"| other route | library | the influence arrived through a library (pandas, d
 w(f"| other route | product | built as a rival product | {kd['product']} |")
 w(f"| other route | organizational | same team or designer, without a documented design transfer | {kd['organizational']} |")
 w("")
-w(f"- **Solid** ({ln['s']}): a substantial influence. **Dotted** ({ln['d']}): a weaker, partial or resemblance-level influence.")
+w(f"- **Solid** ({ln['s']}): a main parent, or a defining feature that was borrowed. **Dotted** ({ln['d']}): a secondary or single-feature influence, an influence named without a feature, and every link by another route.")
 w(f"- **Later-feature links** ({len(late)}): " + "; ".join(f"{L[e[0]]} → {L[e[1]]} (*{e[5]}*)" for e in late) + ".")
-w(f"- **Evidence:** each link has a source and a verdict, and records separately the evidence for the *relationship* and for the *feature* in its label. {ver['supported']} are *supported* (the source documents the influence and what the label says) and {ver['partly']} are *partly* supported (the source is secondary, shows resemblance or precedent only, or names the influence without the feature). "
-  "**Every solid line is supported**: the relationship is documented, and the feature is either documented in the cited source or widely described (marked as such in the record). Partly supported links are drawn dotted. "
+w(f"- **Evidence:** each link has a source and a verdict, and records separately the evidence for the *relationship* and for the *feature* in its label. {ver['supported']} are *supported* (the source documents the influence and what the label says) and {ver['partly']} are *partly* supported (the source supports the influence only indirectly: it is secondary, describes a likeness in the owner's own words, or names a close relative of the language). "
+  f"Strength and evidence are recorded separately: {sum(1 for e in EDGES if e[3] == 's' and SRC[f'{e[0]}>{e[1]}']['verdict'] == 'partly')} solid links are partly supported. In {sum(1 for e in EDGES if SRC[f'{e[0]}>{e[1]}']['names_it'] == 'yes')} links the quoted sentence itself names the influence (`source_names_it` in the data). "
   "The full table below gives the source for every link; `data/edges.csv` adds the supporting quote.")
-w("- **Absence of a link** means the influence was not documented in the sources checked, not that there was none. Several acknowledged inspirations without an identifiable transfer are named in the cards instead (for example Swift ← CLU, C#, Ruby; Kotlin ← JavaScript, Groovy).")
-w("- **Intermediaries named only in labels** (ALGOL 58, ALGOL W, PAL, SASL, KRC, Strongtalk, Alef, Limbo, and the libraries pandas, dplyr and magrittr) are not nodes. This contracts some paths; see *Limitations*.\n")
+w("- **Absence of a link** means the influence was not documented in the sources checked, not that there was none. Candidates that were examined and rejected are listed, with the reason, in `source/research/v3_reconcile.csv`.")
+w("- **Intermediaries named only in labels** (ALGOL 58, ALGOL W, PL/0, PAL, SASL, KRC, Strongtalk, Alef, Limbo, and the libraries pandas, dplyr and magrittr) are not nodes. This contracts some paths; see *Limitations*.\n")
 
 w("## Which languages are included, and what the scope choices change\n")
 w("The map covers the major general-purpose languages and their key ancestors, plus the languages that matter for data work: S, R, SAS, SPSS, Stata, MATLAB, Julia, J, K/q, SQL and its procedural and analytical relatives (T-SQL, PL/SQL, MDX, Cypher), and the Microsoft data languages (Excel formulas, VBA, DAX, Power Query M). "
   "A few languages are included for their uniqueness rather than their descendants (Forth, TeX).\n")
+w("**Intermediates.** A dialect or product that sits between two languages on the map becomes its own node only if it meets three conditions: it was widely used in its own right, a cited source names it as the route between the two, and it extended the language instead of only compiling it. "
+  "Turbo Pascal (between Pascal and Delphi) and QuickBASIC (between Dartmouth BASIC and Visual Basic) meet all three and were added in version 3. ALGOL W, PL/0, SASL, Alef and Limbo do not meet the first, and stay in the labels.\n")
 w("Four languages that were in version 1 were removed as **scope and display-budget choices**, not because their history is unimportant:\n")
 w("- **CoffeeScript**: its arrow functions and classes entered JavaScript in ES2015; this is now told in JavaScript's card. Effect: JavaScript loses a later-feature parent; Python and Ruby lose a descendant.")
 w("- **KQL** and **LookML**: two domain-specific data languages with SQL as their only documented parent (LookML's link was a compile target). Effect: SQL's direct design influence falls by two.")
@@ -117,7 +150,8 @@ w("- **Age bias.** Older languages have had more time to gather descendants, whi
 w("- **Represented intermediaries.** Which intermediaries are drawn as nodes shapes any network measure. CPL and B are drawn, so the explicit C line (ALGOL 60 → CPL → BCPL → B → C) gives them many descendants; Strongtalk, Alef, Limbo, SASL and KRC are named only in labels, so the paths through them are contracted. This is a property of the drawing, not a claim that CPL or B were historically central.")
 w("- **Absence of evidence.** A missing link means the influence was not documented in the sources checked (several sources, such as the Rust Reference's list of influences, are explicitly non-exhaustive).")
 w("- **Judgments.** Health and outlook are AI judgments, each with a stated reason but without a per-rating citation; the outlook depends on an assumption about AI that cannot yet be tested.")
-w("- **Single links.** One link can carry a headline result. Fortran → ALGOL 60 is dotted and only partly supported: FORTRAN was the precedent for the algebraic languages rather than a design source (the 1958 report does not name it, and the American proposal was deliberately not based on it). Because every descendant of ALGOL 60 becomes a descendant of Fortran through this link, any count of descendants should be read with and without it.")
+w("- **Single links.** One link can carry a headline result. Every descendant of ALGOL 60 becomes a descendant of Fortran through Fortran → ALGOL 60. Version 3 draws it solid and supported, on Perlis's account that ALGOL 58 'was based on a model strongly derived from FORTRAN and its contemporaries'; the same account says FORTRAN itself was unacceptable as the common language, and the sentence concerns ALGOL 58, the precursor of ALGOL 60. Any count of descendants should be read with and without this link.")
+w(f"- **Cycles.** A language keeps changing after its first release, and a younger language can influence a later version of an older one ({len(BACK)} links: " + "; ".join(f"{L[a]} → {L[b]}" for a, b in BACK) + "). With these links the graph has cycles. The links whose source language is not younger than the target form an acyclic graph, which is the one to use for path-based measures.")
 w("- **Mixed routes.** Implementation, platform, library, product and organizational links count as influences alongside design links, so a path can mix routes: for example Fortran → S → R counts S's implementation on Fortran routines as influence. The *kind* of every link is in the data, so readers can filter.\n")
 
 w("## Languages\n")
@@ -148,6 +182,8 @@ w("| Hover a language | Its ancestors and successors are highlighted and the res
 w("| Click a language | It is selected: the highlighting stays and its card opens on the right. Click it again to deselect. |")
 w("| Ctrl-click a language (⌘-click on a Mac) | It is added to the selection, or removed if it was already selected. |")
 w("| Click **None / Direct / 2nd degree / All** for Ancestors or Successors | Sets how far the highlighting follows the chain in that direction. |")
+w("| Untick **weaker or partial influence** in the key | Hides the dotted links, and the highlighting then follows solid links only. Tick it to show them again. |")
+w("| Hover or select a language | The labels of its dotted links appear; they are hidden otherwise to keep the map readable. |")
 w("| Click a family, health or outlook category | Picks out the languages in that category. Choices in one row add up; choices in different rows narrow down. |")
 w("| Hover a flag | Shows the designers' names. |")
 w("| Hover a health or outlook badge | Shows the reasoning and, for outlooks, the confidence. |")

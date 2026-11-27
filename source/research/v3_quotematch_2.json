@@ -1,0 +1,344 @@
+[
+ {
+  "tie": "c>awk",
+  "url": "https://www.awk.dev/awk.spe.pdf",
+  "url_used": "https://www.awk.dev/awk.spe.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Verbatim in the PDF text."
+ },
+ {
+  "tie": "snobol>awk",
+  "url": "https://archive.org/stream/pdfy-MgN0H1joIoDVoIC7/The_AWK_Programming_Language_djvu.txt",
+  "url_used": "https://archive.org/stream/pdfy-MgN0H1joIoDVoIC7/The_AWK_Programming_Language_djvu.txt",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (sentence returned whole, offset 300000)",
+  "comment": "Sentence is short enough to come back whole; reported in chapter 8 (Epilog), section 8.1 'AWK as a Language'."
+ },
+ {
+  "tie": "icon>python",
+  "url": "https://www.linuxjournal.com/node/2959",
+  "url_used": "https://www.linuxjournal.com/node/2959",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (sentence returned whole)",
+  "comment": "Verbatim."
+ },
+ {
+  "tie": "algol68>python",
+  "url": "https://www.linuxjournal.com/node/2959",
+  "url_used": "https://www.linuxjournal.com/node/2959",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (sentence returned whole)",
+  "comment": "Verbatim."
+ },
+ {
+  "tie": "sh>python",
+  "url": "https://www.linuxjournal.com/node/2959",
+  "url_used": "https://www.linuxjournal.com/node/2959",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Both sentences confirmed; the second in two fragments ('Like the shell ... it presents you' and 'but when run without arguments ... interactive prompt.'). Source spells 'behaviour' as quoted."
+ },
+ {
+  "tie": "abc>python",
+  "url": "https://python-history.blogspot.com/2009/02/early-language-design-and-development.html",
+  "url_used": "https://python-history.blogspot.com/2009/02/early-language-design-and-development.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Confirmed in two overlapping fragments."
+ },
+ {
+  "tie": "perl>php",
+  "url": "https://sources.debian.org/data/main/p/php3/3:3.0.18-31/doc/preface.html",
+  "url_used": "https://sources.debian.org/data/main/p/php3/3:3.0.18-31/doc/preface.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (sentence returned whole)",
+  "comment": "Verbatim (returned on a second, differently worded request)."
+ },
+ {
+  "tie": "java>php",
+  "url": "https://sources.debian.org/data/main/p/php3/3:3.0.18-31/doc/preface.html",
+  "url_used": "https://sources.debian.org/data/main/p/php3/3:3.0.18-31/doc/preface.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (sentence returned whole)",
+  "comment": "Verbatim (returned on a second, differently worded request)."
+ },
+ {
+  "tie": "ruby>elixir",
+  "url": "https://elixir-lang.org/blog/2013/08/08/elixir-design-goals/",
+  "url_used": "https://elixir-lang.org/blog/2013/08/08/elixir-design-goals/",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (sentences returned whole)",
+  "comment": "Both sentences verbatim."
+ },
+ {
+  "tie": "erlang>elixir",
+  "url": "https://elixir-lang.org/blog/2013/08/08/elixir-design-goals/",
+  "url_used": "https://elixir-lang.org/blog/2013/08/08/elixir-design-goals/",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Confirmed in two fragments. Source has 'counter-parts' as quoted."
+ },
+ {
+  "tie": "clojure>elixir",
+  "url": "https://elixir-lang.org/blog/2013/08/08/elixir-design-goals/",
+  "url_used": "https://elixir-lang.org/blog/2013/08/08/elixir-design-goals/",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Confirmed in three fragments, including the parenthetical '(protocols in Elixir are based on Clojure’s protocol).' In the source 'Enumerable protocol' is link text with 'Enumerable' in code formatting."
+ },
+ {
+  "tie": "prolog>erlang",
+  "url": "https://www.erlang-factory.com/upload/presentations/222/ErlangFactorySFBay2010-JoeArmstrong.pdf",
+  "url_used": "https://www.erlang-factory.com/upload/presentations/222/ErlangFactorySFBay2010-JoeArmstrong.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Slide bullets, in this order and wording, including the source's spelling 'interpretor' and lower-case 'prolog'. The quote joins consecutive bullet lines of one slide; line breaks ignored."
+ },
+ {
+  "tie": "java>js",
+  "url": "https://brendaneich.com/2008/04/popularity/",
+  "url_used": "https://brendaneich.com/2008/04/popularity/",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Confirmed in two overlapping fragments. In the source 'string' and 'String' are in code formatting."
+ },
+ {
+  "tie": "java>dart",
+  "url": "https://ptgmedia.pearsoncmg.com/images/9780321927705/samplepages/9780321927705.pdf",
+  "url_used": "https://ptgmedia.pearsoncmg.com/images/9780321927705/samplepages/9780321927705.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Both sentences verbatim (source uses the 'fl' ligature in 'influenced')."
+ },
+ {
+  "tie": "smalltalk>dart",
+  "url": "https://ptgmedia.pearsoncmg.com/images/9780321927705/samplepages/9780321927705.pdf",
+  "url_used": "https://ptgmedia.pearsoncmg.com/images/9780321927705/samplepages/9780321927705.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Both parts verbatim. The omission mark covers exactly one sentence ('Dart’s syntax follows in the C tradition, via Java and Javascript.')."
+ },
+ {
+  "tie": "erlang>dart",
+  "url": "https://ptgmedia.pearsoncmg.com/images/9780321927705/samplepages/9780321927705.pdf",
+  "url_used": "https://ptgmedia.pearsoncmg.com/images/9780321927705/samplepages/9780321927705.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Verbatim. In the source 'non-blocking' is split 'non-' / 'blocking' across a page break with a running header between; 'different' uses a ligature."
+ },
+ {
+  "tie": "vb>vba",
+  "url": "https://learn.microsoft.com/en-us/previous-versions/msdn10/bb190540(v=msdn.10)",
+  "url_used": "https://learn.microsoft.com/en-us/previous-versions/msdn10/bb190540(v=msdn.10)",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (page text returned in full)",
+  "comment": "Verbatim."
+ },
+ {
+  "tie": "sql>tsql",
+  "url": "https://learn.microsoft.com/en-us/training/modules/get-started-transact-sql-programming/2-describe-transact-sql-for-programming",
+  "url_used": "https://learn.microsoft.com/en-us/training/modules/get-started-transact-sql-programming/2-describe-transact-sql-for-programming",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (page text returned in full)",
+  "comment": "Verbatim, including the source's grammar 'Transact-SQL (T-SQL) are'."
+ },
+ {
+  "tie": "sql>mdx",
+  "url": "https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms714949(v=vs.85)",
+  "url_used": "https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms714949(v=vs.85)",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (page text returned in full)",
+  "comment": "Both sentences verbatim."
+ },
+ {
+  "tie": "sql>cypher",
+  "url": "https://www.pure.ed.ac.uk/ws/files/56321692/cypher_sigmod18_crc_1.pdf",
+  "url_used": "https://www.pure.ed.ac.uk/ws/files/56321692/cypher_sigmod18_crc_1.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Verbatim (the PDF text has a double space before 'Python')."
+ },
+ {
+  "tie": "python>cypher",
+  "url": "https://www.pure.ed.ac.uk/ws/files/56321692/cypher_sigmod18_crc_1.pdf",
+  "url_used": "https://www.pure.ed.ac.uk/ws/files/56321692/cypher_sigmod18_crc_1.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Verbatim (the PDF text has a double space before 'Python')."
+ },
+ {
+  "tie": "algol68>ada",
+  "url": "https://pdv.cs.tu-berlin.de/Ada/lrm83/lrm-01-03.html",
+  "url_used": "",
+  "result": "unverified",
+  "source_wording": "",
+  "method": "none",
+  "comment": "Could not read the source. The cited URL redirects (301) to a 'site deactivated' page (pdv.cs.tu-berlin.de/auftritt-deaktiviert.html). Other copies of the same LRM section were tried: archive.adaic.com/standards/83lrm/html/lrm-01-03.html (socket closed, http and https), adaic.org/resources/add_content/standards/83lrm/html/lrm-01-03.html (404); a last attempt at adahome.com was cut off by the fetch tool's usage limit. The cited URL needs replacing with a live copy."
+ },
+ {
+  "tie": "clu>ada",
+  "url": "https://pdv.cs.tu-berlin.de/Ada/lrm83/lrm-01-03.html",
+  "url_used": "",
+  "result": "unverified",
+  "source_wording": "",
+  "method": "none",
+  "comment": "Could not read the source. The cited URL redirects (301) to a 'site deactivated' page (pdv.cs.tu-berlin.de/auftritt-deaktiviert.html). Other copies of the same LRM section were tried: archive.adaic.com/standards/83lrm/html/lrm-01-03.html (socket closed, http and https), adaic.org/resources/add_content/standards/83lrm/html/lrm-01-03.html (404); a last attempt at adahome.com was cut off by the fetch tool's usage limit. The cited URL needs replacing with a live copy."
+ },
+ {
+  "tie": "simula>ada",
+  "url": "https://pdv.cs.tu-berlin.de/Ada/lrm83/lrm-01-03.html",
+  "url_used": "",
+  "result": "unverified",
+  "source_wording": "",
+  "method": "none",
+  "comment": "Could not read the source. The cited URL redirects (301) to a 'site deactivated' page (pdv.cs.tu-berlin.de/auftritt-deaktiviert.html). Other copies of the same LRM section were tried: archive.adaic.com/standards/83lrm/html/lrm-01-03.html (socket closed, http and https), adaic.org/resources/add_content/standards/83lrm/html/lrm-01-03.html (404); a last attempt at adahome.com was cut off by the fetch tool's usage limit. The cited URL needs replacing with a live copy."
+ },
+ {
+  "tie": "algol>basic",
+  "url": "https://en.wikipedia.org/wiki/Dartmouth_BASIC",
+  "url_used": "https://en.wikipedia.org/wiki/Dartmouth_BASIC",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch (sentence returned whole)",
+  "comment": "Verbatim in the current Wikipedia article; 'FOR...TO...STEP' and 'DO...CONTINUE' are in code formatting, and a citation marker follows the period. This checks Wikipedia's wording only, not Kurtz (1981)."
+ },
+ {
+  "tie": "pli>c",
+  "url": "https://www.cs.tufts.edu/~nr/cs257/archive/dennis-ritchie/chist.pdf",
+  "url_used": "https://www.cs.tufts.edu/~nr/cs257/archive/dennis-ritchie/chist.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Verbatim; the quote stops mid-sentence (the source continues ', and permitted programmers to ...')."
+ },
+ {
+  "tie": "fortran>b",
+  "url": "https://www.cs.tufts.edu/~nr/cs257/archive/dennis-ritchie/chist.pdf",
+  "url_used": "https://www.cs.tufts.edu/~nr/cs257/archive/dennis-ritchie/chist.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Verbatim; a page break with a running header falls between 'this style' and 'but ornamented'."
+ },
+ {
+  "tie": "csharp>fsharp",
+  "url": "https://fsharp.org/history/hopl-final/hopl-fsharp.pdf",
+  "url_used": "https://fsharp.org/history/hopl-final/hopl-fsharp.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Verbatim."
+ },
+ {
+  "tie": "haskell>fsharp",
+  "url": "https://fsharp.org/history/hopl-final/hopl-fsharp.pdf",
+  "url_used": "https://fsharp.org/history/hopl-final/hopl-fsharp.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Verbatim, including the source's mismatched quotes around async."
+ },
+ {
+  "tie": "python>fsharp",
+  "url": "https://fsharp.org/history/hopl-final/hopl-fsharp.pdf",
+  "url_used": "https://fsharp.org/history/hopl-final/hopl-fsharp.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Verbatim."
+ },
+ {
+  "tie": "fsharp>csharp",
+  "url": "https://fsharp.org/history/hopl-final/hopl-fsharp.pdf",
+  "url_used": "https://fsharp.org/history/hopl-final/hopl-fsharp.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Verbatim; the source has an em dash where the quote has '--' (tolerated dash difference)."
+ },
+ {
+  "tie": "icon>csharp",
+  "url": "https://fsharp.org/history/hopl-final/hopl-fsharp.pdf",
+  "url_used": "https://fsharp.org/history/hopl-final/hopl-fsharp.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Verbatim."
+ },
+ {
+  "tie": "python>csharp",
+  "url": "https://fsharp.org/history/hopl-final/hopl-fsharp.pdf",
+  "url_used": "https://fsharp.org/history/hopl-final/hopl-fsharp.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Verbatim."
+ },
+ {
+  "tie": "eiffel>java",
+  "url": "https://www.oracle.com/java/technologies/introduction-to-Java.html",
+  "url_used": "https://www.stroustrup.com/1995_Java_whitepaper.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "The cited Oracle URL returned HTTP 403 (also oracle.com/technetwork/java/intro-141325.html: 403; docs.oracle.com copy: 404). Checked instead in the October 1995 edition of the same white paper (Gosling & McGilton, Sun Microsystems) hosted at stroustrup.com: the sentence is there verbatim. Note the edition differs from the cited one (1996), so the cited page itself was not read."
+ },
+ {
+  "tie": "objc>java",
+  "url": "https://www.oracle.com/java/technologies/introduction-to-Java.html",
+  "url_used": "https://www.stroustrup.com/1995_Java_whitepaper.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "The cited Oracle URL returned HTTP 403 (also oracle.com/technetwork/java/intro-141325.html: 403; docs.oracle.com copy: 404). Checked instead in the October 1995 edition of the same white paper (Gosling & McGilton, Sun Microsystems) hosted at stroustrup.com: the sentence is there verbatim. Note the edition differs from the cited one (1996), so the cited page itself was not read."
+ },
+ {
+  "tie": "ml>miranda",
+  "url": "https://www.cs.kent.ac.uk/people/staff/dat/tfp12/tfp12.pdf",
+  "url_used": "https://www.cs.kent.ac.uk/people/staff/dat/tfp12/tfp12.pdf",
+  "result": "exact",
+  "source_wording": "",
+  "method": "pdftotext",
+  "comment": "Both parts verbatim. The source prints the ellipsis spaced ('* ** *** . . .'); whitespace only. The omitted span is longer than one sentence."
+ },
+ {
+  "tie": "algol>pli",
+  "url": "https://cacmb4.acm.org/blogs/blog-cacm/274388-lessons-from-pl-i-a-most-ambitious-programming-language/fulltext",
+  "url_used": "",
+  "result": "unverified",
+  "source_wording": "",
+  "method": "none",
+  "comment": "Could not read the source: the cited cacmb4.acm.org URL returned HTTP 403, as did cacm.acm.org/blogs/blog-cacm/274388-.../fulltext and cacm.acm.org/blogcacm/lessons-from-pl-i-a-most-ambitious-programming-language/ (the site refuses automated fetches)."
+ },
+ {
+  "tie": "sh>r",
+  "url": "https://archive.linux.duke.edu/cran/web/packages/magrittr/vignettes/magrittr.html",
+  "url_used": "https://archive.linux.duke.edu/cran/web/packages/magrittr/vignettes/magrittr.html",
+  "result": "exact",
+  "source_wording": "",
+  "method": "webfetch fragments",
+  "comment": "Confirmed in two consecutive fragments. The quote starts mid-sentence (source: 'This is not an unknown feature elsewhere; a prime example is ...'); '|>' and 'F#' are in code formatting. Only the magrittr vignette was checked, not the PIPE.md note also named in the citation."
+ }
+]
