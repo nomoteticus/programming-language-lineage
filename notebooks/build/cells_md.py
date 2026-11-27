@@ -3,22 +3,43 @@ MD = {}
 MD["title"] = r'''
 # Who shaped whom? The influence network of programming languages
 
-*A network analysis of 88 programming languages and 147 documented influence ties, from Fortran (1957) to Zig (2016).*
+*A network analysis of 90 programming languages and 218 documented influence ties, from Fortran (1957) to Zig (2016). Version 3 of the data.*
 
-Programming languages are usually drawn as family trees: neat lines of parents and children. Influence does not stay inside families, though. A language may take its type system from one tradition, its syntax from a second and a library idea from a third. Seen this way, the history of programming languages looks less like a pedigree and more like a social network, and the vocabulary of social network analysis fits it well: centrality and status, brokers who join otherwise separate groups, cohesive subgroups, and the question of whether a prominent position reflects anything more than having arrived early.
+Programming languages are usually drawn as family trees: neat lines of parents and children. Influence does not stay inside families, though. A language may take its type system from one tradition, its syntax from a second and a library idea from a third. Seen this way, the history of programming languages looks less like a pedigree and more like a social network, and the vocabulary of social network analysis fits it well: centrality and status, brokers who sit between groups, weak ties, cohesive subgroups, and the question of whether a prominent position reflects anything more than having arrived early.
 
 This notebook asks six questions of the data behind the interactive map:
 
 1. **Influence.** Which languages shaped the most others, directly and through their descendants?
 2. **Borrowing.** Which languages drew on the most sources?
-3. **Brokerage.** Which languages connect traditions that would otherwise be separate? Do *weak* ties do the bridging, as Granovetter (1973) argued for social ties?
-4. **Cohesion.** Do the curated language families match the groups the network forms on its own?
-5. **Age.** Is a language's reach more than a matter of having been early?
-6. **Influence and health.** Are the most influential languages still alive? Are the biggest borrowers?
+3. **Connectors.** Which languages sit between others, so that influence passes through them?
+4. **Weak ties.** Do weak ties connect separate traditions, as Granovetter (1973) argued for social ties?
+5. **Families.** Do the curated language families hold together more than chance would produce?
+6. **Age.** How much of a language's reach is simply a matter of having been early?
+
+Every result is tested against alternative ways of drawing the network (section 12), and the conclusions (section 13) say which ones survive. The aim is a set of claims that can be defended, not a set of rankings.
+'''
+
+MD["summary"] = r'''
+## Summary
+
+**Goal.** To see what network analysis can add to the history of programming languages: which languages shaped others, who connects traditions, and whether the family trees we draw match the actual flow of ideas. Because the data are a curated record built from cited sources, the second goal was to say which findings can be trusted. The analysis is therefore built around checks: influence is followed in time order, the network is redrawn five ways, the record is perturbed in both directions (wrong ties and missing ties), and every comparison has a chance baseline.
+
+**In short.**
+
+- **A small group of early languages dominates.** Fortran, ALGOL 60 and LISP reach the most languages, and the result holds however the network is drawn. C and LISP are borrowed from directly most often. Part of this is simply being early, but not all of it.
+- **"Who borrowed most" is the least reliable question.** Rust, Python and Julia come out on top, but the ranking depends on how well each language documents its own heritage, so the usual story of Python as the great synthesizer does not hold up.
+- **The connectors are the big, long-lived languages of the C line.** C++ and C sit between others in every version of the network; Python and C# do only when weak or later-version ties are counted.
+- **Weak ties cross traditions without bridging them.** They link languages of different families, as the theory of weak ties suggests, but between languages that already share neighbors. They are secondary borrowings, not first links.
+- **Families are real, and porous.** The curated families hold together far more than chance would produce, yet most ties still cross them.
+- **Much rests on a few ties.** Half of all source-to-sink chains pass through Fortran → ALGOL 60, so the notebook shows what changes without it.
+
+The sections below give the method, the evidence for each question, and a full list of what is robust and what is not.
 '''
 
 MD["howto"] = r'''
 > **Reading and running this notebook.** `network-analysis.ipynb` holds the code and its results. `network-analysis.html` is the same notebook rendered without code, for reading. To rerun it, install the packages in `requirements.txt` (at the root of the repository) and run all cells from the `notebooks/` folder; it takes about a minute. Every random step is seeded, so a rerun reproduces the numbers quoted in the text. Figures are also saved to `notebooks/figures/`.
+>
+> **What is new compared with the analysis of version 2.** The data were rebuilt (every cited source re-read against a written inclusion rule), and the analysis was redesigned with them: influence is followed in time order; ties of different kinds and different evidence are tested separately instead of being pooled; uncertainty covers missing ties as well as wrong ones; every comparison with the families has a chance baseline; and the analysis of health, which depended on AI-assigned ratings, was dropped.
 '''
 
 MD["setup"] = r'''
@@ -28,248 +49,279 @@ MD["setup"] = r'''
 MD["data"] = r'''
 ## 2. The data and the graph
 
-Each **node** is a language. Each **tie** A → B records that B's designers borrowed something from A, backed by a cited source (the evidence record is in `data/edges.csv`). Ties are directed forward in time: from the source to the borrower.
+Each **node** is a language. Each **tie** A → B records that B's designers drew on something from A, backed by a cited source (the evidence record is in `data/edges.csv`). Ties point from the source to the borrower. Each tie carries:
 
-Each tie also carries:
+- a **strength**: *strong* for a main or substantial influence, *weak* for a partial one (a single feature, a stated aim, a shared designer, a library);
+- a **kind**: design, syntax, type, or one of four other mechanisms (library, implementation, platform, organizational). By rule, every tie of an "other" kind is weak;
+- a **verdict** on the evidence: *supported* by the quoted sentence, or *partly supported*. This is kept apart from strength, so a strong tie can be partly supported and a weak one fully supported;
+- for 32 ties, a **later version** (for example Python 2.0 or pandas 2008) and its year, when the borrowing happened after the language's first release.
 
-- a **strength**: *strong* (104 ties) for a substantial influence, *weak* (43) for a partial or resemblance-level one;
-- a **verdict** on its evidence: *supported* (136) or *partly supported* (11, all of them weak ties);
-- for 16 ties, a **later version** (the `since` column) when the borrowing happened after the language's first release, for example Python's list comprehensions from Haskell in Python 2.0.
-
-The headline analysis uses **all 147 ties, unweighted**, which treats every documented influence alike. Two alternative specifications (strong ties only; strong = 1 and weak = 0.5) are reported in section 11.
+The headline analysis uses **all 218 ties, unweighted**, so that every documented influence counts once. Section 12 repeats the analysis on four reduced versions of the network.
 '''
 
 MD["glance"] = r'''
-**The network at a glance.** The network is **sparse**: fewer than 2% of the possible ordered pairs are tied, and the average language has between three and four ties. Apart from Forth, which has no documented tie, all languages form **one connected component**. The graph is almost **acyclic**: the only two-way pair is PHP and Hack, because Hack later fed type features back into PHP 7.1.
-
-Two numbers already say something about how ideas travel. First, only **8% of two-step chains are closed**: when A influenced B and B influenced C, A is rarely recorded as a direct influence on C. Influence mostly travels *through* intermediaries rather than skipping generations, so measures that follow paths, not just direct ties, matter here. Second, **almost half of all ties cross family lines**, so the families are far from closed worlds.
+**The network at a glance.** The network is sparse: under 3% of the possible ordered pairs are tied, and the average language has between four and five ties. All languages but two (Forth and SAS, which have no documented tie) form one connected component. The graph has three small loops, all caused by later-version ties: a younger language that fed something back into an older one (for example Swift into Rust 0.12, or Java into Ada 2005). Loops are what time order, introduced next, takes care of.
 '''
 
-MD["uncertainty"] = r'''
-## 3. Measures, and how sure we can be
-
-### Measures
+MD["measures"] = r'''
+## 3. Measures
 
 | Question | Measure | What it counts |
 |---|---|---|
 | Who influenced the most? | **Direct influence** (outdegree) | Languages that borrowed directly from it. |
-| | **Influence domain** | All later languages that can be reached from it by following ties forward, however many steps away (Wasserman and Faust 1994, ch. 5). |
-| | **Status** (PageRank on reversed ties) | A language has high status when it is borrowed from by languages that are themselves borrowed from. This recursive idea goes back to Katz (1953) and Bonacich (1987); PageRank (Brin and Page 1998) is its best-known form. |
+| | **Influence domain** | All languages that its influence can reach along chains of ties, however many steps away (Wasserman and Faust 1994, ch. 5). |
+| | **Status** (PageRank on reversed ties) | A language has high status when it is borrowed from by languages that are themselves borrowed from; this recursive idea goes back to Katz (1953) and Bonacich (1987), and PageRank (Brin and Page 1998) is its best-known form. |
 | Who borrowed the most? | **Direct borrowing** (indegree) | Languages it borrowed from directly. |
-| | **Ancestry** | All earlier languages it descends from, directly or indirectly. |
-| Who connects? | **Betweenness** (Freeman 1977) | The shortest influence paths between other languages that run through it. |
-| | **Cross-family brokerage** (Gould and Fernandez 1989) | Chains A → B → C, with no direct tie A → C, in which B joins different families. |
+| | **Ancestry** | All languages that can reach it along chains of ties. |
+| Who connects? | **Betweenness** (Freeman 1977) | For every pair of languages, the share of their shortest chains of influence that pass through it. |
 
-### Uncertainty: why not confidence intervals?
+### Chains must respect time
 
-The 88 languages and 147 ties are not a random sample from a larger population. They are a curated record, so the usual sampling-based confidence intervals and p-values do not apply. The real uncertainty is about **which ties belong in the record**: a weak, partly supported tie is less certain than a strong, well-documented one.
+A measure that follows chains (influence domain, ancestry, betweenness) normally assumes that anything can travel along any path. Here that would be wrong. A tie A → B records a particular feature at a particular date. If B took a feature from A in 2008 (as pandas took ideas from R), that feature cannot have passed on from B to a language that borrowed from B in 1995.
 
-The notebook therefore uses one method throughout: an **evidence-weighted Monte Carlo** over ties. In each of 1,000 draws, every tie is kept or dropped at random, with a probability set by its evidence:
+So a chain A → B → C counts **only if the tie B → C is no earlier than the tie A → B**. A tie is dated by the later version it records (Python 2.0 is 2000) or, if it has none, by the year the borrowing language first appeared. This also removes the loops of section 2: chains never run backward. The functions below implement this. They are checked against networkx on the ties present at first release, where every chain already runs forward in time and the results must agree exactly. (They were also checked against a brute-force enumeration of all chains on 300 random small graphs with loops, outside this notebook; there were no differences.)
 
-| Tie | Probability of keeping it |
-|---|---|
-| Strong (all supported) | 0.9 |
-| Weak, supported | 0.6 |
-| Weak, partly supported | 0.4 |
+The effect on this data is modest overall (the rank correlation with ignoring dates is 0.99 for both reach measures) but it matters for particular languages: PowerShell's ancestry falls from 42 to 28, PL/SQL's from 23 to 10, and Java's influence domain from 26 to 17.
+'''
 
-Every measure is recomputed on each of the 1,000 networks. The tables report each language's **rank on the full network**, its **median rank across the draws**, and the **90% interval** of its rank (the 5th to 95th percentile). A narrow interval means the position does not depend on any one uncertain tie; a wide one means it does.
+MD["uncertainty"] = r'''
+## 4. Uncertainty: what if the record is wrong?
 
-Two points about reading these intervals. The full network is the most generous case, since every tie is present, so an interval need not be centered on the full-network value. And the probabilities are assumptions, not estimates: they encode "strong ties are very likely real, weak ones less so". The conclusions below rely only on large differences, which do not hinge on the exact values.
+The 90 languages and 218 ties are not a random sample from a larger population. They are a curated record, so sampling-based confidence intervals and p-values do not apply to the rankings. The real uncertainty is about **the record itself**, and it runs in two directions:
+
+- a recorded tie may not be a real design influence (a source can be misread, and 18 ties are only partly supported by their quoted sentence);
+- real ties may be missing, because nobody wrote them down or the sources do not mention them. The sources of version 3 were re-read in full, but an influence that no source states is invisible.
+
+The notebook therefore re-runs every measure on **1,000 perturbed copies** of the network. In each copy, every tie is dropped with a probability set by its evidence, and extra ties are added between random pairs of languages (the older one as the source). The tables report each language's **rank on the full network**, its **median rank across the copies**, and the **90% interval** of its rank (5th to 95th percentile). A narrow interval means the position does not depend on any one uncertain tie.
+
+| | Drop a supported tie | Drop a partly supported tie | Random ties added |
+|---|---|---|---|
+| **Moderate** (the intervals in the tables) | 10% | 50% | 10% of the number of ties (22) |
+| **Severe** (a stress test, section 12) | 20% | 60% | 25% of the number of ties (54) |
+
+These are assumptions, not estimates; nothing in the data calibrates them. They are chosen to be clearly pessimistic, and the conclusions rest on results that hold under the severe setting as well. Two further points about reading the intervals: languages with the same value share a rank, and the full network is the most generous case, so an interval need not be centered on the observed rank.
 '''
 
 MD["timeline"] = r'''
-## 4. The shape of the network, and its main path
+## 5. The shape of the network, and its main path
 
 Figure 1 places every language at its year of creation, in a band for its family. Node size shows the influence domain.
 
-The dark line is the network's **main path**. Main path analysis was developed by Hummon and Doreian (1989) to find the backbone of a citation network, the chain of papers through which a field's knowledge flowed. Each tie gets a **search path count**: the number of paths from a source (a language with no recorded parent) to a sink (one with no recorded heir) that pass through it (Batagelj 2003). The **global main path** is the source-to-sink chain with the highest total count (Liu and Lu 2012). It needs an acyclic graph, so it uses the 131 original-design ties, leaving out the 16 later-version ties.
+The dark line is the network's **main path**. Main path analysis was developed by Hummon and Doreian (1989) to find the backbone of a citation network, the chain of papers through which a field's knowledge flowed. Each tie gets a **search path count**: the number of chains from a source (a language with no recorded parent) to a sink (one with no recorded heir) that pass through it (Batagelj 2003). The **global main path** is the source-to-sink chain with the highest total count (Liu and Lu 2012).
+
+The method needs a graph without loops, so it uses the 186 ties present at first release. They all run forward in time, which also keeps the path from running through a feature added decades later. When several chains tie for the best, all of them are shown, so that no ending is chosen arbitrarily.
 '''
 
 MD["timeline_read"] = r'''
-**Reading Figure 1.** The main path runs **Fortran → ALGOL 60 → CPL → BCPL → B → C → C++ → Java → C#**, then on to PowerShell. This is the spine of the network: the ALGOL-to-C line and the object-oriented languages built on C. The last step matters little: C# has four heirs, and the tie to PowerShell carries few paths.
+**Reading Figure 1.** The main path runs **Fortran → ALGOL 60 → CPL → BCPL → B → C → C++ → Java → C# → F#**, and then ends in either Elixir or Power Query M (equally good). This is the spine of the network: the ALGOL-to-C line, and the object-oriented languages built on it. The last steps matter little, since several languages hang off C# and F# with equal weight.
 
-The first tie of the path deserves a warning. **Fortran → ALGOL 60 carries 55% of all source-to-sink paths**, by far the most load-bearing tie in the network, and it is also one of the 11 ties recorded as only partly supported: ALGOL was designed as a machine-independent alternative to Fortran, so Fortran was its precedent and foil more than its design source. Without this tie the main path simply starts at ALGOL 60 (section 11), but every measure of Fortran's reach changes a great deal.
+Two cautions. First, main paths favor **long unbranched stretches**: the ALGOL 60 → CPL → BCPL → B → C stretch scores well because it is long, not because each tie in it is busy. The table of the busiest individual ties is a better guide to where the traffic is. Second, **Fortran → ALGOL 60 carries half of all source-to-sink chains** (421 of 835), and **PL/I → C**, a weak tie, is the second busiest (26%). Much of the structure rests on these two single ties. Removing Fortran → ALGOL 60 leaves the main path unchanged from ALGOL 60 onward, and so does keeping only design, syntax and type ties. With strong ties only the spine is the same as far as Java, where four heirs (C#, Scala, Kotlin, Dart) tie.
 '''
 
 MD["rq1"] = r'''
-## 5. RQ1: Which languages were the most influential?
+## 6. RQ1: Which languages were the most influential?
 
 ### Direct influence
 '''
 
 MD["rq1b"] = r'''
 ### Influence domain and status
+
+"Share of them reached" divides the influence domain by the number of languages created in or after the same year, so that a language is not credited simply for having had more time.
 '''
 
 MD["rq1_read"] = r'''
-**Reading.** The three measures answer different questions, and they agree only in part.
+**Reading.** The three measures answer different questions.
 
-- **Direct influence** is led by **C** (10 direct heirs), ranked first in every draw, then **LISP** (8), **SQL** (7), **Java** and **Fortran** (6 each). Direct influence rewards languages that many later designers looked at directly.
-- **Influence domain** rewards early languages at the head of long chains. **Fortran** has the largest domain on the full network (55 later languages), but its median rank across the draws is only 9 and its interval runs from 1 to 21, because 35 of those 55 languages are reached only through the contested tie to ALGOL 60. **ALGOL 60** (46; ranked 1st or 2nd in 90% of draws) and **LISP** (35; 2nd to 7th) are the robust leaders.
-- **CPL, BCPL and B** show a typical artifact of reach measures. Their domains are large (27 to 29), but their intervals stretch to rank 54, since each is a single link in one chain (ALGOL 60 → CPL → BCPL → B → C) and losing any link cuts their reach. Structurally they are conduits rather than sources (the method note makes the same point about drawn intermediaries).
-- **Status** gives the clearest answer. **ALGOL 60** and **LISP** rank between 1st and 3rd in 90% of draws, followed by **C** (3rd to 7th).
+- **Direct influence** is led by **LISP** and **C** (12 direct heirs each), then **ALGOL 60** (9) and a group at 8 (Java, Smalltalk, C#, Haskell). LISP's rank interval is the narrowest (1st to 2nd); C ranges from 1st to 3rd. Beyond the top three, the order is a matter of one or two ties, and the intervals overlap widely.
+- **Influence domain** is led by **Fortran** (62 languages) and **ALGOL 60** (60), then **COBOL** (44) and **LISP** (43). Both leaders reach about 70% of the languages that came after them. ALGOL 60's rank is 1st or 2nd in 90% of the perturbed copies; Fortran's runs from 1st to 3rd. COBOL's reach runs mostly through PL/I and then C, a weak tie, which is why it is the least secure of the four.
+- **CPL, BCPL and B** have large domains (35 to 37) but very wide intervals (up to 64th), because each is one link in a single chain (ALGOL 60 → CPL → BCPL → B → C) and losing one link cuts the reach of those before it. Structurally they are conduits, not sources.
+- **Status** puts **Fortran, ALGOL 60 and LISP** in the first three places. ALGOL 60 and LISP stay in the top three in 90% or more of the copies.
 
-**Answer to RQ1.** By the network's own measures, **ALGOL 60 and LISP are the most influential languages**, and **C** is the language most often borrowed from directly. Fortran heads the longest lineage only if its tie to ALGOL 60 is accepted as a design influence.
+**Answer to RQ1.** **Fortran, ALGOL 60 and LISP** are the most influential languages by reach and status, and **LISP and C** are the most often borrowed from directly. Fortran's lead over ALGOL 60 rests on its tie to ALGOL 60 (section 12): without it, Fortran falls to third on reach and seventh on status, and ALGOL 60 leads.
 '''
 
 MD["rq2"] = r'''
-## 6. RQ2: Which languages borrowed the most?
+## 7. RQ2: Which languages borrowed the most?
+
+Borrowing is where the quality of the record matters most. A language's in-degree counts the ties that someone wrote down, and some languages document their own heritage far more thoroughly than others (the Rust Reference lists its influences on one page). The table therefore shows how many distinct sources lie behind a language's ties, and how many come from its single largest source.
 '''
 
 MD["rq2_read"] = r'''
-**Reading.** **Python** has the most direct sources (8) and ranks first in every draw. Its sources span six families: ABC, C, C++, Modula-3, Icon, Haskell, and the R and SQL ideas behind pandas. **C++** follows (5; 2nd to 6th), then a large tie at four sources: Rust, Scala, Dart, JavaScript, Julia, R, Swift and Ruby, whose intervals overlap so much that their order means little.
+**Reading.** **Rust, Python and Julia** tie at the top with 10 direct sources each, followed by **S** (9) and, at 8, **Swift** and **Scala**. The three leaders are not alike. All 10 of Rust's ties come from a single page (the Rust Reference); Julia's come from three sources (8 from its own founding essay); Python's come from five, which makes its number the best documented. Across all languages, the rank correlation between in-degree and the number of ties from a single source is 0.94: **in-degree measures, to a large degree, how thoroughly a language documents its own influences**, and S, C++ and Rust show it most clearly. Python and Rust stay in the top five under all five specifications of section 12; Julia does in four.
 
-**Ancestry** grows almost mechanically with date: a recent language inherits the whole ancestry of its parents. TypeScript, Dart, Kotlin and Swift lead (36 to 40 ancestors), but their intervals are wide because their ancestry often hangs on one or two ties. Python's ancestry is smaller (30) but much more secure (2nd to 8th): it is reached by many independent routes.
+**Ancestry** grows with how recent a language is, since a recent language can inherit the whole ancestry of its parents. Swift and Rust (50 ancestors each) lead, followed by Dart, Kotlin and TypeScript. The rankings are less secure than for direct borrowing: TypeScript's ancestry rests on few ties and drops out of the top five under four of five specifications.
 
-**Answer to RQ2.** **Python is the network's great synthesizer**, followed by C++. Many of Python's borrowings came after its first release, such as list comprehensions from Haskell, generators from Icon and data frames by way of pandas, so its position reflects a language that kept borrowing.
+**Answer to RQ2.** **Rust, Python and Julia are the three biggest borrowers of the record**, but their order is not meaningful, and the ranking says as much about documentation as about design. The claim that a single language is the network's great synthesizer does not survive the checks: Python is first (tied) in the full network, but it falls to fourth when only design, syntax and type ties are counted.
 '''
 
 MD["rq3"] = r'''
-## 7. RQ3: Which languages connect separate traditions?
+## 8. RQ3: Which languages sit between others?
 
-Two complementary views. **Betweenness** counts the shortest influence paths that run through a language: how much of the network's traffic it carries. **Brokerage roles** (Gould and Fernandez 1989) use the families. For every chain A → B → C with no direct tie A → C, the broker B plays one of five roles, depending on the families of the three languages:
-
-| Role | Families | Interpretation |
-|---|---|---|
-| Liaison | A, B and C all different | links two traditions, neither of them its own |
-| Gatekeeper | B and C the same, A different | brings outside ideas into its family |
-| Representative | A and B the same, C different | carries its family's ideas out |
-| Itinerant | A and C the same, B different | an outsider passing ideas within another family |
-| Coordinator | all the same | brokerage within one family (not counted as cross-family) |
+**Betweenness** counts, for every pair of languages with a chain of influence between them, the share of their shortest chains that pass through a given language. A high score means that influence between other languages often travels through it. With time order respected, a chain through a language counts only if what it passed on was already there. This is a statement about position in the record, not about importance: a language can sit on many chains simply because it has many ties on both sides.
 '''
 
 MD["rq3_read"] = r'''
-**Reading.** **Python** carries the most shortest paths (betweenness 129), ahead of **C** (110) and **C++** (92). Its rank is less secure than C++'s, though: across the draws C++ stays between 1st and 4th, while Python ranges from 1st to 13th, because several of its brokering ties are weak or later-version ties. B again owes its rank to its place in the C line.
+**Reading.** **Python** (181.8) comes first, followed by **C++** (168.5), **C#** (145.0), **C** (129.1) and **Java** (99.3). The positions of the five differ in how secure they are. **C++, C and Java** stay in the top five under every specification of section 12, and C++ and C in at least 90% of the perturbed copies. **C#** stays in four specifications of five. **Python** does in three: its betweenness rests heavily on its weak and later-version ties (library ties through pandas, features added in Python 2.0, and the ties from Python to C#, JavaScript, F# and Scala that were added in later versions). Counting only strong ties, Python falls from first to 39th; counting only ties present at first release, to 10th.
 
-The brokerage roles show *how* each language connects:
-
-- **Python** is the network's main **liaison** (15 of its 28 cross-family chains), for instance carrying ideas from Icon and Haskell on to Julia, and from C++ and Modula-3 on to Scala. It is also a gatekeeper, bringing outside ideas into the scripting family.
-- **Smalltalk** is a pure bridge between traditions: it carried LISP and Logo ideas into Objective-C, Java, Ruby and Dart.
-- **C** and **Haskell** are pure **representatives**: they export their own family's ideas (C to Perl, AWK, PHP, Python and Stata; Haskell to Python, Scala, Swift, Rust and Excel formulas) but never stand between two other families.
-- **Java** and **JavaScript** are mainly **gatekeepers**, bringing ideas from C++ and Smalltalk (for Java) and from Scheme and Self (for JavaScript) on to the newer languages of their own families.
-
-**Answer to RQ3.** **Python, C++ and Smalltalk are the main connectors between traditions.** C++ holds its position most firmly; Python's broker role is the largest but leans more on weak ties.
-'''
-
-MD["weak"] = r'''
-### Do weak ties bridge?
-
-Granovetter (1973) argued that weak ties, not strong ones, link otherwise separate social circles. The data allow a simple check: do weak influence ties cross family lines more often than strong ones?
-'''
-
-MD["weak_read"] = r'''
-**Reading.** They do, clearly: **two-thirds of weak ties (67%) cross family lines, against two-fifths of strong ties (39%)**. Strong influence mostly runs within a tradition, and weak influence mostly runs between traditions. The robustness check in section 11 points the same way: dropping weak ties changes the brokerage ranking more than any other measure.
-
-Two cautions. "Strength" here describes how substantial the documented borrowing was, not the frequency of contact that Granovetter had in mind, so the parallel is an analogy, not a test of his theory. And part of the pattern may come from coding: an influence across traditions is harder to document in detail, so it may be more often rated weak.
+**Answer to RQ3.** **C++ and C are the languages that most reliably sit between others**, with Java close behind. Python's position as a connector is real in the full record but depends on ties that are weak or date from later versions, so it should not be stated without that qualification. The sociological reading is simple: the languages that connect are those with many ancestors and many heirs, which are the large, long-lived languages of the C line and of the object-oriented tradition.
 '''
 
 MD["rq4"] = r'''
-## 8. RQ4: Do the language families hold together?
+## 9. RQ4: Do weak ties connect separate traditions?
 
-The nine families on the map are curated display groups, mostly by domain of use. Here they are compared with the network's own structure in three ways: the **mixing matrix** of ties between families; Krackhardt and Stern's (1988) **E-I index** for each family (external minus internal ties, divided by all ties: −1 means entirely inward-looking, +1 entirely outward-looking); and **community detection** with the Louvain method (Blondel et al. 2008), which finds the partition that maximizes **modularity** (Newman and Girvan 2004), compared with the families using normalized mutual information (NMI) and the adjusted Rand index.
+Granovetter (1973) argued that weak ties, not strong ones, link otherwise separate social circles, because strong ties tend to form among people who already share contacts. Two checks translate the idea to this data:
+
+- **Crossing family lines.** Does a weak tie more often join two different families than a strong tie does?
+- **Structural bridging.** Granovetter's own idea is structural: a bridge is a tie whose two ends have no contacts in common. Does a weak tie more often have *no shared neighbor* (in the undirected graph) than a strong one?
+
+Because every tie of a non-design kind is coded weak, and partly supported ties are more often weak, the comparison is repeated on design, syntax and type ties only, on supported ties only, and on both. "Shuffles as extreme" says how often shuffling the strength labels among ties at random gave a difference as large as the observed one, out of 2,000 shuffles. It is a baseline for the size of the difference, not a test on a sample.
 '''
 
 MD["rq4_read"] = r'''
-**Reading.** The diagonal of Figure 5 is the heaviest part of the matrix for most families, but the off-diagonal flows are large. The **E-I index** sorts the families into two kinds:
+**Reading.** The two checks give different answers.
 
-- **Inward-looking:** **Data & BI** is the only family with more internal than external ties (E-I −0.08): SQL and its dialects form a world of their own. **C & systems** (0.10), **Teaching & visual** (0.11) and **Arrays & statistics** (0.13) are close to balanced.
-- **Outward-looking:** **Lisp** (0.54) is a small family whose ideas were mostly exported, into ML, arrays, scripting and teaching languages. **ML & Haskell** (0.37), **Scripting & web** (0.40) and **JVM & .NET** (0.44) also trade mostly with other families. (The high value for *Other lineages*, 0.57, is expected: it is a residual group, not a tradition.)
+- **Weak ties do cross family lines**: 78% of weak ties against 37% of strong ones, in all four versions of the comparison, and none of 2,000 shuffles gets close. Strong influence mostly stays within a tradition; weak influence mostly connects traditions.
+- **Weak ties are not bridges in the structural sense.** They are *less* often without a shared neighbor than strong ties (31% against 53% among design, syntax and type ties; 5 of 2,000 shuffles are as extreme). A weak tie typically goes from a language to one that is already close to it in the network. A plausible mechanism: a language borrows its main idea from one parent (a strong tie) and a single feature from a relative of that parent or of its other sources (a weak tie), which closes a triangle. Strong ties form chains of descent (A → B → C), which contain no triangles.
 
-**Communities.** The Louvain communities are considerably more modular than the families (modularity 0.56 against 0.37), and they agree with the families only moderately (NMI 0.45, with a 90% interval of 0.41 to 0.54 across the draws; adjusted Rand index 0.18). The communities follow **lineages** rather than domains of use. Examples: Modula-2, Oberon, Newsqueak, Modula-3 and Go form one group (Wirth's line leading to Go); Prolog, Erlang, F#, Elixir and Power Query M form another; Python sits with ISWIM, ML, Haskell and OCaml rather than with the scripting languages.
-
-**Answer to RQ4.** **The families are only loosely cohesive.** They group languages by what they are used for; the network groups them by whom they learned from. Both are useful, but they are different maps.
+**Answer to RQ4.** In this network, **weak ties cross traditions but do not bridge them**: they carry secondary borrowings between languages that are already connected, not the first link between separate parts of the network. The cross-family result is partly a coding pattern (an influence from outside a language's own tradition is, almost by definition, a secondary one), and the structural result is the opposite of what Granovetter's analogy would predict, so the analogy to his theory should be kept loose.
 '''
 
 MD["rq5"] = r'''
-## 9. RQ5: Is influence just a matter of being early?
+## 10. RQ5: Do the language families hold together?
 
-An early language has more later languages that could borrow from it, so a large influence domain may simply reflect age. To separate the two, the observed network is compared with a **null model**: 1,000 randomized networks in which each language keeps its number of incoming and outgoing ties, and every tie still points forward in time, but who borrows from whom is shuffled. The shuffling uses repeated swaps of tie endpoints (a → b and c → d become a → d and c → b), the standard degree-preserving method (Maslov and Sneppen 2002), with the added rule that no tie may point back in time. As in section 4, it uses the 131 original-design ties, so that all ties respect time order.
+The nine families on the map are curated display groups, mostly by domain of use, not groups found by the network. Do they still hold together more than chance would produce? Two baselines answer it, both from 1,000 random reassignments of the family labels to the languages (keeping the family sizes):
 
-For each language with at least one heir, the observed influence domain is compared with the distribution of its domain across the null networks. A language above the 95th percentile reaches further than its date and direct ties predict; one below the 5th reaches less far.
+- the **share of ties that cross a family line**, which is high by construction when labels are random;
+- **modularity** (Newman and Girvan 2004), which compares the share of ties inside families with the share expected if ties ignored family membership.
+
+For each family, Krackhardt and Stern's (1988) **E-I index** compares ties to other families with ties inside: −1 means all ties stay inside the family, +1 means all go outside. The reference range is what the same family would show under random labels, which for small families is close to +1, so raw E-I values must not be read on their own.
+
+The comparison is deliberately limited to the curated families. Algorithms that look for communities in the network (such as Louvain) would find groups of languages that borrow from each other, but those groups would follow lineages by construction, since lineages are what the ties are made of. A better fit than the families would say little.
 '''
 
 MD["rq5_read"] = r'''
-**Reading.** Position in time explains most of the reach: the rank correlation between the observed and the expected influence domain is 0.81, and **no language's reach exceeds what its date and number of direct heirs predict** (none is above the null's 95th percentile). The highest percentiles (about the 90th) belong to CPL, BCPL and B: one heir each, but that heir led to C. ALGOL 60 is also on the high side (82nd percentile).
+**Reading.** **The families are more cohesive than chance would produce, but most of the influence still crosses them.**
 
-Two languages fall **short** of their expected reach: **APL** (expected about 30 descendants, observed 6) and **SQL** (expected about 17, observed 5). Both had several direct heirs, but those heirs started few further lines: APL's descendants (J, K / q, S, Mathematica) stayed in the array niche, and SQL's heirs (T-SQL, PL/SQL, MDX, DAX, Cypher) lead almost nowhere: only MDX has an heir of its own. Their influence was broad but shallow: many children, few grandchildren. **LISP** comes close to the same pattern (6th percentile, just inside the null range): it has eight direct heirs but reaches 32 languages, against about 50 expected. Two of its heirs (Clojure and Mathematica) have no heirs of their own in the record, and the lines from the others often lead to the same languages.
+- 58% of ties cross a family line; with random labels it would be about 87% (and never below 78% in 1,000 shuffles).
+- The families' modularity is 0.26; random labels give −0.01 on average and never more than 0.06.
+- **Eight of the nine families are more inward-looking than 95% of the random reassignments** (Figure 6, right). The ninth, "Other lineages", is a residual group, not a tradition, and sits inside the range, as it should. The most inward-looking are **Data & BI** (E-I 0.17, SQL and its dialects), **Teaching & visual** (0.20) and **C & systems** (0.27, with 32 ties inside the family, the heaviest cell in the matrix).
 
-**Answer to RQ5.** **Influence domain is largely a matter of when a language appeared and how many direct heirs it had.** Being early is most of what makes a language look far-reaching. That is why the direct and status measures in section 5, and the robust ranks, are better guides than raw reach. Note that the null model keeps each language's number of heirs fixed, so it tests reach *beyond* direct ties, not the direct ties themselves.
+**Answer to RQ5.** The curated families are real groupings in the network: they hold together far more than random groups would. They are not closed worlds, however: even the C family, the largest and most self-contained, sends 11 ties to scripting and 6 to arrays and statistics.
 '''
 
 MD["rq6"] = r'''
-## 10. RQ6: Influence and health today
+## 11. RQ6: Is influence just a matter of being early?
 
-Each language has a **health** rating (dead, fading, alive, thriving). These ratings are **AI judgments**, each with a stated reason but no citation per rating, so they are weaker evidence than the ties. Health is scored 0 to 3 and compared with each network measure using Spearman rank correlations, first as they are and then **holding the year of creation constant** (a partial rank correlation), because both health and the network measures depend strongly on age. The intervals come from the same Monte Carlo draws and reflect uncertainty about the ties only, not about the health ratings.
+An early language has more later languages that could borrow from it, so a large influence domain may simply reflect age. Two descriptive checks: how much of the variation in reach is explained by the year of creation alone (a regression of log(1 + influence domain) on year, then also on the number of direct heirs), and the **share of later languages reached**, which divides reach by the number of languages that could have been reached. These are descriptions of this record, not tests.
 '''
 
 MD["rq6_read"] = r'''
-**Reading.** At first sight influence and health pull in opposite directions. Languages with a large **influence domain** are more often dead (rank correlation −0.44), while languages that **borrowed** more are more often alive (+0.44 for direct borrowing, +0.46 for ancestry). The medians make the contrast concrete: the dead languages have a median influence domain of 16; the thriving ones, 3.
+**Reading.** Age explains much of the reach: the rank correlation of influence domain with age is 0.69, and **the year of creation alone explains 46% of the variation** in log(1 + influence domain), rising to **80% once the number of direct heirs is added**. This is the sense in which "most influential" lists favor the past.
 
-Most of this is **age**. Newer languages are rated healthier (+0.48 with year), and early languages have the largest domains. Holding the year of creation constant, status no longer relates to health (−0.03), and the link with influence domain shrinks to −0.19. What remains is a modest pattern on the other side: **languages that borrow more and broker more between families are rated somewhat healthier than others of the same age** (partial correlations between +0.17 and +0.26 for direct borrowing, ancestry and cross-family brokerage, depending on the draws), and they stay positive in at least 95% of the draws.
+Looking at the *share* of later languages reached removes much of that advantage (its rank correlation with age falls to 0.29). **Fortran and ALGOL 60 still lead (70% each)**, ahead of **Java** (65%) and **C#** (58%), then COBOL, F#, Haskell and ALGOL 68 (about 50%). Java's and C#'s shares are high partly because few languages came after them (26 and 19), so a handful of heirs make a large share. At the other end, **APL** and **SQL** are old and have several direct heirs but reach a smaller share of the later languages than most languages of their era; their heirs stayed in their own niches.
 
-**Answer to RQ6.** **Influence does not secure survival.** ALGOL 60, LISP, CPL, BCPL, ISWIM and Simula are among the most influential languages and are all dead; their ideas live on in their heirs. Once age is taken into account, the languages judged healthiest today tend to be synthesizers and brokers rather than originators. The pattern is modest, and it rests on AI judgments of health, so it is a pointer for further work rather than a finding to lean on.
+**Answer to RQ6.** **Part of a language's reach is simply being early, but not all of it.** Fortran and ALGOL 60 lead on reach even after adjusting for time, while the apparent reach of young languages such as Java and C# comes largely from a small denominator.
 '''
 
 MD["robust"] = r'''
-## 11. Robustness
+## 12. Robustness: do the results depend on how the network is drawn?
 
-### Tie strength: three specifications
+### Five ways of drawing the network
 
-The headline treats all ties alike. Two alternatives: **strong ties only** (104 ties), and **weighted**, with strong ties counted as 1 and weak ties as 0.5 (for betweenness, a weak tie counts as a distance of 2). The table shows the rank correlation of each measure with the headline version, then the top five under each specification.
+The headline uses all ties. Each alternative removes something that might distort the picture:
+
+| Specification | Ties | What it removes |
+|---|---|---|
+| **All ties** (headline) | 218 | nothing |
+| **Design, syntax, type** | 206 | library, implementation, platform and organizational ties, which are not design borrowing |
+| **Strong only** | 104 | every weak tie |
+| **First release only** | 186 | ties added in later versions, which are the ones that make chains run through features added decades later |
+| **Supported only** | 200 | ties whose quoted sentence only partly supports them |
+
+Figure 8 shows how the headline top eight on each measure fare under each version. Dark cells are high ranks. Languages with no ties at all in a version share a very low rank, hence large numbers.
 '''
 
 MD["fortran"] = r'''
 ### The Fortran → ALGOL 60 tie
 
-This single tie, recorded as partly supported, shapes several results above. Below: Fortran's position with and without it, and the main path without it.
+This tie is the busiest in the network (half of all source-to-sink chains). In version 3 it is coded strong and supported, resting on Perlis's statement in the HOPL history of ALGOL that "ALGOL 58 was based on a model strongly derived from FORTRAN and its contemporaries". That sentence is about ALGOL 58 and names Fortran together with its contemporaries; Perlis also says that Fortran itself was unacceptable as a universal language. The tie is therefore well supported but not unambiguous, and it is worth knowing what depends on it. Below: Fortran's and ALGOL 60's positions with and without it.
+'''
+
+MD["stress"] = r'''
+### Which results hold everywhere?
+
+For every measure, the table takes the languages in the headline top five and records:
+
+- in how many of the five specifications they stay in the top five (and which ones drop them);
+- in what share of the perturbed copies they are in the top five, under the moderate and the severe setting of section 4.
+
+A result is treated as **robust** when it holds in all five specifications and in at least 90% of the copies under the moderate setting.
 '''
 
 MD["robust_read"] = r'''
-**Reading.** **Weighting makes almost no difference** (rank correlations of 0.96 or more): with only 43 weak ties, halving their weight rarely changes an order. **Dropping weak ties matters more** (0.72 to 0.85). Fortran leaves the top of the reach and status rankings, because its tie to ALGOL 60 is weak, and ALGOL 60 and LISP lead. Python stays the top borrower, but it drops out of the top five brokers, which become C, C++, Smalltalk, Java and Haskell: Python's brokerage rests largely on weak ties, consistent with section 7.
+**Reading.** Three groups of results emerge.
 
-**Fortran** falls from 1st to 10th on influence domain (55 descendants to 20) and from 1st to 6th on status without its tie to ALGOL 60; in the Monte Carlo draws that drop the tie, its median rank on influence domain is 12. The main path keeps the same course from ALGOL 60 onwards.
+**Robust (all five specifications, 90% or more of the moderate copies):**
+- **LISP, C and ALGOL 60** in the top five for direct influence;
+- **Fortran, ALGOL 60 and LISP** in the top five for influence domain and for status (Fortran's position is the least stable of the three: it falls to third on reach and seventh on status if its tie to ALGOL 60 is removed);
+- **Python and Rust** in the top five for direct borrowing, and **Rust** in the top five by ancestry;
+- **C++ and C** in the top five for betweenness.
+
+**Close, but short of the rule:** Smalltalk (direct influence), Java (betweenness) and Kotlin (ancestry) hold in all five specifications but in fewer than 90% of the copies. Julia (borrowing), COBOL and ALGOL 68 (reach), and Swift and Dart (ancestry) each drop out under one specification; S and Swift (borrowing) under two; Scala under three.
+
+**Fragile:**
+- **Python and C#** among the top connectors: both drop out when only strong ties are used, and Python also when later-version ties are left out.
+- **TypeScript** by ancestry, in the top five in only one specification.
+- Any ranking *within* the groups above. The leading groups are stable; the order inside them is not.
+
+**Which specification matters most.** Counting strong ties only changes the rankings most (rank correlation with the headline between 0.66 and 0.81, lowest for betweenness), while the other three versions stay between 0.89 and 1.00. The weak ties matter, but the leaders on the influence measures are strong-tie languages.
+
+The severe setting (twice as many wrong ties and two and a half times as many missing ones) widens the intervals but does not move the robust results out of the top five in most copies; the last two columns of the table give the shares.
 '''
 
 MD["conclusions"] = r'''
-## 12. Conclusions
+## 13. Conclusions
 
-1. **ALGOL 60 and LISP are the most influential languages in the network**, on every measure of reach and status and across nearly all draws. **C** is the language most often borrowed from directly. Fortran's top place on reach rests on one contested tie, so it is not a safe headline.
-2. **Python is the great synthesizer and the leading broker.** It has the most direct sources, the most cross-family brokerage and the highest betweenness, and it kept borrowing long after its first release. C++ and Smalltalk are the other major bridges between traditions, and C++'s position is the most secure.
-3. **Weak ties bridge.** Two-thirds of weak ties cross family lines, against two-fifths of strong ones: strong influence mostly stays within a tradition, and weak influence connects traditions.
-4. **Families are not communities.** The curated families group languages by use; the network's own communities follow lineages, and they fit the ties better.
-5. **Reach is mostly seniority.** A language's influence domain is largely predicted by its date and its number of direct heirs. APL and SQL fall short of that prediction: many children, few grandchildren.
-6. **Influence does not secure survival.** The most influential languages are disproportionately dead, mostly because they are old. Holding age constant, languages that borrow and broker more are judged slightly healthier.
+1. **Fortran, ALGOL 60 and LISP are the most far-reaching languages**, by influence domain and by status, in every specification and in nearly every perturbed network. **LISP and C are the most often borrowed from directly.** Fortran's top place rests on its tie to ALGOL 60 (strong, supported by a historian's statement about ALGOL 58 and "its contemporaries"); without it, ALGOL 60 leads and Fortran falls to third.
+2. **Biggest borrowers: Rust, Python and Julia, in no meaningful order.** The ranking partly reflects how thoroughly each language documents its own influences, so it cannot be read as a ranking of how much each language really borrowed. The claim that Python is the network's single great synthesizer does not survive.
+3. **C++ and C are the most reliable connectors** (Java is close). Python and C# connect more in the full record than they do when weak ties or later-version ties are set aside.
+4. **Weak ties cross traditions but are not bridges.** 78% of weak ties cross a family line, against 37% of strong ones; but weak ties are *more* embedded among shared neighbors than strong ties, not less. They are secondary borrowings between languages that already lie close to each other.
+5. **The curated families hold together, but most influence crosses them.** Their modularity (0.26) is well above chance (−0.01), and eight of nine are more inward-looking than random labels would be; still, 58% of ties cross a family line.
+6. **Part of reach is simply being early.** Year alone explains 46% of the variation in influence domain (80% with the number of direct heirs); relative to the number of later languages, Fortran and ALGOL 60 still lead, while Java's and C#'s high shares come from a small denominator.
+
+**What changed from the analysis of version 2.** Fortran → ALGOL 60 is now documented rather than contested, so the caution that kept Fortran from being named as a top influence is relaxed, though it remains the single tie that most results hang on. Python's position as the top borrower and connector is weaker than it looked. And the earlier conclusion that families "are not communities" is reversed once chance is taken into account.
 '''
 
 MD["caveats"] = r'''
-## 13. Caveats
+## 14. Caveats
 
-- **Curation.** The 88 languages and 147 ties are a selection. Languages left out (and intermediaries named only in tie labels, such as ALGOL W, SASL or Strongtalk) would change paths and rankings; drawn intermediaries such as CPL, BCPL and B lengthen chains and inflate the reach of early languages.
-- **Age and censoring.** Early languages have had decades to gather heirs; recent ones have not. Section 9 addresses this for reach, but every "most influential" list still favors the past.
-- **Ties are documented claims.** Each rests on a cited source, but evidence quality varies, and an undocumented influence is simply absent. The Monte Carlo probabilities are assumptions about how likely ties are to be real, not estimates.
-- **Families are display categories.** They were drawn for the map, mostly by domain of use, and "Other lineages" is a residual group. Measures that depend on families (E-I index, brokerage roles) should be read with that in mind.
-- **Health is an AI judgment**, with a stated reason but no citation for each rating. Section 10's results are indicative only.
-- **No sampling inference.** The data are not a sample, so there are no p-values. The intervals describe uncertainty about which ties exist, nothing more.
-- **A small network.** With 88 nodes, a few ties can move a rank a long way, which is why ranks are reported with intervals and only large differences are interpreted.
-- **Influence is not quality or popularity.** A language can be widely used and rarely borrowed from, or the reverse.
+- **Curation.** The 90 languages and 218 ties are a selection, made by a written rule. Languages left out, and intermediaries not drawn as nodes (ALGOL W, SASL, Alef), would change paths and rankings. Drawn intermediaries such as CPL, BCPL and B lengthen chains and add to the reach of early languages.
+- **Ties are documented claims, and documentation is uneven.** Each tie rests on a cited source, but languages whose designers wrote detailed histories (Rust, Julia, C++, Python) have more recorded ties than languages that did not. In-degree and anything computed from it should be read with that in mind (section 7).
+- **Languages change, nodes do not.** A language is one node over its whole life. Later-version ties and time order go a long way toward handling this, but a language's position is still the position of a language of 20 or 30 years, not of its first release.
+- **Strength is a judgment about how substantial a borrowing was**, made with AI assistance, checked against the quoted sources, and with disputed cases decided by a human, plus a fixed rule for non-design ties. It is not frequency of contact, as in Granovetter's theory.
+- **Uncertainty settings are assumptions.** The probabilities of wrong and missing ties are stated, not estimated. Missing ties are added at random between older and younger languages; real missing ties are not random (they are more likely among languages with sparse documentation).
+- **Families are display categories**, drawn for the map, mostly by domain of use. "Other lineages" is a residual group.
+- **No sampling inference.** The data are a record, not a sample; the shuffles describe what chance alone would produce, and the intervals describe uncertainty about which ties exist.
+- **A small network.** With 90 nodes, one tie can move a rank a long way; only large and repeated differences are interpreted.
+- **Influence is not quality or popularity.** A language can be widely used and rarely borrowed from, or the reverse. The health and outlook ratings that the map also shows are AI judgments and are deliberately not part of this analysis.
 '''
 
 MD["references"] = r'''
 ## References
 
 - Batagelj, V. (2003). Efficient algorithms for citation network analysis. arXiv:cs/0309023.
-- Blondel, V. D., Guillaume, J.-L., Lambiotte, R., & Lefebvre, E. (2008). Fast unfolding of communities in large networks. *Journal of Statistical Mechanics: Theory and Experiment*, P10008.
 - Bonacich, P. (1987). Power and centrality: A family of measures. *American Journal of Sociology*, 92(5), 1170–1182.
+- Brandes, U. (2001). A faster algorithm for betweenness centrality. *Journal of Mathematical Sociology*, 25(2), 163–177.
 - Brin, S., & Page, L. (1998). The anatomy of a large-scale hypertextual Web search engine. *Computer Networks and ISDN Systems*, 30(1–7), 107–117.
 - Freeman, L. C. (1977). A set of measures of centrality based on betweenness. *Sociometry*, 40(1), 35–41.
-- Gould, R. V., & Fernandez, R. M. (1989). Structures of mediation: A formal approach to brokerage in transaction networks. *Sociological Methodology*, 19, 89–126.
 - Granovetter, M. S. (1973). The strength of weak ties. *American Journal of Sociology*, 78(6), 1360–1380.
 - Hummon, N. P., & Doreian, P. (1989). Connectivity in a citation network: The development of DNA theory. *Social Networks*, 11(1), 39–63.
 - Katz, L. (1953). A new status index derived from sociometric analysis. *Psychometrika*, 18(1), 39–43.
 - Krackhardt, D., & Stern, R. N. (1988). Informal networks and organizational crises: An experimental simulation. *Social Psychology Quarterly*, 51(2), 123–140.
 - Liu, J. S., & Lu, L. Y. Y. (2012). An integrated approach for main path analysis: Development of the Hirsch index as an example. *Journal of the American Society for Information Science and Technology*, 63(3), 528–542.
-- Maslov, S., & Sneppen, K. (2002). Specificity and stability in topology of protein networks. *Science*, 296(5569), 910–913.
 - Newman, M. E. J., & Girvan, M. (2004). Finding and evaluating community structure in networks. *Physical Review E*, 69(2), 026113.
+- Perlis, A. J. (1981). The American side of the development of ALGOL. In R. L. Wexelblat (Ed.), *History of Programming Languages* (pp. 75–91). Academic Press.
 - Wasserman, S., & Faust, K. (1994). *Social Network Analysis: Methods and Applications*. Cambridge University Press.
 
 *Software versions used for the results above:*

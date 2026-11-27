@@ -1,9 +1,12 @@
-# Code cells for the network-analysis notebook, keyed by name. The builder
-# interleaves them with the markdown cells.
+# Code cells for the version 3 network-analysis notebook, keyed by name.
+# The builder (build_nb.py) interleaves them with the markdown cells.
 CODE = {}
 
+# ------------------------------------------------------------------ setup
 CODE["setup"] = r'''
 from pathlib import Path
+import heapq
+from collections import defaultdict, deque
 import numpy as np
 import pandas as pd
 import networkx as nx
@@ -12,11 +15,9 @@ import matplotlib.pyplot as plt
 from matplotlib import font_manager
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.lines import Line2D
-from matplotlib.patches import Patch
 from matplotlib import patheffects
 import seaborn as sns
 from scipy.stats import rankdata
-from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 
 # The notebook lives in notebooks/; the data in data/.
 DATA = next(p for p in [Path("../data"), Path("data")] if (p / "nodes.csv").exists())
@@ -24,14 +25,21 @@ FIGURES = DATA.parent / "notebooks" / "figures"
 SAVE_FIGURES = True
 
 SEED = 2026          # every random step below is seeded, so results are reproducible
-N_DRAWS = 1000       # Monte Carlo draws for the uncertainty intervals
-N_NULL = 1000        # randomized networks for the age baseline
+N_DRAWS = 1000       # perturbed copies of the network for the uncertainty intervals
+N_PERM = 1000        # label shuffles for the chance baselines
 
 nodes = pd.read_csv(DATA / "nodes.csv")
 edges = pd.read_csv(DATA / "edges.csv")
 name = nodes.set_index("id")["name"]
 year = nodes.set_index("id")["year"]
 family = nodes.set_index("id")["family"]
+ids = list(nodes.id)
+pd.set_option("display.max_colwidth", None)
+
+# The date of each tie: the year of the later version where there is one
+# (Python 2.0, pandas 2008 ...), otherwise the year the borrowing language first appeared.
+edges["t"] = edges.since_year.fillna(edges.to_id.map(year)).astype(int)
+assert (edges.t >= edges.from_id.map(year)).all(), "a tie is dated before its source language existed"
 print(f"{len(nodes)} languages, {len(edges)} influence ties "
       f"({(edges.strength == 'strong').sum()} strong, {(edges.strength == 'weak').sum()} weak)")
 '''
@@ -69,169 +77,221 @@ def save(fig, stem):
     if SAVE_FIGURES:
         FIGURES.mkdir(parents=True, exist_ok=True)
         fig.savefig(FIGURES / f"{stem}.png")
-
-def family_legend(ax_or_fig, families=FAMILIES, **kw):
-    handles = [Line2D([], [], marker="o", ls="", markersize=7, markerfacecolor=FAMILY_COLOR[f],
-                      markeredgecolor="white", label=f) for f in families]
-    return ax_or_fig.legend(handles=handles, **kw)
 '''
 
+# ------------------------------------------------------------------ data and graph
 CODE["graph"] = r'''
-def build_graph(e, weighted=False):
-    """Directed graph: a tie runs from the earlier language to the one that borrowed from it."""
-    G = nx.DiGraph()
-    G.add_nodes_from(nodes.id)
-    for r in e.itertuples():
-        w = 1.0 if r.strength == "strong" else 0.5
-        G.add_edge(r.from_id, r.to_id,
-                   weight=w if weighted else 1.0,          # for degree and status
-                   distance=1 / w if weighted else 1.0)    # for shortest paths
-    return G
-
-G = build_graph(edges)
+G = nx.DiGraph()
+G.add_nodes_from(ids)
+G.add_edges_from(zip(edges.from_id, edges.to_id))
 U = G.to_undirected()
 
-two_paths = closed = 0
-for b in G:
-    for a in G.predecessors(b):
-        for c in G.successors(b):
-            if a != c:
-                two_paths += 1
-                closed += G.has_edge(a, c)
-
 cross = edges.from_id.map(family) != edges.to_id.map(family)
+cycles = [sorted(name[v] for v in c) for c in nx.strongly_connected_components(G) if len(c) > 1]
 summary = pd.Series({
     "Languages (nodes)": G.number_of_nodes(),
     "Influence ties": G.number_of_edges(),
+    "  strong / weak": f"{(edges.strength == 'strong').sum()} / {(edges.strength == 'weak').sum()}",
+    "  design, syntax or type / other mechanisms": f"{edges.kind.isin(['design', 'syntax', 'type']).sum()} / {(~edges.kind.isin(['design', 'syntax', 'type'])).sum()}",
+    "  supported / partly supported by the cited source": f"{(edges.verdict == 'supported').sum()} / {(edges.verdict == 'partly').sum()}",
+    "  present at first release / added in a later version": f"{edges.since.isna().sum()} / {edges.since.notna().sum()}",
     "Density": round(nx.density(G), 3),
     "Mean ties per language (in + out)": round(2 * G.number_of_edges() / G.number_of_nodes(), 2),
-    "Languages with no tie (isolates)": ", ".join(name[v] for v in nx.isolates(G)),
-    "Size of the largest connected component": max(len(c) for c in nx.weakly_connected_components(G)),
-    "Mutual (two-way) pairs": sum(1 for u, v in G.edges if G.has_edge(v, u) and u < v),
-    "Two-step chains A → B → C": two_paths,
-    "… of which A also tied directly to C": f"{closed} ({closed / two_paths:.0%})",
-    "Ties that cross family lines": f"{cross.sum()} ({cross.mean():.0%})",
+    "Languages with no tie at all": ", ".join(name[v] for v in nx.isolates(G)),
+    "Largest connected component": max(len(c) for c in nx.weakly_connected_components(G)),
+    "Groups of languages that influence each other in a loop": "; ".join(" / ".join(c) for c in cycles),
 }, name="value")
 summary.to_frame()
 '''
 
-CODE["measures"] = r'''
-ROLES = ["liaison", "gatekeeper", "representative", "itinerant", "coordinator"]
+# ------------------------------------------------------------------ measures
+CODE["measures_fn"] = r'''
+# Influence is followed along ties in time order. A chain A -> B -> C counts only if the
+# tie B -> C is no earlier than the tie A -> B: what B passed on to C must already have
+# been in B. (Haskell's list comprehensions reached Python in 2.0, in 2000, so they could
+# not have traveled on to a language that borrowed from Python in 1995.)
+def reach(E):
+    """For every language, the set of languages its influence can reach along time-respecting chains."""
+    out = defaultdict(list)
+    for u, w, t in zip(E.from_id, E.to_id, E.t):
+        out[u].append((w, t))
+    result = {}
+    for s in ids:
+        earliest = {s: -10**9}          # earliest moment influence from s can be at each language
+        heap = [(-10**9, s)]
+        while heap:
+            a, u = heapq.heappop(heap)
+            if a > earliest[u]:
+                continue
+            for w, t in out[u]:
+                if t >= a and t < earliest.get(w, 10**9):
+                    earliest[w] = t
+                    heapq.heappush(heap, (t, w))
+        result[s] = set(earliest) - {s}
+    return result
 
-def brokerage_roles(G, groups=family):
-    """Gould and Fernandez (1989) roles. For every chain A -> B -> C with no direct
-    tie A -> C, B is the broker; its role depends on the families of A, B and C."""
-    counts = {v: dict.fromkeys(ROLES, 0) for v in G}
-    for b in G:
-        for a in G.predecessors(b):
-            for c in G.successors(b):
-                if a == c or G.has_edge(a, c):
-                    continue
-                ga, gb, gc = groups[a], groups[b], groups[c]
-                if ga == gb == gc:
-                    role = "coordinator"      # all three in one family
-                elif ga == gc:
-                    role = "itinerant"        # an outsider passing ideas within another family
-                elif ga == gb:
-                    role = "representative"   # exports its own family's ideas
-                elif gb == gc:
-                    role = "gatekeeper"       # imports outside ideas into its family
-                else:
-                    role = "liaison"          # links two families it does not belong to
-                counts[b][role] += 1
-    return pd.DataFrame.from_dict(counts, orient="index")[ROLES]
+def betweenness(E):
+    """Betweenness (Freeman 1977) over the shortest time-respecting chains between every pair:
+    for each pair of languages, the share of their shortest chains that pass through a language."""
+    E = E.reset_index(drop=True)
+    tail, head, when = E.from_id.tolist(), E.to_id.tolist(), E.t.tolist()
+    ties_from = defaultdict(list)
+    for i, u in enumerate(tail):
+        ties_from[u].append(i)
+    follow = [[f for f in ties_from[head[i]] if when[f] >= when[i]] for i in range(len(E))]
+    score = defaultdict(float)
+    for s in ids:
+        first = ties_from[s]
+        if not first:
+            continue
+        dist, paths, order, queue = {}, defaultdict(int), [], deque()
+        for e in first:
+            dist[e], paths[e] = 1, 1
+            queue.append(e)
+        while queue:                                   # breadth-first search over ties
+            e = queue.popleft(); order.append(e)
+            for f in follow[e]:
+                if f not in dist:
+                    dist[f] = dist[e] + 1; queue.append(f)
+                if dist[f] == dist[e] + 1:
+                    paths[f] += paths[e]
+        nearest = defaultdict(lambda: 10**9)           # shortest chain length from s to each language
+        for e in order:
+            if head[e] != s and dist[e] < nearest[head[e]]:
+                nearest[head[e]] = dist[e]
+        n_short = defaultdict(int)                      # number of shortest chains from s to each language
+        for e in order:
+            if head[e] != s and dist[e] == nearest[head[e]]:
+                n_short[head[e]] += paths[e]
+        down = {}
+        for e in reversed(order):                      # accumulate from the far end back (Brandes 2001)
+            onward = sum(down[f] for f in follow[e] if dist[f] == dist[e] + 1)
+            if head[e] != s:
+                score[head[e]] += paths[e] * onward
+            ends_here = head[e] != s and dist[e] == nearest[head[e]]
+            down[e] = onward + (1 / n_short[head[e]] if ends_here else 0)
+    return pd.Series({v: score.get(v, 0.0) for v in ids})
 
-def measures(G, weighted=False):
-    w = "weight" if weighted else None
-    m = pd.DataFrame(index=pd.Index(list(G.nodes), name="id"))
-    m["outdeg"] = pd.Series(dict(G.out_degree(weight=w)))
-    m["domain"] = pd.Series({v: len(nx.descendants(G, v)) for v in G})
-    m["status"] = pd.Series(nx.pagerank(G.reverse(copy=True), alpha=0.85, weight=w))
-    m["indeg"] = pd.Series(dict(G.in_degree(weight=w)))
-    m["ancestry"] = pd.Series({v: len(nx.ancestors(G, v)) for v in G})
-    m["betweenness"] = pd.Series(nx.betweenness_centrality(
-        G, normalized=False, weight="distance" if weighted else None))
-    roles = brokerage_roles(G)
-    m["brokerage"] = roles.drop(columns="coordinator").sum(axis=1)
+def measures(E):
+    R = reach(E)
+    m = pd.DataFrame(index=pd.Index(ids, name="id"))
+    m["outdeg"] = E.groupby("from_id").size().reindex(ids).fillna(0)
+    m["indeg"] = E.groupby("to_id").size().reindex(ids).fillna(0)
+    m["domain"] = pd.Series({v: len(R[v]) for v in ids})
+    anc = defaultdict(int)
+    for s in ids:
+        for v in R[s]:
+            anc[v] += 1
+    m["ancestry"] = pd.Series({v: anc[v] for v in ids})
+    D = nx.DiGraph(); D.add_nodes_from(ids); D.add_edges_from(zip(E.from_id, E.to_id))
+    m["status"] = pd.Series(nx.pagerank(D.reverse(copy=True), alpha=0.85))
+    m["betweenness"] = betweenness(E)
     return m
 
 LABEL = {
     "outdeg": "Direct influence (outdegree)", "domain": "Influence domain",
     "status": "Status (PageRank)", "indeg": "Direct borrowing (indegree)",
     "ancestry": "Ancestry", "betweenness": "Betweenness",
-    "brokerage": "Cross-family brokerage",
 }
-M = measures(G)
-roles = brokerage_roles(G)
+M = measures(edges)
 
 def rank_desc(s):
-    return s.rank(ascending=False, method="min").astype(int)
+    return s.rank(ascending=False, method="min").astype(int)    # tied values share a rank
 '''
 
+CODE["check"] = r'''
+# Check the two time-respecting functions against networkx. On the ties present at first
+# release every chain already runs forward in time, so the results must be identical.
+orig = edges[edges.since.isna()]
+D0 = nx.DiGraph(); D0.add_nodes_from(ids); D0.add_edges_from(zip(orig.from_id, orig.to_id))
+assert nx.is_directed_acyclic_graph(D0)
+R0 = reach(orig)
+assert all(R0[v] == nx.descendants(D0, v) for v in ids)
+nxb = pd.Series(nx.betweenness_centrality(D0, normalized=False))
+assert np.allclose(betweenness(orig), nxb.reindex(ids))
+print(f"Checked on the {len(orig)} first-release ties: reach and betweenness agree with networkx for all {len(ids)} languages.")
+
+# What does time order change on the full network? Compare with ignoring dates.
+naive_dom = pd.Series({v: len(nx.descendants(G, v)) for v in ids})
+naive_anc = pd.Series({v: len(nx.ancestors(G, v)) for v in ids})
+change = pd.DataFrame({
+    "Influence domain, dates ignored": naive_dom, "Influence domain, time order": M.domain,
+    "Ancestry, dates ignored": naive_anc, "Ancestry, time order": M.ancestry}, index=pd.Index(ids))
+print("Rank correlation, dates ignored vs time order: "
+      f"influence domain {np.corrcoef(rankdata(naive_dom), rankdata(M.domain))[0, 1]:.3f}, "
+      f"ancestry {np.corrcoef(rankdata(naive_anc), rankdata(M.ancestry))[0, 1]:.3f}")
+movers = list(dict.fromkeys(
+    list((change["Ancestry, dates ignored"] - change["Ancestry, time order"]).sort_values(ascending=False).head(5).index)
+    + list((change["Influence domain, dates ignored"] - change["Influence domain, time order"]).sort_values(ascending=False).head(4).index)))
+change.loc[movers].rename(index=name).rename_axis("Language")
+'''
+
+# ------------------------------------------------------------------ uncertainty
 CODE["montecarlo"] = r'''
-# Probability that each tie is kept in a draw, set by the evidence record.
-def keep_probability(r):
-    if r.strength == "strong":
-        return 0.9
-    return 0.4 if r.verdict == "partly" else 0.6
+# The record can be wrong in two directions: a recorded tie may not be a real design
+# influence, and real ties may be missing. Each "draw" is a perturbed copy of the network:
+#  - every tie is dropped with a probability set by its evidence (supported or partly supported);
+#  - a number of extra ties are added between random pairs of languages, the older one as source.
+# The probabilities are stated assumptions, not estimates. Two settings: "moderate" (the
+# intervals in the tables) and "severe" (a stress test).
+SETTINGS = {
+    "moderate": dict(drop_supported=0.10, drop_partly=0.50, extra=0.10),
+    "severe":   dict(drop_supported=0.20, drop_partly=0.60, extra=0.25),
+}
+yr = year.to_dict()
+tied = set(zip(edges.from_id, edges.to_id)) | set(zip(edges.to_id, edges.from_id))
+candidates = [(a, b) for a in ids for b in ids if a != b and yr[a] <= yr[b] and (a, b) not in tied]
 
-edges["p_keep"] = edges.apply(keep_probability, axis=1)
-HEALTH_SCORE = {"dead": 0, "fading": 1, "alive": 2, "thriving": 3}
-health = nodes.set_index("id").health.map(HEALTH_SCORE)
-
-def spearman(x, y):
-    return np.corrcoef(rankdata(x), rankdata(y))[0, 1]
-
-def partial_spearman(x, y, z):
-    """Rank correlation of x and y after removing the linear effect of z's ranks from both."""
-    rx, ry, rz = rankdata(x), rankdata(y), rankdata(z)
-    res = lambda r: r - np.polyval(np.polyfit(rz, r, 1), rz)
-    return np.corrcoef(res(rx), res(ry))[0, 1]
-
-rng = np.random.default_rng(SEED)
-fa = ((edges.from_id == "fortran") & (edges.to_id == "algol")).to_numpy()
-ids = list(nodes.id)
-fam_labels = [family[v] for v in ids]
-draws, corr_rows, nmi = [], [], []
-for k in range(N_DRAWS):
-    keep = rng.random(len(edges)) < edges.p_keep.to_numpy()
-    Gk = build_graph(edges[keep])
-    mk = measures(Gk)
-    mk["draw"], mk["fortran_algol_kept"] = k, bool(keep[fa][0])
-    draws.append(mk)
+def perturbed_draws(setting, seed):
+    p = SETTINGS[setting]
+    rng = np.random.default_rng(seed)
+    keep_prob = np.where(edges.verdict == "supported", 1 - p["drop_supported"], 1 - p["drop_partly"])
+    n_extra = round(p["extra"] * len(edges))
+    fa = ((edges.from_id == "fortran") & (edges.to_id == "algol")).to_numpy()
+    out = []
+    for k in range(N_DRAWS):
+        keep = rng.random(len(edges)) < keep_prob
+        pick = rng.choice(len(candidates), n_extra, replace=False)
+        extra = pd.DataFrame([(*candidates[i], yr[candidates[i][1]]) for i in pick],
+                             columns=["from_id", "to_id", "t"])
+        mk = measures(pd.concat([edges.loc[keep, ["from_id", "to_id", "t"]], extra]))
+        mk["draw"], mk["fortran_algol_kept"] = k, bool(keep[fa][0])
+        out.append(mk)
+    d = pd.concat(out).reset_index()
     for col in LABEL:
-        corr_rows.append((k, col, spearman(mk.loc[ids, col], health[ids]),
-                          partial_spearman(mk.loc[ids, col], health[ids], year[ids])))
-    comms = nx.community.louvain_communities(Gk.to_undirected(), seed=k)
-    lab = {v: i for i, c in enumerate(comms) for v in c}
-    nmi.append(normalized_mutual_info_score(fam_labels, [lab[v] for v in ids]))
+        d[col + "_rank"] = d.groupby("draw")[col].rank(ascending=False, method="min")
+    return d
 
-MC = pd.concat(draws).reset_index()
-for col in LABEL:
-    MC[col + "_rank"] = MC.groupby("draw")[col].rank(ascending=False, method="min")
-MC_CORR = pd.DataFrame(corr_rows, columns=["draw", "measure", "rho", "partial_rho"])
-print(f"{N_DRAWS} draws; on average {edges.p_keep.sum():.0f} of {len(edges)} ties kept per draw")
+MC = {s: perturbed_draws(s, SEED + i) for i, s in enumerate(SETTINGS)}
+print(f"{N_DRAWS} draws per setting. Moderate: about "
+      f"{(edges.verdict == 'supported').sum() * 0.9 + (edges.verdict == 'partly').sum() * 0.5:.0f} of {len(edges)} ties kept "
+      f"and {round(0.10 * len(edges))} random ties added per draw.")
 '''
 
 CODE["ranktable_fn"] = r'''
-def rank_table(col, k=10, by=None):
-    """Top k languages on one measure, with the Monte Carlo median rank and 90% rank interval."""
-    q = MC.groupby("id")[col + "_rank"].quantile([0.05, 0.5, 0.95]).unstack()
-    t = pd.DataFrame({
-        "Language": name, "Year": year, "Family": family,
-        LABEL[col]: M[col].round(3) if col == "status" else M[col].round(1),
-        "Rank": rank_desc(M[col]),
-        "Median rank (MC)": q[0.5].astype(int),
-        "90% rank interval": q[0.05].astype(int).astype(str) + "–" + q[0.95].astype(int).astype(str),
-    })
-    return t.sort_values(["Rank", "Median rank (MC)"]).head(k).reset_index(drop=True).rename(lambda i: i + 1)
+def rank_interval(col, setting="moderate"):
+    q = MC[setting].groupby("id")[col + "_rank"].quantile([0.05, 0.5, 0.95]).unstack()
+    return q[0.5], q[0.05].astype(int).astype(str) + "–" + q[0.95].astype(int).astype(str)
+
+def rank_table(col, k=10, extra=None):
+    """Top k languages on one measure, with the median rank and 90% rank interval over the draws."""
+    med, interval = rank_interval(col)
+    t = pd.DataFrame({"Language": name, "Year": year, "Family": family})
+    v = M[col]
+    t[LABEL[col]] = v.round(3) if col == "status" else v.round(1) if col == "betweenness" else v.astype(int)
+    for k_, v in (extra or {}).items():
+        t[k_] = v
+    t["Rank"] = rank_desc(M[col])
+    t["Median rank (draws)"] = med.astype(int)
+    t["90% rank interval"] = interval
+    return t.sort_values(["Rank", "Median rank (draws)"]).head(k).reset_index(drop=True).rename(lambda i: i + 1)
 
 def plot_rank_intervals(cols, k=12, title=None, stem=None):
-    fig, axes = plt.subplots(1, len(cols), figsize=(4.3 * len(cols), 0.36 * k + 1.6), sharex=False)
+    fig, axes = plt.subplots(1, len(cols), figsize=(4.3 * len(cols), 0.36 * k + 1.6))
     axes = np.atleast_1d(axes)
     shown = set()
     for ax, col in zip(axes, cols):
-        q = MC.groupby("id")[col + "_rank"].quantile([0.05, 0.5, 0.95]).unstack()
+        q = MC["moderate"].groupby("id")[col + "_rank"].quantile([0.05, 0.5, 0.95]).unstack()
         obs = rank_desc(M[col])
         top = pd.DataFrame({"obs": obs, "med": q[0.5]}).sort_values(["obs", "med"]).head(k).index
         y = np.arange(len(top))[::-1]
@@ -248,7 +308,7 @@ def plot_rank_intervals(cols, k=12, title=None, stem=None):
     handles = [Line2D([], [], marker="o", ls="", ms=7, mfc=FAMILY_COLOR[f], mec="white", label=f)
                for f in FAMILIES if f in shown]
     handles.append(Line2D([], [], color="#c9ced6", lw=3.2, solid_capstyle="round",
-                          label="90% interval across 1,000 draws"))
+                          label="90% interval across 1,000 perturbed networks"))
     fig.legend(handles=handles, loc="lower center", ncol=min(len(handles), 5),
                bbox_to_anchor=(0.5, -0.06 - 0.03 * (len(handles) > 5)), fontsize=9)
     fig.tight_layout()
@@ -260,39 +320,79 @@ def plot_rank_intervals(cols, k=12, title=None, stem=None):
     plt.show()
 '''
 
-CODE["timeline"] = r'''
-# Main path (Hummon and Doreian 1989), computed on the 131 original-design ties,
-# which form an acyclic graph. Search path count (SPC) = number of
-# source-to-sink paths that run through a tie (Batagelj 2003).
+# ------------------------------------------------------------------ main path
+CODE["mainpath_fn"] = r'''
+# Main path analysis (Hummon and Doreian 1989). It needs a graph without loops, so it uses the
+# ties present at first release: they all run forward in time, which also keeps chains from
+# running through a feature added decades later. Each tie gets a search path count (SPC):
+# the number of chains from a source (a language with no recorded parent) to a sink (one with
+# no recorded heir) that pass through it (Batagelj 2003).
 def search_path_counts(D):
     order = list(nx.topological_sort(D))
-    n_minus, n_plus = {}, {}
+    n_before, n_after = {}, {}
     for v in order:
-        preds = list(D.predecessors(v))
-        n_minus[v] = sum(n_minus[p] for p in preds) if preds else 1
+        parents = list(D.predecessors(v))
+        n_before[v] = sum(n_before[p] for p in parents) if parents else 1
     for v in reversed(order):
-        succ = list(D.successors(v))
-        n_plus[v] = sum(n_plus[s] for s in succ) if succ else 1
-    total = sum(n_plus[v] for v in D if D.in_degree(v) == 0)
-    return {(u, v): n_minus[u] * n_plus[v] for u, v in D.edges}, total
+        heirs = list(D.successors(v))
+        n_after[v] = sum(n_after[h] for h in heirs) if heirs else 1
+    total = sum(n_after[v] for v in D if D.in_degree(v) == 0)
+    return {(u, v): n_before[u] * n_after[v] for u, v in D.edges}, total
 
-def global_main_path(D):
-    D = D.copy()
-    D.remove_nodes_from(list(nx.isolates(D)))
+def global_main_paths(D):
+    """Every source-to-sink chain with the highest total search path count (Liu and Lu 2012),
+    so that an arbitrary tie-break between equally good endings is not hidden."""
     spc, total = search_path_counts(D)
-    nx.set_edge_attributes(D, spc, "spc")
-    return nx.dag_longest_path(D, weight="spc"), spc, total
+    best = {}
+    for v in nx.topological_sort(D):
+        best[v] = max((best[u] + spc[(u, v)] for u in D.predecessors(v)), default=0)
+    sinks = [v for v in D if D.out_degree(v) == 0]
+    top = max(best[v] for v in sinks)
+    found = []
+    def walk_back(v, tail):
+        parents = [u for u in D.predecessors(v) if best[u] + spc[(u, v)] == best[v]]
+        if not parents:
+            found.append(tail[::-1])
+        for u in parents:
+            walk_back(u, tail + [u])
+    for v in sinks:
+        if best[v] == top:
+            walk_back(v, [v])
+    return found, spc, total
 
-original = edges[edges.since.isna()]
-DAG = build_graph(original)
-assert nx.is_directed_acyclic_graph(DAG)
-main_path, SPC, N_PATHS = global_main_path(DAG)
-print("Main path:", " → ".join(name[v] for v in main_path))
+def acyclic(E):
+    D = nx.DiGraph(); D.add_edges_from(zip(E.from_id, E.to_id))
+    assert nx.is_directed_acyclic_graph(D)
+    return D
 
+def show_paths(paths):
+    stem = []
+    while all(len(p) > len(stem) and p[:len(stem) + 1] == paths[0][:len(stem) + 1] for p in paths):
+        stem = paths[0][:len(stem) + 1]
+    ends = [name[p[len(stem)]] for p in paths if len(p) > len(stem)]
+    text = " → ".join(name[v] for v in stem)
+    return text + (" → {" + ", ".join(ends) + "}" if ends else "")
+
+DAG = acyclic(orig)
+main_paths, SPC, N_PATHS = global_main_paths(DAG)
+rows = []
+for label, E in [("All first-release ties", orig),
+                 ("Without Fortran → ALGOL 60", orig[~((orig.from_id == "fortran") & (orig.to_id == "algol"))]),
+                 ("Strong first-release ties only", orig[orig.strength == "strong"]),
+                 ("Design, syntax and type first-release ties", orig[orig.kind.isin(["design", "syntax", "type"])])]:
+    Dx = acyclic(E)
+    paths, spc, total = global_main_paths(Dx)
+    rows.append((label, len(E), total, show_paths(paths)))
+pd.DataFrame(rows, columns=["Ties used", "Ties", "Source-to-sink chains", "Main path (equally good endings in braces)"]).set_index("Ties used")
+'''
+
+CODE["spc_table"] = r'''
+share = SPC[("fortran", "algol")] / N_PATHS
+print(f"{N_PATHS} source-to-sink chains in all. Fortran → ALGOL 60 carries {SPC[('fortran', 'algol')]} of them ({share:.0%}).")
 spc_table = (pd.DataFrame([(name[u], name[v], s, s / N_PATHS) for (u, v), s in SPC.items()],
-                          columns=["From", "To", "Search path count", "Share of all paths"])
+                          columns=["From", "To", "Search path count", "Share of all chains"])
              .sort_values("Search path count", ascending=False).head(8).reset_index(drop=True))
-spc_table["Share of all paths"] = spc_table["Share of all paths"].map("{:.0%}".format)
+spc_table["Share of all chains"] = spc_table["Share of all chains"].map("{:.0%}".format)
 spc_table.rename(lambda i: i + 1)
 '''
 
@@ -316,8 +416,9 @@ def timeline_layout(char_w=0.3, pad=1.4):
     return pos, ticks
 
 pos, ticks = timeline_layout()
-size = 14 + 6.5 * M["domain"]
-on_path = set(zip(main_path, main_path[1:]))
+size = 14 + 5.5 * M["domain"]
+on_path = {(u, v) for p in main_paths for u, v in zip(p, p[1:])}
+on_path_nodes = {v for p in main_paths for v in p}
 
 fig, ax = plt.subplots(figsize=(15, 11.5))
 for i, (_, f, top_, bottom_) in enumerate(ticks):
@@ -331,6 +432,7 @@ for _, r in edges.iterrows():
                                 color=INK if main else EDGE,
                                 alpha=1 if main else (0.75 if r.strength == "strong" else 0.4),
                                 lw=2.2 if main else (0.9 if r.strength == "strong" else 0.6),
+                                ls="-" if pd.isna(r.since) else (0, (3, 2)),
                                 connectionstyle="arc3,rad=0.12",
                                 shrinkA=np.sqrt(size[u]) / 2, shrinkB=np.sqrt(size[v]) / 2 + 1))
 xy = np.array([pos[v] for v in nodes.id])
@@ -339,7 +441,7 @@ ax.scatter(xy[:, 0], xy[:, 1], s=size[nodes.id], c=[FAMILY_COLOR[f] for f in nod
 for v in nodes.id:
     x, y_ = pos[v]
     ax.text(x + 0.45 + np.sqrt(size[v]) * 0.035, y_, name[v], va="center", fontsize=7.6,
-            color=INK, zorder=5, fontweight="semibold" if v in main_path else "normal",
+            color=INK, zorder=5, fontweight="semibold" if v in on_path_nodes else "normal",
             path_effects=[patheffects.withStroke(linewidth=2.6, foreground="white")])
 ax.set_yticks([t[0] for t in ticks], [t[1] for t in ticks])
 ax.set_xlim(1954, 2024)
@@ -349,25 +451,28 @@ ax.spines[["left", "bottom"]].set_visible(False)
 ax.set_title("Figure 1. The influence network on a timeline", fontsize=14, pad=14)
 handles = [Line2D([], [], color=EDGE, lw=0.9, alpha=0.75, label="strong tie"),
            Line2D([], [], color=EDGE, lw=0.6, alpha=0.4, label="weak tie"),
+           Line2D([], [], color=EDGE, lw=0.9, alpha=0.75, ls=(0, (3, 2)), label="added in a later version"),
            Line2D([], [], color=INK, lw=2.2, label="main path"),
            Line2D([], [], marker="o", ls="", ms=4, mfc=MUTED, mec="white", label="small influence domain"),
            Line2D([], [], marker="o", ls="", ms=13, mfc=MUTED, mec="white", label="large influence domain")]
-ax.legend(handles=handles, loc="upper center", fontsize=8.5, ncol=5, bbox_to_anchor=(0.5, -0.04))
-ax.text(0.0, -0.085, "Node size: influence domain (number of later languages that descend from it). "
-        "Main path: the chain that carries the most source-to-sink paths, on original-design ties.",
+ax.legend(handles=handles, loc="upper center", fontsize=8.5, ncol=6, bbox_to_anchor=(0.5, -0.04))
+ax.text(0.0, -0.085, "Node size: influence domain (languages reachable along time-respecting chains). "
+        "Main path: the chain carrying the most source-to-sink paths, on first-release ties.",
         transform=ax.transAxes, fontsize=8.5, color=MUTED)
 save(fig, "network-timeline")
 plt.show()
 '''
 
+# ------------------------------------------------------------------ RQ1 influence
+CODE["outdeg_table"] = r'''
+rank_table("outdeg")
+'''
 CODE["influence_table"] = r'''
-rank_table("domain")
+later = pd.Series({v: int(((year >= year[v]) & (year.index != v)).sum()) for v in ids})   # languages created in or after its year
+rank_table("domain", extra={"Later languages": later, "Share of them reached": (M.domain / later).round(2)})
 '''
 CODE["status_table"] = r'''
 rank_table("status")
-'''
-CODE["outdeg_table"] = r'''
-rank_table("outdeg")
 '''
 CODE["influence_plot"] = r'''
 plot_rank_intervals(["outdeg", "domain", "status"],
@@ -375,8 +480,14 @@ plot_rank_intervals(["outdeg", "domain", "status"],
                     stem="network-influence-ranks")
 '''
 
+# ------------------------------------------------------------------ RQ2 borrowing
 CODE["borrow_tables"] = r'''
-rank_table("indeg")
+sources = edges.groupby("to_id").url.nunique().reindex(ids).fillna(0).astype(int)
+biggest = edges.groupby("to_id").url.agg(lambda s: s.value_counts().iloc[0]).reindex(ids).fillna(0).astype(int)
+t = rank_table("indeg", k=12, extra={"Distinct sources": sources, "Ties from its largest source": biggest})
+print("Rank correlation between a language's in-degree and the number of its ties that come from one single source: "
+      f"{np.corrcoef(rankdata(M.indeg), rankdata(biggest))[0, 1]:.2f}")
+t
 '''
 CODE["ancestry_table"] = r'''
 rank_table("ancestry")
@@ -387,276 +498,290 @@ plot_rank_intervals(["indeg", "ancestry"], k=12,
                     stem="network-borrower-ranks")
 '''
 
+# ------------------------------------------------------------------ RQ3 connectors
 CODE["broker_tables"] = r'''
-rank_table("betweenness")
+rank_table("betweenness", k=12)
 '''
-CODE["roles_table"] = r'''
-R = roles.copy()
-R.insert(0, "Language", name)
-R.insert(1, "Family", family)
-R["Cross-family total"] = M["brokerage"]
-R["Rank"] = rank_desc(M["brokerage"])
-q = MC.groupby("id")["brokerage_rank"].quantile([0.05, 0.5, 0.95]).unstack()
-R["90% rank interval"] = q[0.05].astype(int).astype(str) + "–" + q[0.95].astype(int).astype(str)
-R.columns = [c.capitalize() if c in ROLES else c for c in R.columns]
-R.sort_values(["Cross-family total", "Liaison"], ascending=False).head(12).reset_index(drop=True).rename(lambda i: i + 1)
+CODE["broker_plot"] = r'''
+plot_rank_intervals(["betweenness"], k=12,
+                    title="Figure 4. The languages that most often sit between others, with 90% rank interval",
+                    stem="network-betweenness-ranks")
 '''
-CODE["roles_plot"] = r'''
-ROLE_COLOR = {"liaison": BLUE, "gatekeeper": ORANGE, "representative": "#1baf7a",
-              "itinerant": "#eda100", "coordinator": NEUTRAL}
-ROLE_TEXT = {"liaison": "liaison (between two other families)",
-             "gatekeeper": "gatekeeper (brings ideas into its family)",
-             "representative": "representative (carries its family's ideas out)",
-             "itinerant": "itinerant (outsider inside another family)",
-             "coordinator": "coordinator (within one family)"}
-top = (roles.assign(total=roles.sum(axis=1), cross=M["brokerage"])
-       .sort_values(["cross", "total"], ascending=False).head(12))
-fig, ax = plt.subplots(figsize=(10, 5.6))
-y = np.arange(len(top))[::-1]
-left = np.zeros(len(top))
-for role in ROLES:
-    ax.barh(y, top[role], left=left, height=0.62, color=ROLE_COLOR[role],
-            edgecolor="white", linewidth=1.5, label=ROLE_TEXT[role])
-    left += top[role].to_numpy()
-for yi, tot in zip(y, left):
-    ax.text(tot + 0.4, yi, f"{tot:.0f}", va="center", fontsize=9, color=MUTED)
-ax.set_yticks(y, [name[v] for v in top.index])
-ax.spines["left"].set_visible(False)
-ax.xaxis.grid(True); ax.set_axisbelow(True)
-ax.set_xlabel("number of brokered chains A → B → C (no direct tie A → C)")
-ax.set_title("Figure 4. Brokerage roles of the top cross-family brokers")
-ax.legend(loc="lower right", fontsize=8.5)
-save(fig, "network-brokerage")
+
+# ------------------------------------------------------------------ RQ4 weak ties
+CODE["weak_ties"] = r'''
+# Granovetter (1973): weak ties link circles that would otherwise stay apart, and they are
+# not embedded in shared acquaintances. Two checks: does a weak tie cross family lines more
+# often, and does it lack common neighbors (the structural idea of a bridge)?
+nbrs = {v: set(U[v]) for v in U}
+e = edges.assign(across=cross.to_numpy(),
+                 no_shared=[len(nbrs[a] & nbrs[b]) == 0 for a, b in zip(edges.from_id, edges.to_id)])
+subsets = {
+    "All ties": e,
+    "Design, syntax and type ties": e[e.kind.isin(["design", "syntax", "type"])],
+    "Supported ties": e[e.verdict == "supported"],
+    "Design, syntax and type, supported": e[e.kind.isin(["design", "syntax", "type"]) & (e.verdict == "supported")],
+}
+rng_w = np.random.default_rng(SEED + 5)
+def gap_and_chance(d, col):
+    obs = d.groupby("strength")[col].mean()
+    gap = obs["weak"] - obs["strong"]
+    s, x = d.strength.to_numpy(), d[col].to_numpy()
+    shuffled = []
+    for _ in range(N_PERM * 2):
+        p = rng_w.permutation(s)
+        shuffled.append(x[p == "weak"].mean() - x[p == "strong"].mean())
+    shuffled = np.array(shuffled)
+    return gap, (np.abs(shuffled) >= abs(gap)).mean()
+
+rows = []
+for label, d in subsets.items():
+    g = d.groupby("strength")
+    gap_c, p_c = gap_and_chance(d, "across")
+    gap_s, p_s = gap_and_chance(d, "no_shared")
+    rows.append((label, g.size()["strong"], g.size()["weak"],
+                 f"{g.across.mean()['strong']:.0%}", f"{g.across.mean()['weak']:.0%}", f"{p_c * 2 * N_PERM:.0f} of {2 * N_PERM:,}",
+                 f"{g.no_shared.mean()['strong']:.0%}", f"{g.no_shared.mean()['weak']:.0%}", f"{p_s * 2 * N_PERM:.0f} of {2 * N_PERM:,}"))
+WT = pd.DataFrame(rows, columns=pd.MultiIndex.from_tuples([
+    ("", "Ties"), ("Number of ties", "strong"), ("Number of ties", "weak"),
+    ("Cross a family line", "strong"), ("Cross a family line", "weak"), ("Cross a family line", "shuffles as extreme"),
+    ("No shared neighbor", "strong"), ("No shared neighbor", "weak"), ("No shared neighbor", "shuffles as extreme")]))
+WT.set_index(("", "Ties")).rename_axis("")
+'''
+CODE["weak_plot"] = r'''
+fig, axes = plt.subplots(1, 2, figsize=(10.5, 3.9), sharey=True)
+d = subsets["Design, syntax and type ties"]
+labels = ["Cross a family line", "Have no shared neighbor"]
+for ax, col, title in zip(axes, ["across", "no_shared"], labels):
+    vals = d.groupby("strength")[col].mean().reindex(["strong", "weak"])
+    counts = d.groupby("strength").size().reindex(["strong", "weak"])
+    ax.bar([0, 1], vals * 100, color=[BLUE, ORANGE], width=0.55)
+    for i, (v, n) in enumerate(zip(vals, counts)):
+        ax.text(i, v * 100 + 2, f"{v:.0%}", ha="center", fontsize=11, fontweight="semibold")
+        ax.text(i, 3, f"n = {n}", ha="center", fontsize=8.5, color="white")
+    ax.set_xticks([0, 1], ["strong ties", "weak ties"]); ax.tick_params(axis="x", labelcolor=INK)
+    ax.set_title(title, fontsize=11); ax.set_ylim(0, 100)
+    ax.yaxis.grid(True); ax.set_axisbelow(True); ax.spines["left"].set_visible(False)
+axes[0].set_ylabel("share of ties (%)")
+fig.suptitle("Figure 5. Weak ties cross family lines, but they are not bridges (design, syntax and type ties)",
+             x=0.01, ha="left", fontsize=13, fontweight="semibold", y=1.02)
+fig.tight_layout()
+save(fig, "network-weak-ties")
 plt.show()
 '''
 
-CODE["weak_ties"] = r'''
-wt = pd.crosstab(edges.strength, cross.rename("crosses families"), margins=True, margins_name="all ties")
-wt.columns = ["within a family", "across families", "all"]
-wt["share across"] = (wt["across families"] / wt["all"]).map("{:.0%}".format)
-wt
-'''
+# ------------------------------------------------------------------ RQ5 families
+CODE["families"] = r'''
+# Do the nine curated families hold together more than chance would produce? Compare with
+# the same nine family sizes assigned at random to the languages (1,000 shuffles).
+fam_code = {f: i for i, f in enumerate(FAMILIES)}
+lab = np.array([fam_code[family[v]] for v in ids])
+pos_of = {v: i for i, v in enumerate(ids)}
+a_idx = edges.from_id.map(pos_of).to_numpy(); b_idx = edges.to_id.map(pos_of).to_numpy()
 
-CODE["mixing"] = r'''
+def modularity_of(labels):
+    parts = [{ids[i] for i in np.flatnonzero(labels == k)} for k in range(len(FAMILIES))]
+    return nx.community.modularity(U, [p for p in parts if p])
+
+def ei_index(labels):
+    fa, fb = labels[a_idx], labels[b_idx]
+    out = []
+    for k in range(len(FAMILIES)):
+        internal = ((fa == k) & (fb == k)).sum()
+        external = (((fa == k) | (fb == k)) & (fa != fb)).sum()
+        out.append((external - internal) / (external + internal) if external + internal else np.nan)
+    return np.array(out)
+
+rng_f = np.random.default_rng(SEED + 6)
+null_q, null_cross, null_ei = [], [], []
+for _ in range(N_PERM):
+    p = rng_f.permutation(lab)
+    null_q.append(modularity_of(p))
+    null_cross.append((p[a_idx] != p[b_idx]).mean())
+    null_ei.append(ei_index(p))
+null_ei = np.array(null_ei)
+obs_q, obs_cross, obs_ei = modularity_of(lab), (lab[a_idx] != lab[b_idx]).mean(), ei_index(lab)
+
+fit = pd.DataFrame({
+    "Observed": [round(obs_q, 2), f"{obs_cross:.0%}"],
+    "Random family labels, mean": [round(np.mean(null_q), 2), f"{np.mean(null_cross):.0%}"],
+    "Random family labels, most extreme of 1,000": [f"{max(null_q):.2f} (highest)", f"{min(null_cross):.0%} (lowest)"],
+}, index=["Modularity of the families", "Share of ties that cross a family line"])
+fit
+'''
+CODE["families_plot"] = r'''
 mix = pd.crosstab(edges.from_id.map(family), edges.to_id.map(family)).reindex(index=FAMILIES, columns=FAMILIES, fill_value=0)
-fig, ax = plt.subplots(figsize=(8.6, 7))
+fig, axes = plt.subplots(1, 2, figsize=(16, 6.4), gridspec_kw={"width_ratios": [1.05, 1]})
+ax = axes[0]
 sns.heatmap(mix, ax=ax, cmap=SEQ_BLUE, annot=mix.where(mix > 0).fillna(0).astype(int).astype(str).replace("0", ""),
-            fmt="", cbar=False, linewidths=2, linecolor="white", square=True,
-            annot_kws={"fontsize": 9})
+            fmt="", cbar=False, linewidths=2, linecolor="white", square=True, annot_kws={"fontsize": 9})
 for t in ax.texts:
     t.set_color("white" if t.get_text() and int(t.get_text()) >= 8 else INK)
 ax.set_xlabel("borrowing family"); ax.set_ylabel("source family")
 ax.tick_params(axis="x", rotation=40, labelcolor=INK)
 plt.setp(ax.get_xticklabels(), ha="right")
-ax.set_title("Figure 5. Ties between families (diagonal = within a family)")
-save(fig, "network-family-mixing")
-plt.show()
+ax.set_title("Ties between families (diagonal = within a family)")
 
-ei = []
-for f in FAMILIES:
-    internal = mix.loc[f, f]
-    external = mix.loc[f].sum() + mix[f].sum() - 2 * internal
-    ei.append((f, (family == f).sum(), internal, external, (external - internal) / (external + internal)))
-EI = pd.DataFrame(ei, columns=["Family", "Languages", "Internal ties", "External ties", "E-I index"]).sort_values("E-I index")
-EI["E-I index"] = EI["E-I index"].round(2)
-EI.reset_index(drop=True).rename(lambda i: i + 1)
-'''
-
-CODE["communities"] = r'''
-# Louvain is randomized: keep the best of 200 seeds by modularity.
-best = max((nx.community.louvain_communities(U, seed=s) for s in range(200)),
-           key=lambda c: nx.community.modularity(U, c))
-comm_of = {v: i for i, c in enumerate(sorted(best, key=len, reverse=True)) for v in c}
-family_parts = [set(nodes.id[nodes.family == f]) for f in FAMILIES]
-fit = pd.Series({
-    "Modularity of the curated families": round(nx.community.modularity(U, family_parts), 3),
-    "Modularity of the Louvain communities": round(nx.community.modularity(U, best), 3),
-    "Number of Louvain communities": len(best),
-    "Agreement with families: NMI": round(normalized_mutual_info_score(fam_labels, [comm_of[v] for v in ids]), 2),
-    "NMI, 90% interval across draws": f"{np.quantile(nmi, 0.05):.2f}–{np.quantile(nmi, 0.95):.2f}",
-    "Agreement with families: adjusted Rand index": round(adjusted_rand_score(fam_labels, [comm_of[v] for v in ids]), 2),
-}, name="value")
-display(fit.to_frame())
-
-rows = []
-for i in sorted(set(comm_of.values())):
-    members = sorted((v for v in comm_of if comm_of[v] == i), key=lambda v: year[v])
-    fams = family[members].value_counts()
-    rows.append((i + 1, len(members), f"{fams.index[0]} ({fams.iloc[0]} of {len(members)})",
-                 ", ".join(name[v] for v in members)))
-pd.DataFrame(rows, columns=["Community", "Size", "Largest family", "Members (by year)"]).set_index("Community")
-'''
-
-CODE["null"] = r'''
-def time_respecting_rewire(G, n_swaps, rng):
-    """Swap the targets of two ties (a->b, c->d  =>  a->d, c->b). Every language keeps
-    its number of incoming and outgoing ties, and no tie may point back in time."""
-    H = G.copy()
-    E = list(H.edges())
-    done = tries = 0
-    while done < n_swaps and tries < 50 * n_swaps:
-        tries += 1
-        i, j = rng.integers(len(E), size=2)
-        (a, b), (c, d) = E[i], E[j]
-        if len({a, b, c, d}) < 4 or H.has_edge(a, d) or H.has_edge(c, b):
-            continue
-        if year[a] > year[d] or year[c] > year[b]:
-            continue
-        H.remove_edges_from([(a, b), (c, d)]); H.add_edges_from([(a, d), (c, b)])
-        E[i], E[j] = (a, d), (c, b)
-        done += 1
-    return H
-
-rng_null = np.random.default_rng(SEED + 1)
-null = pd.DataFrame([{v: len(nx.descendants(H, v)) for v in H}
-                     for H in (time_respecting_rewire(DAG, 10 * DAG.number_of_edges(), rng_null)
-                               for _ in range(N_NULL))])
-obs = pd.Series({v: len(nx.descendants(DAG, v)) for v in DAG})
-AGE = pd.DataFrame({
-    "Language": name, "Year": year, "Outdegree": pd.Series(dict(DAG.out_degree())),
-    "Influence domain": obs, "Expected (null mean)": null.mean().round(1),
-    "Null 90% range": null.quantile(0.05).astype(int).astype(str) + "–" + null.quantile(0.95).astype(int).astype(str),
-    "Percentile": (null.lt(obs, axis=1).mean() + 0.5 * null.eq(obs, axis=1).mean()).round(3),
-})
-AGE["Observed / expected"] = (AGE["Influence domain"] / null.mean()).round(2)
-AGE = AGE[AGE["Outdegree"] > 0]
-print(f"{len(AGE)} languages with at least one outgoing tie; "
-      f"rank correlation between observed and age-expected domain: {spearman(AGE['Influence domain'], AGE['Expected (null mean)']):.2f}")
-above = AGE[AGE.Percentile >= 0.95]
-below = AGE[AGE.Percentile <= 0.05]
-print(f"Above the null's 95th percentile: {len(above)}; below its 5th percentile: {len(below)}")
-print("Highest and lowest percentiles:")
-pd.concat([AGE.sort_values("Percentile", ascending=False).head(5),
-           AGE.sort_values("Percentile").head(5).iloc[::-1]]).reset_index(drop=True).rename(lambda i: i + 1)
-'''
-
-CODE["null_plot"] = r'''
-fig, ax = plt.subplots(figsize=(8.6, 7))
-cat = np.where(AGE.Percentile >= 0.95, "above", np.where(AGE.Percentile <= 0.05, "below", "within"))
-colors = {"above": BLUE, "below": ORANGE, "within": NEUTRAL}
-labels = {"above": "larger than its position predicts (top 5% of null)",
-          "below": "smaller than its position predicts (bottom 5% of null)",
-          "within": "within the null range (5th to 95th percentile)"}
-for c in ["within", "above", "below"]:
-    s = AGE[cat == c]
-    if s.empty:
-        continue
-    ax.scatter(s["Expected (null mean)"], s["Influence domain"], s=58, color=colors[c],
-               edgecolor="white", linewidth=1.5, label=labels[c], zorder=3)
-lim = [0.8, 80]
-ax.plot(lim, lim, color=MUTED, lw=1, ls=(0, (1, 2)), zorder=1)
-ax.text(1.6, 1.25, "observed = expected", rotation=45, fontsize=8.5, color=MUTED, ha="left")
-ax.set_xscale("log"); ax.set_yscale("log"); ax.set_xlim(lim); ax.set_ylim(lim)
-for axis in (ax.xaxis, ax.yaxis):
-    axis.set_major_formatter(mpl.ticker.FuncFormatter(lambda v, _: f"{v:g}"))
-ax.grid(True, which="major"); ax.set_axisbelow(True)
-label_ids = (list(AGE.sort_values("Percentile", ascending=False).index[:4]) + list(below.index)
-             + ["fortran", "lisp", "algol", "c"])
-for v in dict.fromkeys(label_ids):
-    if v in AGE.index:
-        x, y_ = AGE.loc[v, "Expected (null mean)"], AGE.loc[v, "Influence domain"]
-        dx, dy, ha = {"b": (-7, 3, "right"), "bcpl": (0, -15, "center"), "cpl": (6, 5, "left")}.get(v, (6, 4, "left"))
-        ax.annotate(name[v], (x, y_), xytext=(dx, dy), textcoords="offset points", fontsize=8.5,
-                    color=INK, ha=ha)
-ax.set_xlabel("expected influence domain, given year and number of ties (mean of 1,000 null networks)")
-ax.set_ylabel("observed influence domain")
-ax.set_title("Figure 6. Influence beyond what a language's age and ties predict")
-ax.legend(loc="upper left", fontsize=8.5)
-save(fig, "network-age-baseline")
-plt.show()
-'''
-
-CODE["health"] = r'''
-H = pd.DataFrame({"health": nodes.set_index("id").health, **{c: M[c] for c in LABEL}})
-q = MC_CORR.groupby("measure")[["rho", "partial_rho"]].quantile([0.05, 0.5, 0.95]).unstack()
-fmt = lambda c, k: f"{q.loc[c, (k, 0.5)]:+.2f} ({q.loc[c, (k, 0.05)]:+.2f} to {q.loc[c, (k, 0.95)]:+.2f})"
-HC = pd.DataFrame({
-    "All ties": [f"{spearman(M.loc[ids, c], health[ids]):+.2f}" for c in LABEL],
-    "Across draws: median (90% interval)": [fmt(c, "rho") for c in LABEL],
-    "All ties ": [f"{partial_spearman(M.loc[ids, c], health[ids], year[ids]):+.2f}" for c in LABEL],
-    "Across draws: median (90% interval) ": [fmt(c, "partial_rho") for c in LABEL],
-}, index=pd.Index([LABEL[c] for c in LABEL], name="Measure"))
-HC.columns = pd.MultiIndex.from_tuples([("Rank correlation with health", "All ties"),
-                                        ("Rank correlation with health", "Draws: median (90% interval)"),
-                                        ("Holding year of creation constant", "All ties"),
-                                        ("Holding year of creation constant", "Draws: median (90% interval)")])
-print(f"Rank correlation of health with year of creation: {spearman(year[ids], health[ids]):+.2f}")
-HC
-'''
-
-CODE["health_medians"] = r'''
-order = ["dead", "fading", "alive", "thriving"]
-med = H.groupby("health")[["outdeg", "domain", "indeg", "ancestry", "betweenness"]].median().reindex(order)
-med.insert(0, "Languages", H.health.value_counts().reindex(order))
-med.insert(1, "Median year", year.groupby(H.health).median().reindex(order).astype(int))
-med.columns = ["Languages", "Median year"] + [LABEL[c] for c in ["outdeg", "domain", "indeg", "ancestry", "betweenness"]]
-med.rename_axis("Health (AI judgment)")
-'''
-
-CODE["health_plot"] = r'''
-fig, axes = plt.subplots(1, 2, figsize=(11, 4.6), sharey=False)
-order = ["dead", "fading", "alive", "thriving"]
-counts = H.health.value_counts()
-for ax, col in zip(axes, ["domain", "indeg"]):
-    sns.stripplot(data=H, x="health", y=col, order=order, ax=ax, color=BLUE, alpha=0.55,
-                  size=6, jitter=0.22, edgecolor="white", linewidth=0.8)
-    meds = H.groupby("health")[col].median()
-    for i, h in enumerate(order):
-        ax.hlines(meds[h], i - 0.3, i + 0.3, color=INK, lw=2.2, capstyle="round", zorder=5)
-    ax.set_xticks(range(4), [f"{h}\n(n = {counts[h]})" for h in order])
-    ax.tick_params(axis="x", labelcolor=INK)
-    ax.set_xlabel(""); ax.set_ylabel(LABEL[col].lower())
-    ax.yaxis.grid(True); ax.set_axisbelow(True)
-    ax.spines["left"].set_visible(False)
-axes[0].set_title("Influence domain by health today")
-axes[1].set_title("Direct borrowing by health today")
-fig.text(0.01, -0.03, "Each dot is a language; the dark bar is the median. Health is an AI judgment (see caveats).",
-         fontsize=8.5, color=MUTED)
+ax = axes[1]
+order = np.argsort(obs_ei)
+y = np.arange(len(FAMILIES))
+lo, hi = np.nanquantile(null_ei, [0.05, 0.95], axis=0)
+ax.hlines(y, lo[order], hi[order], color="#c9ced6", lw=7, capstyle="round", zorder=1)
+ax.scatter(obs_ei[order], y, s=70, c=[FAMILY_COLOR[FAMILIES[i]] for i in order], edgecolor="white", linewidth=1.6, zorder=3)
+ax.axvline(0, color=MUTED, lw=0.8)
+ax.set_yticks(y, [FAMILIES[i] for i in order])
+ax.set_xlim(-0.2, 1.05)
+ax.xaxis.grid(True); ax.set_axisbelow(True); ax.spines["left"].set_visible(False)
+ax.set_xlabel("E-I index: −1 = all ties inside the family, +1 = all ties outside")
+ax.set_title("E-I index, against random family labels")
+ax.legend(handles=[Line2D([], [], color="#c9ced6", lw=7, label="5th to 95th percentile of 1,000 shuffles")],
+          loc="upper left", fontsize=8.5, bbox_to_anchor=(0, 0.93))
+fig.suptitle("Figure 6. Families hold together more than chance, but most ties still cross them",
+             x=0.01, ha="left", fontsize=13.5, fontweight="semibold", y=1.01)
 fig.tight_layout()
-fig.suptitle("Figure 7. Influential languages are often dead; borrowers tend to be alive",
-             x=0.01, ha="left", fontsize=13.5, fontweight="semibold", y=1.0)
-fig.subplots_adjust(top=0.86)
-save(fig, "network-health")
+save(fig, "network-families")
+plt.show()
+EI = pd.DataFrame({"Languages": [(family == f).sum() for f in FAMILIES],
+                   "E-I index": obs_ei.round(2),
+                   "Random labels: median": np.nanmedian(null_ei, axis=0).round(2),
+                   "Random labels: 5th–95th percentile": [f"{a:.2f} to {b:.2f}" for a, b in zip(lo, hi)]},
+                  index=FAMILIES).sort_values("E-I index")
+EI.rename_axis("Family")
+'''
+
+# ------------------------------------------------------------------ RQ6 age
+CODE["age"] = r'''
+# How much of "influence domain" is simply having been early?
+ly = np.log1p(M.domain.to_numpy())
+def r_squared(X):
+    X = np.column_stack([np.ones(len(ids))] + X)
+    resid = ly - X @ np.linalg.lstsq(X, ly, rcond=None)[0]
+    return 1 - resid.var() / ly.var()
+r2_year = r_squared([year.to_numpy() - 1990])
+r2_both = r_squared([year.to_numpy() - 1990, np.log1p(M.outdeg.to_numpy())])
+rho = np.corrcoef(rankdata(M.domain), rankdata(-year))[0, 1]
+print(f"Rank correlation of influence domain with age: {rho:.2f}")
+print(f"Share of the variation in log(1 + influence domain) explained by year of creation alone: {r2_year:.0%}; "
+      f"by year and number of direct heirs: {r2_both:.0%}")
+
+# Reach relative to the number of later languages that could have borrowed
+AGEDF = pd.DataFrame({"Language": name, "Year": year, "Influence domain": M.domain.astype(int),
+                      "Later languages": later, "Share of them reached": (M.domain / later).round(2)})
+AGEDF = AGEDF[AGEDF["Later languages"] >= 15]
+print(f"Among the {len(AGEDF)} languages with at least 15 later languages, the share reached ranges "
+      f"from {AGEDF['Share of them reached'].min():.0%} to {AGEDF['Share of them reached'].max():.0%}; "
+      f"its rank correlation with age is {np.corrcoef(rankdata(AGEDF['Share of them reached']), rankdata(-AGEDF.Year))[0, 1]:.2f}.")
+AGEDF.sort_values("Share of them reached", ascending=False).head(8).reset_index(drop=True).rename(lambda i: i + 1)
+'''
+CODE["age_plot"] = r'''
+fig, axes = plt.subplots(1, 2, figsize=(13.5, 5.6))
+ax = axes[0]
+ax.scatter(year, M.domain, s=46, c=[FAMILY_COLOR[family[v]] for v in ids], edgecolor="white", linewidth=1.3, zorder=3)
+label_ids = list(M.domain.sort_values(ascending=False).index[:6]) + ["python", "swift", "go", "rust", "sql", "apl", "java"]
+offsets = {"algol": (6, -10, "left"), "cobol": (6, -10, "left"), "lisp": (-6, 5, "right"), "cpl": (6, -10, "left"),
+           "go": (-6, -11, "right"), "rust": (6, -11, "left"), "swift": (-4, 8, "right")}
+for v in dict.fromkeys(label_ids):
+    dx, dy, ha = offsets.get(v, (6, 4, "left"))
+    ax.annotate(name[v], (year[v], M.domain[v]), xytext=(dx, dy), textcoords="offset points",
+                fontsize=8.5, color=INK, ha=ha)
+ax.set_xlabel("year of creation"); ax.set_ylabel("influence domain (languages reached)")
+ax.yaxis.grid(True); ax.set_axisbelow(True)
+ax.set_title("Reach falls with age")
+
+ax = axes[1]
+d = AGEDF.sort_values("Year")
+ax.scatter(d.Year, d["Share of them reached"] * 100, s=50, c=[FAMILY_COLOR[family[v]] for v in d.index],
+           edgecolor="white", linewidth=1.3, zorder=3)
+off2 = {"fortran": (6, -12), "lisp": (6, -12), "apl": (6, -12), "sql": (6, -12)}
+for v in d.index:
+    if d.loc[v, "Share of them reached"] >= 0.5 or v in ["lisp", "apl", "sql", "python", "smalltalk"]:
+        ax.annotate(name[v], (d.loc[v, "Year"], d.loc[v, "Share of them reached"] * 100), xytext=off2.get(v, (6, 4)),
+                    textcoords="offset points", fontsize=8.5, color=INK)
+ax.set_xlabel("year of creation"); ax.set_ylabel("share of later languages reached (%)")
+ax.yaxis.grid(True); ax.set_axisbelow(True)
+ax.set_title("Share of later languages reached (languages with 15 or more later ones)")
+fig.suptitle("Figure 7. Part of influence is simply being early",
+             x=0.01, ha="left", fontsize=13.5, fontweight="semibold", y=1.02)
+fig.tight_layout()
+save(fig, "network-age")
 plt.show()
 '''
 
-CODE["robust"] = r'''
-S = measures(build_graph(edges[edges.strength == "strong"]))
-W = measures(build_graph(edges, weighted=True), weighted=True)
-rob = pd.DataFrame({
-    "Measure": [LABEL[c] for c in LABEL],
-    "Strong ties only (104)": [round(spearman(M[c], S[c]), 2) for c in LABEL],
-    "Weighted (weak = 0.5)": [round(spearman(M[c], W[c]), 2) for c in LABEL],
-}).set_index("Measure")
-display(rob)
+# ------------------------------------------------------------------ robustness
+CODE["specs"] = r'''
+# Five ways of drawing the network. The headline uses all ties; the others each remove one
+# thing the reviews of version 2 worried about.
+SPECS = {
+    "All ties": edges,
+    "Design, syntax, type": edges[edges.kind.isin(["design", "syntax", "type"])],
+    "Strong only": edges[edges.strength == "strong"],
+    "First release only": edges[edges.since.isna()],
+    "Supported only": edges[edges.verdict == "supported"],
+}
+SM = {k: (M if k == "All ties" else measures(v)) for k, v in SPECS.items()}
+print("Ties in each specification: " + "; ".join(f"{k} {len(v)}" for k, v in SPECS.items()))
 
-def top5(m, c):
-    return ", ".join(name[v] for v in m[c].sort_values(ascending=False).index[:5])
-pd.DataFrame({spec: [top5(m, c) for c in LABEL] for spec, m in
-              [("All ties (headline)", M), ("Strong ties only", S), ("Weighted", W)]},
-             index=[LABEL[c] for c in LABEL])
+agree = pd.DataFrame({k: [np.corrcoef(rankdata(M[c]), rankdata(SM[k][c]))[0, 1] for c in LABEL]
+                      for k in list(SPECS)[1:]}, index=[LABEL[c] for c in LABEL]).round(2)
+agree.rename_axis("Rank correlation with the headline")
 '''
-
+CODE["specs_plot"] = r'''
+fig, axes = plt.subplots(2, 3, figsize=(15, 8.2))
+cmap = LinearSegmentedColormap.from_list("rk", ["#0d366b", "#2a78d6", "#cde2fb", "#ffffff"])
+for ax, c in zip(axes.ravel(), LABEL):
+    top = rank_desc(M[c]).sort_values(kind="stable").index[:8]
+    grid = pd.DataFrame({k: rank_desc(SM[k][c]).reindex(top) for k in SPECS}).rename(index=name)
+    sns.heatmap(grid, ax=ax, cmap=cmap, vmin=1, vmax=25, annot=grid.astype(int).astype(str), fmt="", cbar=False,
+                linewidths=1.5, linecolor="white", annot_kws={"fontsize": 9})
+    for t in ax.texts:
+        t.set_color("white" if int(t.get_text()) <= 4 else INK)
+    ax.set_title(LABEL[c], fontsize=11)
+    ax.tick_params(axis="x", rotation=30, labelcolor=INK, labelsize=8.5); plt.setp(ax.get_xticklabels(), ha="right")
+    ax.tick_params(axis="y", rotation=0)
+    ax.set_ylabel("")
+fig.suptitle("Figure 8. Rank of the headline top eight under five ways of drawing the network (1 = highest)",
+             x=0.01, ha="left", fontsize=13.5, fontweight="semibold", y=1.0)
+fig.tight_layout()
+save(fig, "network-robustness")
+plt.show()
+'''
 CODE["fortran"] = r'''
-G_wo = G.copy(); G_wo.remove_edge("fortran", "algol")
-M_wo = measures(G_wo)
+no_fa = edges[~((edges.from_id == "fortran") & (edges.to_id == "algol"))]
+M_wo = measures(no_fa)
 fortran = pd.DataFrame({
-    "With the tie": [M.loc["fortran", "domain"], rank_desc(M["domain"])["fortran"], rank_desc(M["status"])["fortran"]],
-    "Without the tie": [M_wo.loc["fortran", "domain"], rank_desc(M_wo["domain"])["fortran"], rank_desc(M_wo["status"])["fortran"]],
-}, index=["Fortran's influence domain", "Fortran's rank on influence domain", "Fortran's rank on status"])
-mc_wo = MC[(MC.id == "fortran") & (~MC.fortran_algol_kept)]
-print(f"In the {len(mc_wo)} Monte Carlo draws without the tie, Fortran's influence-domain rank has "
+    "With the tie": [M.loc["fortran", "domain"], rank_desc(M["domain"])["fortran"], rank_desc(M["status"])["fortran"],
+                     M.loc["algol", "domain"], rank_desc(M["domain"])["algol"]],
+    "Without the tie": [M_wo.loc["fortran", "domain"], rank_desc(M_wo["domain"])["fortran"], rank_desc(M_wo["status"])["fortran"],
+                        M_wo.loc["algol", "domain"], rank_desc(M_wo["domain"])["algol"]],
+}, index=["Fortran: influence domain", "Fortran: rank on influence domain", "Fortran: rank on status",
+          "ALGOL 60: influence domain", "ALGOL 60: rank on influence domain"]).astype(int)
+mc_wo = MC["moderate"][(MC["moderate"].id == "fortran") & (~MC["moderate"].fortran_algol_kept)]
+print(f"In the {len(mc_wo)} perturbed networks (of {N_DRAWS}) that lose the tie, Fortran's influence-domain rank has "
       f"median {mc_wo.domain_rank.median():.0f} (90% interval {mc_wo.domain_rank.quantile(0.05):.0f}–{mc_wo.domain_rank.quantile(0.95):.0f}).")
-DAG_wo = DAG.copy(); DAG_wo.remove_edge("fortran", "algol")
-path_wo, _, _ = global_main_path(DAG_wo)
-print("Main path without the tie:", " → ".join(name[v] for v in path_wo))
-print(f"Share of all source-to-sink paths that run through Fortran → ALGOL 60: {SPC[('fortran', 'algol')] / N_PATHS:.0%}")
 fortran
+'''
+CODE["stress"] = r'''
+# For each measure, the languages in the headline top five. In how many of the five
+# specifications do they stay in the top five, and in what share of the perturbed
+# networks of each setting?
+ranks = {s_: {c: MC[s_].pivot(index="draw", columns="id", values=c + "_rank") for c in LABEL} for s_ in SETTINGS}
+rows = []
+for c in LABEL:
+    head = rank_desc(M[c])
+    for v in head[head <= 5].sort_values(kind="stable").index:
+        out_of = [k for k in SPECS if rank_desc(SM[k][c])[v] > 5]
+        rows.append((LABEL[c], name[v], head[v], f"{len(SPECS) - len(out_of)} of {len(SPECS)}",
+                     ", ".join(out_of) if out_of else "—",
+                     f"{(ranks['moderate'][c][v] <= 5).mean():.0%}", f"{(ranks['severe'][c][v] <= 5).mean():.0%}"))
+STRESS = pd.DataFrame(rows, columns=["Measure", "Language", "Headline rank", "Stays in top 5 in",
+                                     "Drops out of the top 5 when only these ties are used",
+                                     "Perturbed networks: moderate", "Perturbed networks: severe"])
+STRESS.set_index(["Measure", "Language"])
 '''
 
 CODE["versions"] = r'''
-import sys, matplotlib, seaborn, scipy, sklearn
+import sys, matplotlib, seaborn, scipy
 print(f"Python {sys.version.split()[0]} · pandas {pd.__version__} · networkx {nx.__version__} · "
-      f"numpy {np.__version__} · scipy {scipy.__version__} · scikit-learn {sklearn.__version__} · "
+      f"numpy {np.__version__} · scipy {scipy.__version__} · "
       f"matplotlib {matplotlib.__version__} · seaborn {seaborn.__version__}")
 '''
