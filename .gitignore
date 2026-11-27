@@ -14,3 +14,6 @@ __pycache__/
 .DS_Store
 Thumbs.db
 .claudine/
+
+# Intermediate build output (the page body; the published page is site/index.html)
+source/language-lineage.html

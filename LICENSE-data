@@ -1,0 +1,33 @@
+Programming Language Lineage: data and text
+Copyright (c) 2026 nomoteticus
+
+The data and text in this repository are licensed under the
+Creative Commons Attribution 4.0 International license (CC BY 4.0).
+
+  Summary:     https://creativecommons.org/licenses/by/4.0/
+  Legal code:  https://creativecommons.org/licenses/by/4.0/legalcode
+
+This covers:
+
+  - the files in data/ (nodes.csv, edges.csv, edges-v1-to-v2.csv,
+    languages-v1-to-v2.csv);
+  - the method note and other documents in docs/;
+  - the README;
+  - the language descriptions, link labels, evidence notes and ratings held
+    in source/ (nodes.py, desc.py, edges.py, sources.json, research/) and
+    shown on the page.
+
+You may share and adapt this material for any purpose, including
+commercially, as long as you give appropriate credit, link to the license,
+and indicate if changes were made. A suitable credit is:
+
+  "Programming Language Lineage" by nomoteticus,
+  https://github.com/nomoteticus/programming-language-lineage, CC BY 4.0.
+
+Not covered:
+
+  - the code, which is under the MIT license (see LICENSE);
+  - quotations from cited sources in the evidence records, which remain the
+    work of their authors and are quoted for reference;
+  - third-party logos, flags and fonts, which are under their own terms
+    (see docs/logo-credits.md).

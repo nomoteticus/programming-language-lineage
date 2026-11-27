@@ -44,7 +44,7 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-body); f
 .wrap { max-width: 1640px; margin: 0 auto; padding-inline: 24px; padding-block: 28px 48px; display: grid; gap: 22px; }
 @media (max-width: 600px) { .wrap { padding-inline: 16px; } }
 
-header { display: grid; gap: 6px; max-width: 70ch; }
+header { display: grid; gap: 6px; }
 .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
 h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 4.2vw, 46px); line-height: 1.05; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
 h1 code { font-family: var(--font-mono); font-weight: 500; font-size: .8em; }
@@ -65,6 +65,8 @@ h1 code { font-family: var(--font-mono); font-weight: 500; font-size: .8em; }
 .chip { width: 14px; height: 14px; border-radius: 7px; border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 18%, var(--surface)); }
 .key-line { width: 26px; height: 0; border-top: 1.6px solid var(--muted); }
 .key-line.dashed { border-top-style: dashed; }
+.key-line.ctx { border-top: 1.6px dotted var(--muted); opacity: .8; }
+.key-tag { font-size: 12px; font-family: var(--font-body); color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
 .key-dead { width: 22px; height: 12px; border-radius: 6px; border: 1.4px dashed var(--muted); }
 .key-ring { width: 14px; height: 14px; border-radius: 7px; border: 3px double var(--fg); }
 .key-swiss { width: 13px; height: 13px; border-radius: 2px; background: var(--swiss); position: relative; }
@@ -82,13 +84,15 @@ figcaption { font-size: 13px; color: var(--muted); }
 .tick { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
 .edge { fill: none; stroke: var(--edge); stroke-width: 1.3; marker-end: url(#ah); transition: opacity .15s, stroke .15s; }
 .edge.dashed { stroke-dasharray: 5 4; }
+.edge.ctx { stroke-dasharray: 1 3.2; stroke-linecap: round; stroke-width: 1.1; opacity: .7; }
+.elabel.ctx { font-style: italic; opacity: .8; }
+#map.filter .edge.ctx, #map.focus .edge.ctx { stroke-dasharray: 1 3.2; }
 .ah { fill: var(--edge); }
 .ah-hi { fill: var(--fg); }
 .elabel { font-family: var(--font-body); font-size: 11px; fill: var(--muted); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; transition: opacity .15s; pointer-events: none; }
 .node { cursor: pointer; transition: opacity .15s; }
 .node rect { fill: color-mix(in srgb, var(--c) 15%, var(--surface)); stroke: var(--c); stroke-width: 1.4; }
 .node text { font-family: var(--font-mono); font-size: 13px; font-weight: 500; fill: var(--fg); }
-.node.yours rect { stroke-width: 3; }
 .node:focus { outline: none; }
 .node:focus-visible rect { stroke: var(--fg); stroke-width: 3; }
 .badge-bg { fill: var(--surface); stroke: var(--line); stroke-width: 1; }
@@ -104,6 +108,13 @@ figcaption { font-size: 13px; color: var(--muted); }
 svg.badge-mini { width: 17px; height: 17px; flex: none; display: inline-block; vertical-align: -3px; }
 .status-line { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; margin: 0 0 8px; }
 .status-line span { display: inline-flex; align-items: center; gap: 6px; }
+.dims { font-size: 13px; color: var(--muted); margin: -4px 0 0; }
+.dims b { color: var(--fg); font-weight: 600; }
+.scope { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; }
+.src { font-size: 11.5px; }
+.src a { color: var(--muted); }
+.kindtag { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.ai { font-size: 12px; color: var(--muted); }
 .flag-edge { fill: none; stroke: var(--fg); stroke-opacity: .28; stroke-width: .6; }
 .node use { pointer-events: bounding-box; }
 svg.mini { width: 16px; height: 12px; flex: none; display: inline-block; vertical-align: -1px; }
@@ -133,7 +144,13 @@ svg.mini { width: 16px; height: 12px; flex: none; display: inline-block; vertica
 .card { position: fixed; top: env(safe-area-inset-top, 0px); right: 0; bottom: env(safe-area-inset-bottom, 0px); width: min(440px, 100vw); background: var(--surface); border-left: 1px solid var(--line); box-shadow: -12px 0 32px rgba(0,0,0,.12); overflow-y: auto; z-index: 20; transform: translateX(105%); visibility: hidden; transition: transform .22s ease, visibility 0s linear .22s; }
 .card.open { transform: none; visibility: visible; transition: transform .22s ease, visibility 0s; }
 .card-inner { padding: 18px 22px 32px; display: grid; gap: 14px; }
-.card-close { all: unset; cursor: pointer; justify-self: end; font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; }
+.card-btns { display: flex; gap: 8px; justify-content: flex-end; }
+.card-show { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); z-index: 21; font: inherit; font-size: 14px; cursor: pointer; color: var(--surface); background: var(--fg); border: 0; border-radius: 999px; padding: 10px 18px; min-height: 44px; box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+.card-show[hidden] { display: none; }
+.card-show:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+.also { font-size: 13px; color: var(--muted); margin: 0; }
+.also .lang { font-size: 13px; }
+.card-close { all: unset; cursor: pointer; font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; }
 .card-close:hover { color: var(--fg); border-color: var(--muted); }
 .card-close:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
 #cardBody { display: grid; gap: 14px; }
@@ -215,20 +232,20 @@ footer { font-size: 13px; color: var(--muted); max-width: 80ch; }
 
 <div class="wrap">
   <header>
-    <p class="eyebrow">From <code>(lambda ...)</code> to <code>val</code> · 1957 to 2023</p>
+    <p class="eyebrow">From FORTRAN to Zig · 88 languages · 1957 to 2016</p>
     <h1>Programming Language Lineage</h1>
-    <p class="lede">Each language sits at the year it appeared. Arrows point from a language to the ones it influenced, and say what was passed on. Flags show where each was built and, on the left, where its designers were born when that differs. The corner badges give its health today and my 20-year outlook assuming AI keeps writing more of the world's code. Hover a language to isolate its family, or click it to open its card.</p>
+    <p class="lede">Each language sits at the year it appeared. Arrows point from a language to the ones it influenced, and say what was passed on. Flags show where each was built and, on the left, where its designers were born when that differs. The corner badges give its health today and a 20-year outlook, assuming AI keeps writing more of the world's code; both are AI judgments, with the reason on each card. Hover a language to isolate its family, or click it to open its card; Ctrl-click (⌘-click on a Mac) adds more languages to the selection, and <b>Hide panel</b> folds the card away so you can see the whole map.</p>
   </header>
 
   <div class="legend" role="group" aria-label="Legend and filters">
     %%LEGEND%%
     <div class="lrow"><span class="lhead">Hover and click</span><div class="lkeys depth">
-      <span class="seg" role="group" aria-label="Ancestors to show"><span class="seglab">Ancestors</span><button type="button" class="segb" data-dir="up" data-depth="1" aria-pressed="true">Direct</button><button type="button" class="segb" data-dir="up" data-depth="2" aria-pressed="false">2nd degree</button><button type="button" class="segb" data-dir="up" data-depth="99" aria-pressed="false">All</button></span>
-      <span class="seg" role="group" aria-label="Successors to show"><span class="seglab">Successors</span><button type="button" class="segb" data-dir="down" data-depth="1" aria-pressed="true">Direct</button><button type="button" class="segb" data-dir="down" data-depth="2" aria-pressed="false">2nd degree</button><button type="button" class="segb" data-dir="down" data-depth="99" aria-pressed="false">All</button></span>
+      <span class="seg" role="group" aria-label="Ancestors to show"><span class="seglab">Ancestors</span><button type="button" class="segb" data-dir="up" data-depth="0" aria-pressed="false">None</button><button type="button" class="segb" data-dir="up" data-depth="1" aria-pressed="true">Direct</button><button type="button" class="segb" data-dir="up" data-depth="2" aria-pressed="false">2nd degree</button><button type="button" class="segb" data-dir="up" data-depth="99" aria-pressed="false">All</button></span>
+      <span class="seg" role="group" aria-label="Successors to show"><span class="seglab">Successors</span><button type="button" class="segb" data-dir="down" data-depth="0" aria-pressed="false">None</button><button type="button" class="segb" data-dir="down" data-depth="1" aria-pressed="true">Direct</button><button type="button" class="segb" data-dir="down" data-depth="2" aria-pressed="false">2nd degree</button><button type="button" class="segb" data-dir="down" data-depth="99" aria-pressed="false">All</button></span>
     </div></div>
     <div class="lrow"><span class="lhead">Key</span><div class="lkeys static">
-      <span><span class="key-line"></span>direct influence</span>
-      <span><span class="key-line dashed"></span>loose or cosmetic</span>
+      <span><span class="key-line"></span>strong influence</span>
+      <span><span class="key-line dashed"></span>weaker or partial influence</span>
       <span><span class="key-line root"></span>roots: what shaped the selected language</span>
       <span><span class="key-line leaf"></span>leaves: what it went on to shape</span>
       <span><span class="key-dead"></span>dashed outline: dead language</span>
@@ -241,7 +258,7 @@ footer { font-size: 13px; color: var(--muted); max-width: 80ch; }
     <div class="scroller">
       %%SVG%%
     </div>
-    <figcaption>Influence is simplified: most languages have many parents, and only major ones are drawn. Years are first public release, except Rust (1.0). Health and outlook are my judgement as of October 2026, not measurements. Flags are simplified too: committee languages (ALGOL, Haskell) get a globe, and only the lead designers' birthplaces are shown.</figcaption>
+    <figcaption>Only documented influences are drawn, typically one to four per language, and every link has a source (see the method note). Solid: a substantial influence. Dotted: a weaker or partial one. Most influences are on design; some came by another route (built on the other language's code or runtime, through a library, or from the same team), and the card says which. A version after a label (for example <i>generators · Python 2.2</i>) means the influence arrived in a later version of the language, not its original design. Years are first public announcement or release. Health and the 2046 outlook are AI judgments as of October 2026, not measurements; hover a badge for the reasoning and confidence. Flags are simplified: committee languages (ALGOL 60, ALGOL 68, Haskell) get a globe, and only the lead designers' birthplaces are shown.</figcaption>
   </figure>
 
 
@@ -250,15 +267,16 @@ footer { font-size: 13px; color: var(--muted); max-width: 80ch; }
     <div class="cols" id="all"></div>
   </div>
 
-  <footer>Sources: the languages' own design documents and FAQs (Go, Rust, Swift, Kotlin, Scala, Python), plus standard histories of Lisp, ML, APL, S and Simula. Dashed lines mark resemblance more than documented design intent. Flags by flag-icons (MIT licence). Logos from Simple Icons; marks belong to their owners.</footer>
+  <footer>Sources: every link is sourced in the method note's link table (%%PRIMARY%% of %%NLINKS%% from primary sources: designers' papers, HOPL histories, official FAQs and documentation); each card shows the source of its direct links. Related work: Éric Lévénez's Computer Languages History chart, the O'Reilly History of Programming Languages poster, and the HOPL conference papers. Flags by flag-icons (MIT license). Logos from Simple Icons; the marks belong to their owners and are used only to identify each language (<a href="https://github.com/nomoteticus/programming-language-lineage/blob/main/docs/logo-credits.md">logo credits</a>). Built with Claude (Anthropic); reviewed by Gemini 3.1 Pro and ChatGPT 6.1 Sol. Version 2, November 2026.</footer>
 </div>
 
 <aside class="card" id="card" aria-hidden="true" aria-labelledby="cardTitle">
   <div class="card-inner">
-    <button type="button" class="card-close" id="cardClose">Close</button>
+    <div class="card-btns"><button type="button" class="card-close" id="cardHide">Hide panel</button><button type="button" class="card-close" id="cardClose">Close</button></div>
     <div id="cardBody"></div>
   </div>
 </aside>
+<button type="button" class="card-show" id="cardShow" hidden>Show panel</button>
 
 <script>
 const DATA = %%DATA%%;
@@ -267,17 +285,19 @@ const card = document.getElementById('card');
 const cardBody = document.getElementById('cardBody');
 const lhint = document.getElementById('lhint');
 const resetBtn = document.getElementById('reset');
-let pinned = null;
+let pinned = null;          // the language whose card is shown (last selected)
+let selected = [];          // all selected languages, in selection order
+let panelHidden = false;
 
 const flag = c => `<svg class="mini" viewBox="0 0 16 12" aria-hidden="true"><use href="#flag-${c}"/></svg>`;
 const badge = k => `<svg class="badge-mini" viewBox="0 0 16 16" aria-hidden="true"><use href="#${k}"/></svg>`;
-const STL = { dead: 'Dead', dying: 'Dying', alive: 'Alive', thriving: 'Thriving' };
+const STL = { dead: 'Dead', fading: 'Fading', alive: 'Alive', thriving: 'Thriving' };
 const OLL = { bull: 'Bullish to 2046', bear: 'Bearish to 2046', steady: 'Steady to 2046' };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 /* ---------- filters: OR within a row, AND across rows ---------- */
 const active = new Map();   // group -> Set(keys)
-const groupOf = k => k === 'yours' ? 'yours' : k.split('-')[0];
+const groupOf = k => k.split('-')[0];
 function applyFilter() {
   svg.querySelectorAll('.match, .half').forEach(el => el.classList.remove('match', 'half'));
   document.querySelectorAll('.lkey').forEach(b => b.setAttribute('aria-pressed', String(!!active.get(groupOf(b.dataset.key))?.has(b.dataset.key))));
@@ -318,48 +338,52 @@ function reach(id, dir, max) {
     const next = [];
     frontier.forEach(cur => ((dir === 'up' ? inE : outE)[cur] || []).forEach(i => {
       const e = DATA.edges[i], other = dir === 'up' ? e.f : e.t;
+      if (e.c && lvl > 1) return;
       if (!edges.has(i)) edges.set(i, lvl);
-      if (!nodes.has(other)) { nodes.set(other, { lvl, via: cur }); next.push(other); }
+      if (!nodes.has(other)) { nodes.set(other, { lvl, via: cur }); if (!e.c) next.push(other); }
     }));
     frontier = next;
   }
   return { nodes, edges };
 }
-function highlight(id) {
+function highlight(ids) {
+  // ids: one id, a list of ids (multi-selection) or null
+  ids = ids == null ? [] : [].concat(ids);
   svg.querySelectorAll('.on, .sel, .deep, .root, .leaf').forEach(el => el.classList.remove('on', 'sel', 'deep', 'root', 'leaf'));
-  if (!id) { svg.classList.remove('focus'); if ([...active.values()].some(s => s.size)) svg.classList.add('filter'); return; }
+  if (!ids.length) { svg.classList.remove('focus'); if ([...active.values()].some(s => s.size)) svg.classList.add('filter'); return; }
   svg.classList.remove('filter');
   svg.classList.add('focus');
-  const up = reach(id, 'up', depth.up), down = reach(id, 'down', depth.down);
-  const lvlOf = new Map([...up.edges, ...down.edges]);
+  const upE = new Map(), downE = new Map(), lit = new Set();
+  ids.forEach(id => {
+    const up = reach(id, 'up', depth.up), down = reach(id, 'down', depth.down);
+    up.edges.forEach((l, i) => upE.set(i, Math.min(l, upE.get(i) ?? l)));
+    down.edges.forEach((l, i) => downE.set(i, Math.min(l, downE.get(i) ?? l)));
+    up.nodes.forEach((v, n) => lit.add(n)); down.nodes.forEach((v, n) => lit.add(n));
+  });
   svg.querySelectorAll('.edge, .elabel').forEach(el => {
-    const i = +el.dataset.e, l = lvlOf.get(i);
-    if (l) { el.classList.add('on', up.edges.has(i) ? 'root' : 'leaf'); if (l > 1) el.classList.add('deep'); }
+    const i = +el.dataset.e, l = upE.get(i) ?? downE.get(i);
+    if (l) { el.classList.add('on', upE.has(i) ? 'root' : 'leaf'); if (l > 1) el.classList.add('deep'); }
   });
   svg.querySelectorAll('.node').forEach(n => {
-    if (up.nodes.has(n.dataset.id) || down.nodes.has(n.dataset.id)) n.classList.add('on');
-    if (n.dataset.id === id) n.classList.add('sel');
+    if (lit.has(n.dataset.id)) n.classList.add('on');
+    if (ids.includes(n.dataset.id)) n.classList.add('sel');
   });
 }
 document.querySelectorAll('.segb').forEach(b => b.addEventListener('click', () => {
   depth[b.dataset.dir] = +b.dataset.depth;
   document.querySelectorAll(`.segb[data-dir="${b.dataset.dir}"]`).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-  if (pinned) { highlight(pinned); renderCard(pinned); }
+  if (pinned) { highlight(selected); renderCard(pinned); }
 }));
 
 /* ---------- card ---------- */
 const parents = {}, children = {};
 DATA.edges.forEach(e => { (parents[e.t] ||= []).push(e); (children[e.f] ||= []).push(e); });
-const ord = n => n === 2 ? '2nd' : n === 3 ? '3rd' : n + 'th';
 const langBtn = id => `<button type="button" class="lang" data-id="${id}"><span class="chip fam-${DATA.nodes[id].fam}"></span>${esc(DATA.nodes[id].label)}</button>`;
 function influenceCol(title, id, dir) {
   const map = dir === 'up' ? parents : children, key = dir === 'up' ? 'f' : 't';
   const dir1 = (map[id] || []).slice().sort((a, b) => DATA.nodes[a[key]].year - DATA.nodes[b[key]].year);
-  const r = reach(id, dir, Math.max(2, depth[dir]));
-  const ind = [...r.nodes.entries()].filter(([n, v]) => v.lvl >= 2).sort((a, b) => a[1].lvl - b[1].lvl || DATA.nodes[a[0]].year - DATA.nodes[b[0]].year);
   return `<div class="col"><h3 class="${dir === 'up' ? 'roots' : 'leaves'}">${title}</h3>
-    <h4>Direct</h4>${dir1.length ? `<ul>${dir1.map(e => `<li>${langBtn(e[key])}<span>${esc(e.lab)}${e.d ? ' (loose)' : ''}</span></li>`).join('')}</ul>` : '<p class="empty">None drawn</p>'}
-    <h4>Indirect</h4>${ind.length ? `<ul>${ind.map(([far, v]) => `<li>${langBtn(far)}<span>via ${esc(DATA.nodes[v.via].label)} <span class="deg">· ${ord(v.lvl)} degree</span></span></li>`).join('')}</ul>` : '<p class="empty">None drawn</p>'}
+    ${dir1.length ? `<ul>${dir1.map(e => `<li>${langBtn(e[key])}<span>${esc(e.lab)}${e.since ? ` · ${esc(e.since)}` : ''} <span class="kindtag">${[e.d ? 'weaker' : '', ['design', 'syntax', 'type'].includes(e.kind) ? '' : e.kind].filter(Boolean).join(' · ')}</span></span><span class="src"><a href="${esc(e.src.url)}" target="_blank" rel="noopener">source</a>${e.src.verdict === 'partly' ? ' (partial support)' : ''}</span></li>`).join('')}</ul>` : '<p class="empty">None drawn</p>'}
   </div>`;
 }
 function renderCard(id) {
@@ -368,39 +392,67 @@ function renderCard(id) {
   const inv = n.inv.length >= 3
     ? `<p class="who"><b>Collective</b><span>${n.inv.map(([a, c]) => esc(a) + (c ? ` ${flag(c)}` : '')).join(', ')}</span></p>`
     : `<p class="who">${n.inv.map(([a, c]) => `<span class="person"><b>${esc(a)}</b>${c ? ` ${flag(c)} <span class="muted">born in ${esc(DATA.countries[c])}</span>` : ''}</span>`).join('')}</p>`;
+  const others = selected.filter(x => x !== id);
   cardBody.innerHTML = `
+    ${others.length ? `<p class="also">Also selected: ${others.map(langBtn).join(' ')} · Ctrl-click a language on the map to add or remove it.</p>` : ''}
     <div class="chead fam-${n.fam}">
       ${logo}
       <div><h2 id="cardTitle">${esc(n.label)} <span class="yr">${n.year}</span></h2><div class="fam">${esc(DATA.fams[n.fam])}</div></div>
     </div>
     <p class="status-line"><span>${badge('st-' + n.st)} ${STL[n.st]}</span>${n.ol ? `<span>${badge('ol-' + n.ol)} ${OLL[n.ol]}</span>` : ''}</p>
+    <p class="dims">Maintenance <b>${esc(n.maint)}</b> · new projects <b>${esc(n.newproj)}</b> · installed base <b>${esc(n.base)}</b></p>
+    ${n.scope ? `<p class="scope"><b>This node covers:</b> ${esc(n.scope)}</p>` : ''}
     <dl class="facts">
       <dt>Invented by</dt><dd>${inv}</dd>
       <dt>Where</dt><dd>${flag(n.dev)} ${esc(DATA.countries[n.dev])}<br><span class="muted">${esc(n.org)}</span></dd>
     </dl>
     <p class="desc">${esc(n.desc)}</p>
-    <p class="note"><b>Outlook:</b> ${esc(n.note)}</p>
+    ${n.ol
+      ? `<p class="note"><b>Outlook to 2046: ${OLL[n.ol].replace(' to 2046', '')}</b> (confidence: ${esc(n.conf)})<br>${esc(n.note)}${n.ai ? ' This outlook rests mainly on the assumption that AI writes a growing share of code.' : ''}<br><b>The outlook would change if:</b> ${esc(n.ifchange)}</p>`
+      : `<p class="note"><b>Today:</b> ${esc(n.note)}</p>`}
     <div class="cols2">${influenceCol('Influenced by', id, 'up')}${influenceCol('Influenced', id, 'down')}</div>
     ${n.sw.length ? `<h3>Famous software written in ${esc(n.label)}</h3><ul class="sw">${n.sw.map(([a, d]) => `<li><b>${esc(a)}</b>${d ? ` <span>${esc(d)}</span>` : ''}</li>`).join('')}</ul>` : ''}`;
 }
-function openCard(id) {
-  pinned = id; highlight(id); renderCard(id);
-  card.classList.add('open'); card.setAttribute('aria-hidden', 'false'); card.inert = false;
+const showBtn = document.getElementById('cardShow');
+function showPanel(on) {
+  // the panel is open when a language is pinned and the panel is not hidden
+  const open = !!pinned && on;
+  card.classList.toggle('open', open); card.setAttribute('aria-hidden', String(!open)); card.inert = !open;
+  showBtn.hidden = !pinned || open;
+  if (pinned) showBtn.textContent = `Show panel · ${DATA.nodes[pinned].label}` + (selected.length > 1 ? ` (+${selected.length - 1})` : '');
+}
+function openCard(id, add = false) {
+  if (add) {
+    // Ctrl/Cmd-click: toggle this language in the selection; the card shows the last one selected
+    if (selected.includes(id)) selected = selected.filter(x => x !== id); else selected.push(id);
+    if (!selected.length) return closeCard();
+    pinned = selected[selected.length - 1];
+  } else {
+    selected = [id]; pinned = id; panelHidden = false;
+  }
+  highlight(selected); renderCard(pinned);
+  showPanel(!panelHidden);
   card.scrollTop = 0;
 }
 function closeCard() {
-  pinned = null; highlight(null);
-  card.classList.remove('open'); card.setAttribute('aria-hidden', 'true'); card.inert = true;
+  pinned = null; selected = []; panelHidden = false; highlight(null);
+  showPanel(false);
 }
 card.inert = true;
 document.getElementById('cardClose').addEventListener('click', closeCard);
+document.getElementById('cardHide').addEventListener('click', () => { panelHidden = true; showPanel(false); showBtn.focus(); });
+showBtn.addEventListener('click', () => { panelHidden = false; showPanel(true); });
 card.addEventListener('click', ev => { const b = ev.target.closest('button.lang'); if (b) openCard(b.dataset.id); });
 
 svg.querySelectorAll('.node').forEach(n => {
   const id = n.dataset.id;
   n.addEventListener('mouseenter', () => { if (!pinned) highlight(id); });
-  n.addEventListener('mouseleave', () => { if (!pinned) highlight(null); else highlight(pinned); });
-  n.addEventListener('click', ev => { ev.stopPropagation(); pinned === id ? closeCard() : openCard(id); });
+  n.addEventListener('mouseleave', () => { if (!pinned) highlight(null); else highlight(selected); });
+  n.addEventListener('click', ev => {
+    ev.stopPropagation();
+    if (ev.ctrlKey || ev.metaKey) return openCard(id, true);
+    (selected.length === 1 && pinned === id) ? closeCard() : openCard(id);
+  });
   n.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); pinned === id ? closeCard() : openCard(id); } });
 });
 svg.addEventListener('click', () => { if (pinned) closeCard(); });
@@ -416,7 +468,7 @@ Object.keys(DATA.nodes)
     const n = DATA.nodes[id];
     const sec = document.createElement('section');
     sec.innerHTML = `<h3><span class="chip fam-${n.fam}"></span><button type="button" data-id="${id}">${esc(n.label)}</button> ${n.left.map(flag).join('')}${flag(n.dev)} ${badge('st-' + n.st)}${n.ol ? badge('ol-' + n.ol) : ''} <span class="yr">${n.year}</span></h3>
-      <ul>${ins.length ? ins.map(e => `<li>from <b>${esc(DATA.nodes[e.f].label)}</b>: <span>${esc(e.lab)}${e.d ? ' (loose)' : ''}</span></li>`).join('') : '<li><span>No parents drawn on this map.</span></li>'}</ul>`;
+      <ul>${ins.length ? ins.map(e => `<li>from <b>${esc(DATA.nodes[e.f].label)}</b>: <span>${esc(e.lab)}${e.since ? ` · ${esc(e.since)}` : ''}${[e.d ? 'weaker' : '', ['design', 'syntax', 'type'].includes(e.kind) ? '' : e.kind].filter(Boolean).map(x => ` (${x})`).join('')}</span></li>`).join('') : '<li><span>No parents drawn on this map.</span></li>'}</ul>`;
     all.appendChild(sec);
   });
 all.addEventListener('click', ev => { const b = ev.target.closest('button[data-id]'); if (b) openCard(b.dataset.id); });

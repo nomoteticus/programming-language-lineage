@@ -1,0 +1,19 @@
+id,change,v1_name,v2_name,v1_year,v2_year,family
+lisp,renamed,Lisp,LISP,1958,1958,Lisp
+algol,renamed,ALGOL,ALGOL 60,1960,1960,C & systems
+cpl,added,,CPL,,1963,C & systems
+basic,renamed,BASIC,Dartmouth BASIC,1964,1964,Teaching & visual
+iswim,added,,ISWIM,,1966,ML & Haskell
+algol68,added,,ALGOL 68,,1968,C & systems
+b,added,,B,,1969,C & systems
+commonlisp,added,,Common Lisp,,1984,Lisp
+newsqueak,added,,Newsqueak,,1989,Other lineages
+j,added,,J,,1990,Arrays & statistics
+kq,added,,K / q,,1992,Arrays & statistics
+vba,added,,VBA,,1993,Teaching & visual
+cyclone,added,,Cyclone,,2002,C & systems
+coffee,removed,CoffeeScript,,2009,,Scripting & web
+rust,year changed,Rust,Rust,2015,2010,C & systems
+lookml,removed,LookML,,2012,,Data & BI
+kql,removed,KQL,,2014,,Data & BI
+mojo,removed,Mojo,,2023,,C & systems
